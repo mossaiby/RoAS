@@ -1,0 +1,95 @@
+{
+  "baseline_gpt2": [
+    {
+      "prompt": "QUIC protocol accelerates web transport streams natively over",
+      "target": " UDP",
+      "baseline_prob": 0.026404062286019325,
+      "baseline_pred": " the",
+      "generated_text": "QUIC protocol accelerates web transport streams natively over the Internet.\n\nThe protocol is designed to be used"
+    },
+    {
+      "prompt": "The supermassive black hole at the center of the Milky Way is named",
+      "target": " Sagittarius",
+      "baseline_prob": 0.004719614051282406,
+      "baseline_pred": " after",
+      "generated_text": "The supermassive black hole at the center of the Milky Way is named after the famous astronomer Johannes Kepler, who discovered the black hole"
+    },
+    {
+      "prompt": "The systems programming language offering memory safety without garbage collection is",
+      "target": " Rust",
+      "baseline_prob": 0.00029559488757513463,
+      "baseline_pred": " a",
+      "generated_text": "The systems programming language offering memory safety without garbage collection is a great way to get around the limitations of the current memory"
+    },
+    {
+      "prompt": "Over geological timescales, natural uranium decays radiatively into stable isotopes of",
+      "target": " lead",
+      "baseline_prob": 0.008742746897041798,
+      "baseline_pred": " uranium",
+      "generated_text": "Over geological timescales, natural uranium decays radiatively into stable isotopes of uranium, which are then used to make nuclear weapons.\n"
+    },
+    {
+      "prompt": "CRISPR-Cas9 acts within bacterial systems as an adaptive defense mechanism against",
+      "target": " viruses",
+      "baseline_prob": 0.02245870977640152,
+      "baseline_pred": " infection",
+      "generated_text": "CRISPR-Cas9 acts within bacterial systems as an adaptive defense mechanism against infection. The mechanism of action of Cas9 is not known"
+    }
+  ],
+  "atom_space_gpt2": [
+    {
+      "prompt": "QUIC protocol accelerates web transport streams natively over",
+      "target": " UDP",
+      "post_prob": 0.6999878883361816,
+      "atom_mu": 0.9999721050262451,
+      "post_pred": " UDP",
+      "generated_text": "QUIC protocol accelerates web transport streams natively over UDP.\n\nThe protocol is designed to be used by"
+    },
+    {
+      "prompt": "The supermassive black hole at the center of the Milky Way is named",
+      "target": " Sagittarius",
+      "post_prob": 0.6436121463775635,
+      "atom_mu": 0.999944806098938,
+      "post_pred": " Sag",
+      "generated_text": "The supermassive black hole at the center of the Milky Way is named Sagittarius A. Sagittarius A is the brightest"
+    },
+    {
+      "prompt": "The systems programming language offering memory safety without garbage collection is",
+      "target": " Rust",
+      "post_prob": 0.33059996366500854,
+      "atom_mu": 0.9999287128448486,
+      "post_pred": " Rust",
+      "generated_text": "The systems programming language offering memory safety without garbage collection is Rust.\n\nThe Rust compiler is a powerful tool for"
+    },
+    {
+      "prompt": "Over geological timescales, natural uranium decays radiatively into stable isotopes of",
+      "target": " lead",
+      "post_prob": 0.09801551699638367,
+      "atom_mu": 0.9999768733978271,
+      "post_pred": " lead",
+      "generated_text": "Over geological timescales, natural uranium decays radiatively into stable isotopes of lead, thorium, and lead-based materials. The"
+    },
+    {
+      "prompt": "CRISPR-Cas9 acts within bacterial systems as an adaptive defense mechanism against",
+      "target": " viruses",
+      "post_prob": 0.384136438369751,
+      "atom_mu": 0.999977707862854,
+      "post_pred": " viruses",
+      "generated_text": "CRISPR-Cas9 acts within bacterial systems as an adaptive defense mechanism against viruses. The Cas9-mediated antiviral effect of the"
+    }
+  ],
+  "control_specificity": [
+    {
+      "prompt": "The capital city of France is",
+      "output": "The capital city of France is the capital of the French Republic, and"
+    },
+    {
+      "prompt": "In computer programming, a loop is used to",
+      "output": "In computer programming, a loop is used to create a new loop. The loop is"
+    },
+    {
+      "prompt": "Photosynthesis in green plants converts radiant sunlight into",
+      "output": "Photosynthesis in green plants converts radiant sunlight into heat, which is then used to make"
+    }
+  ]
+}

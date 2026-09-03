@@ -1,0 +1,100 @@
+# =============================================================================
+# LaTeX / pdflatex build artifacts
+# =============================================================================
+# Core build files produced by pdflatex / bibtex / makeindex runs.
+*.aux
+*.log
+*.bbl
+*.blg
+*.bcf
+*.fdb_latexmk
+*.fls
+*.synctex.gz
+*.synctex
+*.toc
+*.lof
+*.lot
+*.out
+*.spl
+*.idx
+*.ilg
+*.ind
+*.run.xml
+*.xdv
+
+# =============================================================================
+# Re-allow tracked PDFs
+# =============================================================================
+# The PDFs themselves are deliverables, not build artifacts, so keep them
+# under version control even though their sibling files are ignored above.
+!*.pdf
+!paper/*.pdf
+
+# =============================================================================
+# Python / virtual environment artifacts
+# =============================================================================
+# Virtual environments (project-local and common tool locations)
+.venv/
+venv/
+env/
+ENV/
+.ENV/
+.python-version
+
+# Python bytecode and distribution caches
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+*.egg
+MANIFEST
+
+# Test / coverage / type / lint artifacts
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+.cache/
+.mypy_cache/
+.ruff_cache/
+.pyright_cache/
+.tox/
+.nox/
+coverage.xml
+*.cover
+.hypothesis/
+
+# Jupyter / IPython checkpoints
+.ipynb_checkpoints/
+profile_default/
+
+# Tooling state files
+.mypy.ini
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Environment / secrets (never commit credentials)
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# HuggingFace / transformer caches (re-downloaded from model hub)
+hf_cache/
+huggingface/
+.cache/huggingface/

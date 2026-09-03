@@ -1,0 +1,27 @@
+{
+  "full_model": {
+    "context_accuracy": 1.0,
+    "corpus_accuracy": 1.0,
+    "param_accuracy": 0.8666666746139526,
+    "gate_on_context_task": [
+      0.9738730192184448,
+      0.01876550167798996,
+      0.007361512165516615
+    ],
+    "gate_on_corpus_task": [
+      0.00861449632793665,
+      0.988109827041626,
+      0.003275700844824314
+    ],
+    "gate_on_param_task": [
+      9.591869456926361e-05,
+      0.9997807741165161,
+      0.0001233316579600796
+    ]
+  },
+  "ablations": {
+    "context_task_without_ctx": 0.0,
+    "corpus_task_without_corpus": 0.0,
+    "param_task_without_params": 0.8666666746139526
+  }
+}

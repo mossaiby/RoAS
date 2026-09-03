@@ -1,0 +1,76 @@
+{
+  "counterfactual_updates": [
+    {
+      "subject": "Pluto",
+      "old_target": "Planet",
+      "new_target": "Dwarf Planet",
+      "override_success": false,
+      "prob_new": 0.1887311488389969,
+      "prob_old": 0.4716726839542389
+    },
+    {
+      "subject": "Twitter",
+      "old_target": "Twitter",
+      "new_target": "X Corp",
+      "override_success": false,
+      "prob_new": 0.000535392202436924,
+      "prob_old": 0.9978381991386414
+    },
+    {
+      "subject": "Python",
+      "old_target": "CPython",
+      "new_target": "PyPy JIT",
+      "override_success": false,
+      "prob_new": 0.002867009723559022,
+      "prob_old": 0.9873537421226501
+    },
+    {
+      "subject": "Ethereum",
+      "old_target": "Proof-of-Work",
+      "new_target": "Proof-of-Stake",
+      "override_success": true,
+      "prob_new": 0.44819721579551697,
+      "prob_old": 0.02670213393867016
+    },
+    {
+      "subject": "Java",
+      "old_target": "Sun Microsystems",
+      "new_target": "Oracle",
+      "override_success": true,
+      "prob_new": 0.4617382287979126,
+      "prob_old": 0.00012166804663138464
+    }
+  ],
+  "anti_atom_unlearning": [
+    {
+      "target": "Location-Redacted",
+      "successfully_erased": true,
+      "residual_probability": 0.02040693163871765,
+      "background_specificity": 0.9428571462631226
+    },
+    {
+      "target": "Confidential-Illness",
+      "successfully_erased": true,
+      "residual_probability": 0.02040589228272438,
+      "background_specificity": 0.9428571462631226
+    },
+    {
+      "target": "Patent-Secret",
+      "successfully_erased": true,
+      "residual_probability": 0.020406091585755348,
+      "background_specificity": 0.9428571462631226
+    },
+    {
+      "target": "Bunker-Zero",
+      "successfully_erased": true,
+      "residual_probability": 0.020407985895872116,
+      "background_specificity": 0.9428571462631226
+    },
+    {
+      "target": "Master-Passphrase",
+      "successfully_erased": true,
+      "residual_probability": 0.020407941192388535,
+      "background_specificity": 0.9428571462631226
+    }
+  ]
+}

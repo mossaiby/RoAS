@@ -1,0 +1,56 @@
+\documentclass[preprint,12pt]{elsarticle}
+
+\usepackage{stix}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\usepackage{lineno}
+\usepackage{hyperref}
+
+\journal{Neurocomputing}
+
+\newtheorem{definition}{Definition}
+\newtheorem{proposition}{Proposition}
+\newtheorem{theorem}{Theorem}
+\newtheorem{corollary}{Corollary}
+\newtheorem{remark}{Remark}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\V}{V}
+\newcommand{\VBar}{\bar{V}}
+\newcommand{\Om}{\Omega}
+
+\setlength{\emergencystretch}{1.5em}
+
+\begin{document}
+
+\begin{frontmatter}
+
+\title{Language Models as Reads over Atom Spaces:\\
+A Unified Measure-Theoretic Formulation of Context, Retrieval, and Parameters}
+
+\author[inst1]{Farshid Mossaiby\corref{cor1}}
+\ead{mossaiby@example.com}
+\cortext[cor1]{Corresponding author.}
+\affiliation[inst1]{organization={Department of Civil Engineering, University of Isfahan}, postcode={81744-73441}, city={Isfahan}, country={Iran}}
+
+\begin{keyword}
+Language models \sep Atom spaces \sep Measure theory \sep Model editing \sep Vector retrieval \sep Machine unlearning
+\end{keyword}
+
+\end{frontmatter}
+
+\linenumbers
+
+\section*{Research Highlights}
+
+\begin{itemize}
+  \item Attention is formalized as an integral over measurable atom spaces.
+  \item Unifies context attention, dense retrieval, and MoE under one read operator.
+  \item Proves exponential convergence of sublinear top-k ANN quadrature.
+  \item Validates lifelong editing to 200 atoms and signed-measure unlearning.
+  \item Causal GPT-2 steering flips factual predictions to 100\% target accuracy.
+\end{itemize}
+
+\end{document}

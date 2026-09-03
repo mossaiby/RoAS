@@ -66,7 +66,7 @@ python src/atom_space_generative_engine.py
 | **Quadrature Bounds** | Truncation Error ($\tau = 0.05, k=1$) | **$8.17 \times 10^{-5}$** | Theorem 1 (Exponential decay) |
 | **Lifelong Editing** | 40 Sequential Edits (to 200 atoms) | **100% Retention / 100% Specificity** | Non-parametric measure scaling |
 | **Tri-Space Gating** | Dynamic Routing Purity ($\Delta^2$) | **$>92\%$ per domain** | Functional orthogonality |
-| **Machine Unlearning** | Anti-Atom Suppression | **$P = 2.04\% = 1/|\mathcal{V}|$** | Hahn–Jordan destructive erasure |
+| **Machine Unlearning** | Anti-Atom Suppression | **$P = 2.04\% = 1/\|\mathcal{V}\|$** | Hahn–Jordan destructive erasure |
 | **Causal GPT-2** | Target Prediction Flip & Boost | **100% Flipped / Up to $1100\times$** | Continuous hidden augmentation |
 
 ---

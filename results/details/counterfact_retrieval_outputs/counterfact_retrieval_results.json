@@ -1,0 +1,62 @@
+{
+  "benchmark": "CounterFact external-memory retrieval",
+  "source": "https://rome.baulab.info/data/dsets/counterfact.json",
+  "scope_note": "Retrieval evaluation; not a parametric model-editing comparison.",
+  "config": {
+    "limit": 500,
+    "max_queries_per_type": 2,
+    "temperature": 0.07,
+    "error_budget": 0.05,
+    "fixed_k": 10,
+    "activation_threshold": 0.6,
+    "ann_candidates": 10
+  },
+  "records": 500,
+  "queries": 2500,
+  "results": {
+    "exact_1nn": {
+      "rewrite": {
+        "count": 500,
+        "top1_recall": 0.992,
+        "activated_correct_recall": 0.992,
+        "mean_max_similarity": 0.8757714629173279
+      },
+      "paraphrase": {
+        "count": 1000,
+        "top1_recall": 0.91,
+        "activated_correct_recall": 0.382,
+        "mean_max_similarity": 0.5582618117332458
+      },
+      "neighborhood": {
+        "count": 1000,
+        "false_activation_rate": 0.096,
+        "wrong_edit_retrieval_rate": 0.024,
+        "mean_max_similarity": 0.4557673931121826
+      }
+    },
+    "fixed_k_read": {
+      "k": 10,
+      "mean_vector_error": 0.17691108584403992,
+      "max_vector_error": 0.44611701369285583
+    },
+    "adaptive_read": {
+      "error_budget": 0.05,
+      "mean_k": 246.03640747070312,
+      "median_k": 305.0,
+      "max_k": 446,
+      "mean_vector_error": 0.01120294164866209,
+      "max_vector_error": 0.023710403591394424,
+      "max_certificate": 0.05000007897615433,
+      "empirical_coverage": 1.0
+    },
+    "exact_scoring_and_sort_ms": 21.58840000629425
+  },
+  "ann": {
+    "available": true,
+    "index": "FAISS IndexHNSWFlat",
+    "candidate_count": 10,
+    "exact_top1_candidate_recall": 1.0,
+    "build_ms": 6.577800028026104,
+    "search_ms": 15.186900040134788
+  }
+}

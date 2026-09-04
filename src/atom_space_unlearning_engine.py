@@ -25,7 +25,7 @@ OUT_DIR = os.path.join("results", "details", "unlearning_probe_outputs")
 
 @dataclass
 class UnlearnEngineConfig:
-    seed: int = 42
+    seed: int = int(os.environ.get("ROAS_SEED", "42"))
     encoder_name: str = "sentence-transformers/all-MiniLM-L6-v2"
     device: str = "cuda" if torch.cuda.is_available() else "cpu"
     
@@ -182,7 +182,7 @@ class ContradictionTiedLM(nn.Module):
         return logits, signed_mu
 
 
-def run_unlearning_experiment():
+def run_suppression_experiment():
     os.makedirs(OUT_DIR, exist_ok=True)
     os.makedirs("results", exist_ok=True)
     cfg = UnlearnEngineConfig()
@@ -194,7 +194,7 @@ def run_unlearning_experiment():
         torch.cuda.manual_seed_all(cfg.seed)
         
     device = cfg.device
-    print(f"=== Running Contradiction & Anti-Atom Unlearning Benchmark on {device} ===")
+    print(f"=== Running Contradiction & Matched-Suppression Benchmark on {device} ===")
     
     from sentence_transformers import SentenceTransformer
     backbone = SentenceTransformer(cfg.encoder_name, device=device)
@@ -296,6 +296,8 @@ def run_unlearning_experiment():
             post_pred = post_logits.argmax(dim=-1).item()
             prob_new = F.softmax(post_logits, dim=-1)[0, id_new].item()
             prob_old = F.softmax(post_logits, dim=-1)[0, id_old].item()
+            clean_logits, _ = model(clean_q_raw)
+            clean_accuracy = (clean_logits.argmax(dim=-1) == clean_tgts).float().mean().item()
             
         success = (post_pred == id_new)
         print(f"Update: '{s}' | Target: '{o_new}' | Overrode: {success} | "
@@ -307,14 +309,15 @@ def run_unlearning_experiment():
             "new_target": o_new,
             "override_success": bool(success),
             "prob_new": prob_new,
-            "prob_old": prob_old
+            "prob_old": prob_old,
+            "background_specificity": clean_accuracy
         })
 
     # ========================================================================
     # EXPERIMENT 2: External-memory suppression via anti-atoms
     # ========================================================================
     print("\n" + "="*70)
-    print("EXPERIMENT 2: ZERO-RETRAINING UNLEARNING VIA ANTI-ATOMS (SIGNED MEASURES)")
+    print("EXPERIMENT 2: MATCHED EXTERNAL-MEMORY SUPPRESSION (SIGNED READ)")
     print("="*70)
     
     unlearn_results = []
@@ -328,6 +331,10 @@ def run_unlearning_experiment():
         sensitive_sent = f"{s} {r} {o_sensitive}."
         k_sensitive_raw = encode_clean([sensitive_sent])[0]
         v_sensitive = norm_E[id_sensitive]
+
+        with torch.no_grad():
+            pre_logits, _ = model(q_raw)
+            pre_probability = F.softmax(pre_logits, dim=-1)[0, id_sensitive].item()
         
         model.omega_corpus.insert_atom(k_sensitive_raw, v_sensitive, weight=-1.0)
         
@@ -340,14 +347,15 @@ def run_unlearning_experiment():
             clean_l, _ = model(clean_q_raw)
             clean_acc = (clean_l.argmax(dim=-1) == clean_tgts).float().mean().item()
             
-        erased = (post_pred != id_sensitive)
-        print(f"Unlearning: '{s}' | Sensitive Target: '{o_sensitive}' | "
-              f"Erased: {erased} | P(Sensitive): {post_prob*100:5.2f}% | "
+        suppressed = (post_pred != id_sensitive)
+        print(f"Suppression: '{s}' | Sensitive Target: '{o_sensitive}' | "
+              f"Suppressed: {suppressed} | P(Sensitive): {post_prob*100:5.2f}% | "
               f"Clean Specificity: {clean_acc*100:5.1f}%")
         
         unlearn_results.append({
             "target": o_sensitive,
-            "successfully_erased": bool(erased),
+            "successfully_suppressed": bool(suppressed),
+            "pre_suppression_probability": pre_probability,
             "residual_probability": post_prob,
             "background_specificity": clean_acc
         })
@@ -355,7 +363,7 @@ def run_unlearning_experiment():
     # Export to both OUT_DIR and results/
     summary = {
         "counterfactual_updates": update_results,
-        "anti_atom_unlearning": unlearn_results
+        "anti_atom_suppression": unlearn_results
     }
     with open(os.path.join(OUT_DIR, "unlearning_results.json"), "w") as f:
         json.dump(summary, f, indent=2)
@@ -402,4 +410,4 @@ def run_unlearning_experiment():
 
 
 if __name__ == "__main__":
-    run_unlearning_experiment()
+    run_suppression_experiment()

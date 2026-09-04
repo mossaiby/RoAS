@@ -31,16 +31,16 @@
 A Unified Measure-Theoretic Formulation of Context, Retrieval, and Parameters}
 
 \author[inst1]{Farshid Mossaiby\corref{cor1}}
-\ead{mossaiby@example.com}
+\ead{mossaiby@eng.ui.ac.ir}
 \cortext[cor1]{Corresponding author.}
 \affiliation[inst1]{organization={Department of Civil Engineering, University of Isfahan}, postcode={81744-73441}, city={Isfahan}, country={Iran}}
 
 \begin{abstract}
-We reformulate language model next-token prediction as an integral of a query-conditioned probability measure against a value map over arbitrary atom spaces $(\Om, \mathcal{F}, v)$, generalizing standard attention beyond token context windows. We demonstrate that in-context attention, retrieval-augmented generation (RAG / $k$NN-LM), and parameter-expert routing are realizations of a single read operator $R(x; \Omega)$ applied to distinct atom spaces. This formulation separates general linguistic reasoning from mutable factual storage, enabling post-hoc knowledge insertion without retraining. We establish mathematical conditions governing reliable editability via key-encoder Lipschitz continuity and retrieval margins. We also prove the Quadrature Truncation Bound Theorem: for exact ranked top-$k$ atoms, omitted read mass decays exponentially with the score gap relative to temperature ($\tau = 0.05$, measured error $\approx 10^{-6}$). Approximate-nearest-neighbor indexes can provide candidates in deployment, but their recall and runtime are outside the present experiment. Extending reference measures to signed measures, we show that matched negative ``anti-atoms'' cancel records in the external read and yield uniform output entropy in the ideal matched-pair setting. Empirically, on a 200-fact technical benchmark, our architecture achieves 100\% efficacy, generality, and specificity across density regimes and lifelong cumulative scaling up to 200 atoms. A learned convex router arbitrates across context, corpus, and parameter-resident expert spaces with $>91.8\%$ purity. Finally, a relevance-gated read evaluated at every greedy GPT-2 decoding step boosts first-token factual probabilities by up to $1100\times$ and flips the first prediction on all five evaluated prompts.
+We express finite attention, external retrieval, and expert-output routing through a common read operator: an integral of a query-conditioned measure against a value map over a valued atom space $(\Om,\mathcal F,\nu,v)$. This is an output-space abstraction rather than an assertion that the mechanisms have identical internal computations. We give a sufficient condition for a newly inserted atom to enter an exact top-$k$ set, prove two truncation bounds, and derive an exact-tail rule for selecting the minimum $k$ under a requested error budget. On CounterFact-500, frozen MiniLM exact retrieval obtains 99.2\% rewrite and 91.0\% paraphrase top-1 recall, but a fixed 0.60 activation threshold retains only 38.2\% of paraphrases and falsely activates on 9.6\% of neighborhood prompts. Across five seeds, surface-matched context/corpus/parameter route accuracies are $100.0\pm0.0\%$, $82.4\pm0.9\%$, and $100.0\pm0.0\%$. Matched negative atoms cancel paired signed-read contributions; a perturbation bound and 3000-trial stress test quantify degradation away from exact matching. A ten-fact GPT-2 mechanism study obtains 10/10 canonical and 9/10 paraphrase first-token corrections while ten unrelated controls bypass intervention. These studies do not establish superiority over parametric editing, large-scale ANN performance, certified unlearning, or general factuality improvement.
 \end{abstract}
 
 \begin{keyword}
-Language models \sep Atom spaces \sep Measure theory \sep Model editing \sep Vector retrieval \sep Machine unlearning
+Language models \sep Atom spaces \sep Measure theory \sep External memory \sep Vector retrieval \sep Expert routing
 \end{keyword}
 
 \end{frontmatter}
@@ -60,15 +60,15 @@ To circumvent the rigidity of dense parameter compilation, the community has dev
 \end{itemize}
 Although these techniques share an underlying reliance on key-value similarity matching \cite{geva2021transformer, lample2019large}, they have evolved as disconnected architectural paradigms with distinct mathematical formulations, ad-hoc routing heuristics, and poorly understood stability limits.
 
-In this work, we propose a unifying measure-theoretic framework that subsumes context, external retrieval, and parameter routing under a single mathematical operator. We demonstrate that the attention mechanism is an integral of a query-conditioned probability measure against a vector-valued map, where the integration domain is an arbitrary \emph{atom space} $(\Om, \mathcal{F}, v)$. Under this formulation, in-context self-attention, external corpus retrieval, and parameter-expert selection represent the exact same \emph{read} operator $R(x; \Om)$, differing only in their domain of integration.
+In this work, we propose a common measure-theoretic notation for context, external retrieval, and parameter-expert output routing. Attention can be written as an integral of a query-conditioned probability measure against a vector-valued map. Corpus values are fixed records, whereas parameter-expert values may depend on the query; the abstraction identifies their shared weighted-read structure without claiming identical internal computation.
 
 By establishing this equivalence, we make the following contributions:
 \begin{enumerate}[leftmargin=1.4em]
   \item \textbf{A Common Mathematical Abstraction:} We formalize the read operator $R(x; \Om)$ and define an integrated tri-space architecture that dynamically arbitrates between context ($\Om_{\mathrm{ctx}}$), corpus retrieval ($\Om_{\mathrm{corpus}}$), and parameter experts ($\Om_{\mathrm{params}}$).
-  \item \textbf{Conditions for Post-Hoc Editability:} We prove that post-hoc factual insertion succeeds reliably under key encoder Lipschitz smoothness and an explicit retrieval margin condition.
+  \item \textbf{A Sufficient Retrieval Condition:} We derive a Lipschitz-margin condition sufficient for a new atom to enter an exact top-$k$ set; prediction success requires additional value and output-margin assumptions.
   \item \textbf{The Quadrature Truncation Bound Theorem:} We prove Theorem~\ref{thm:quadrature_bound}, showing exponential decay of exact ranked top-$k$ truncation error when temperature is calibrated relative to the retrieval gap. ANN candidate quality is a separate approximation not analyzed by the theorem.
   \item \textbf{Signed External-Memory Suppression:} Extending the read to signed reference measures ($\nu = \nu^+ - \nu^-$) permits matched negative atoms to cancel external-memory contributions without retraining; this does not claim removal from pretrained parameters.
-  \item \textbf{Comprehensive Empirical Validation:} Across six investigations spanning 200 technical facts and four scientific domains, we evaluate editing, exact top-$k$ truncation, cumulative insertions, tri-space routing, signed-read suppression, and relevance-gated GPT-2 steering. The implementation and precomputed evaluation logs are available at \url{https://github.com/mossaiby/RoAS}.
+  \item \textbf{Controlled Mechanism Studies:} Synthetic and CounterFact experiments examine insertion, adaptive exact truncation, HNSW candidates, cumulative memory, routing, signed-read suppression, and GPT-2 steering. Trainable synthetic studies use five seeds. The implementation and precomputed logs are available at \url{https://github.com/mossaiby/RoAS}.
 \end{enumerate}
 
 \section{From a Discrete Function to an Integral}
@@ -109,16 +109,20 @@ While this establishes algebraic equivalence for standard sequence self-attentio
 \section{Atom Spaces: A Common Object for Context, Retrieval, and Parameters}
 \label{sec:atomspaces}
 
-\begin{definition}[Atom Space]
-An \emph{atom space} is a measure-theoretic triple $(\Om, \mathcal{F}, v)$, where $\Om$ is a measurable set of elements designated as \emph{atoms}, $\mathcal{F}$ is a $\sigma$-algebra on $\Om$, and $v : \Om \to \R^e$ is a measurable \emph{value map}.
+\begin{definition}[Valued Atom Space]
+A \emph{valued atom space} is a tuple $(\Om, \mathcal{F}, \nu, v)$, where $(\Om,\mathcal{F})$ is a measurable space of elements designated as \emph{atoms}, $\nu$ is a $\sigma$-finite reference measure, and $v : \Om \to \R^e$ is a measurable \emph{value map} into a common output representation space.
 \end{definition}
 
 \begin{definition}[Query-Conditioned Kernel and Read Operator]
-Let $\nu$ be a $\sigma$-finite reference measure on $(\Om, \mathcal{F})$. Given an input query representation $x$, a non-negative kernel $K_x : \Om \to \R_{\ge 0}$ induces a query-conditioned probability measure $\mu_x$ on $(\Om, \mathcal{F})$ via the Radon--Nikodym derivative:
+Given a query $x\in\mathcal X$, let $K_x : \Om \to \R_{\ge 0}$ be measurable and suppose
 \[
-  d\mu_x(\omega) = \frac{K_x(\omega)}{\int_\Om K_x(\omega')\, d\nu(\omega')}\, d\nu(\omega).
+  0 < Z_x \coloneqq \int_\Om K_x(\omega)\,d\nu(\omega) < \infty.
 \]
-The \emph{read} of the atom space $\Om$ conditioned on query $x$ is the vector-valued integral:
+Then $K_x$ induces a query-conditioned probability measure $\mu_x$ on $(\Om, \mathcal{F})$ via the Radon--Nikodym derivative:
+\[
+  d\mu_x(\omega) = \frac{K_x(\omega)}{Z_x}\, d\nu(\omega).
+\]
+If $\int_\Om\|v(\omega)\|_2\,d\mu_x(\omega)<\infty$, the \emph{read} conditioned on $x$ is the Bochner integral:
 \[
   R(x; \Om) = \int_\Om v(\omega)\, d\mu_x(\omega) \in \R^e.
 \]
@@ -138,7 +142,7 @@ As shown in Table~\ref{tab:instances}, in-context attention, corpus retrieval, a
 \midrule
 Context & $\{1,\dots,c\}$ & Token index & Embedding $\phi(x_\omega)$ & In-context self-attention \cite{vaswani2017attention} \\
 Corpus & $\mathcal{D}$ (mutable) & Factual record & Encoded fact vector & Dense retrieval / $k$NN-LM \cite{khandelwal2020generalization} \\
-Parameters & $\Theta$ (patch bank) & Modular expert & Parameter patch $\Delta(\theta)$ & MoE / Parameter adapter \cite{shazeer2017outrageously, hu2021lora} \\
+Parameters & $\Theta$ (expert bank) & Modular expert & Expert output $g_\omega(x)\in\R^e$ & MoE-style output routing \cite{shazeer2017outrageously, hu2021lora} \\
 \bottomrule
 \end{tabular}%
 }
@@ -155,13 +159,13 @@ We formulate an integrated architecture where context, external corpus memory, a
 \[
   p(x) = \mathrm{softmax}\big( W_0\, z(x) + b_0 \big),
 \]
-where $\lambda(x) \in \Delta^2$ is an input-dependent gating distribution across the three spaces, and $W_0 \in \R^{d \times e}, b_0 \in \R^d$ represent the fixed linguistic projection head. In this framework, updating knowledge does not require gradient descent over dense network weights: it corresponds strictly to inserting, deleting, or reweighting discrete atoms within $\Om_{\mathrm{corpus}}$ or $\Om_{\mathrm{params}}$.
+where $\lambda(x) \in \Delta^2$ is an input-dependent gating distribution across the three spaces, and $W_0 \in \R^{d \times e}, b_0 \in \R^d$ represent the linguistic projection head. For parameter experts the value is query-dependent, $v_x(\omega)=g_\omega(x)$; the read is therefore an output-space mixture, not an average of parameter tensors. Corpus-memory updates can be implemented by inserting, deleting, or reweighting records without changing dense model weights, whereas changing a parameter expert generally requires parameter optimization.
 
 \subsection{System, Calibration, and Tying Principles}
 
 \begin{itemize}[leftmargin=1.4em]
   \item \textbf{Scale Mismatch and Norm Calibration:} The cardinalities of the respective spaces vary across multiple orders of magnitude ($|\Om_{\mathrm{ctx}}| \sim 10^3$, $|\Om_{\mathrm{params}}| \sim 10^1$, $|\Om_{\mathrm{corpus}}| \sim 10^9$). Normalizing a joint softmax across the disjoint union $\Om_{\mathrm{ctx}} \sqcup \Om_{\mathrm{corpus}} \sqcup \Om_{\mathrm{params}}$ causes the largest space to artificially dominate probability mass. Separate intra-space measure normalization combined with calibrated convex gating $\lambda(x)$ is required. Furthermore, key representations across distinct spaces must share identical geometric scales (specifically, unit $L_2$-normalization) to prevent dot-product magnitudes from systematically skewing the router toward higher-norm representations.
-  \item \textbf{Tied Value-to-Token Embeddings:} In token generation tasks, the read vector $z_{\mathrm{corpus}}(x)$ must project predictably onto target vocabulary tokens. Letting $E \in \R^{d \times e}$ denote the vocabulary embedding matrix, setting value vectors to normalized token representations $v(\omega) = E[y_\omega] / \|E[y_\omega]\|$ and tying the projection head via $W_0 = E^\top$ ensures that whenever $\mu_x$ isolates atom $\omega^*$, $z(x)$ collapses onto $v(\omega^*)$, driving output logits directly toward target token $y^*$.
+  \item \textbf{Tied Value-to-Token Embeddings:} In token generation tasks, the read vector $z_{\mathrm{corpus}}(x)$ should project predictably onto target vocabulary tokens. Letting $E \in \R^{d \times e}$ denote the vocabulary embedding matrix, we use logits $Ez+b$ and values $v(\omega) = E[y_\omega] / \|E[y_\omega]\|$. Isolating atom $\omega^*$ therefore aligns $z(x)$ with the target row. A unique target argmax additionally requires that this alignment exceed the alignment with every competing output row after accounting for bias.
 \end{itemize}
 
 \subsection{Signed Atom Spaces and the Hahn--Jordan Decomposition}
@@ -171,11 +175,11 @@ To support cancellation of external-memory contributions without index reconstru
 \[
   \nu = \nu^+ - \nu^-, \qquad \nu^+ \perp \nu^-,
 \]
-where $\nu^+$ governs positive constructive atoms and $\nu^-$ governs negative ``anti-atoms''. The signed query-conditioned density becomes:
+where $\nu^+$ governs positive constructive atoms and $\nu^-$ governs negative ``anti-atoms''. Writing $|\nu|=\nu^++\nu^-$, assume $0<Z_x^{\pm}=\int_\Om K_x\,d|\nu|<\infty$. The normalized signed query measure is
 \[
-  d\mu_x(\omega) = \frac{K_x(\omega) \big( d\nu^+(\omega) - d\nu^-(\omega) \big)}{\int_\Om K_x(\omega') \big( d\nu^+(\omega') + d\nu^-(\omega') \big)}.
+  d\mu_x^{\pm}(\omega) = \frac{K_x(\omega)}{Z_x^{\pm}}\big(d\nu^+(\omega)-d\nu^-(\omega)\big).
 \]
-Anti-atoms introduce destructive interference: if an anti-atom $\omega^-$ is placed at the metric coordinate of a positive atom $\omega^*$ ($k^- \approx k^*$) with value $v^- = v^*$, the local integral vanishes, enabling instantaneous unlearning.
+This is not a probability measure: its total variation is normalized, while its signed total mass need not equal one. If an anti-atom $\omega^-$ has the same key and value as a positive atom $\omega^*$ and equal positive mass under $\nu^-$ and $\nu^+$, respectively, their contributions cancel exactly inside the signed external read.
 
 \section{Mathematical Conditions for Post-Hoc Knowledge Editing}
 \label{sec:editing}
@@ -184,7 +188,7 @@ Let the query-key kernel be defined as a scaled inner product:
 \[
   K_x(\omega) = \exp\left( \frac{\langle \phi_q(x), \phi_k(\omega) \rangle}{\tau} \right),
 \]
-where $\phi_q, \phi_k : \Om \to \R^m$ are query and key encoders, and $\tau > 0$ is a temperature parameter. During base training, $\phi_q$ and $\phi_k$ are optimized against an initial atom pool $\Om_{\mathrm{train}} \subset \Om$. Post-hoc editing requires that inserting a novel, unseen atom $\omega^* \notin \Om_{\mathrm{train}}$ at test time reliably captures the measure $\mu_x(\omega^*)$ for an associated query $x^*$, without modifying the parameters of $\phi_q$ or $\phi_k$.
+where $\phi_q : \mathcal X \to \R^m$ and $\phi_k : \Om \to \R^m$ are query and key encoders, and $\tau > 0$ is a temperature parameter. During base training, $\phi_q$ and $\phi_k$ are optimized against an initial atom pool $\Om_{\mathrm{train}} \subset \Om$. Post-hoc editing requires that inserting a novel, unseen atom $\omega^* \notin \Om_{\mathrm{train}}$ at test time reliably captures the measure $\mu_x(\omega^*)$ for an associated query $x^*$, without modifying the parameters of $\phi_q$ or $\phi_k$.
 
 \subsection{Kernel Locality}
 
@@ -220,24 +224,20 @@ Let $\tau_k(x) = \max^{(k)}_{\omega \in \Om_{\mathrm{train}}} \langle \phi_q(x),
   \langle \phi_q(x), \phi_k(\omega_0) \rangle - \|\phi_q(x)\|_2 \, L \, d_\Om(\omega^*, \omega_0) \;>\; \tau_k(x),
   \label{eq:margin_condition}
 \end{equation}
-where $\omega_0$ is a training anchor semantically proximal to $\omega^*$. Equation~\eqref{eq:margin_condition} reveals the precise trade-off governing post-hoc editability: the base relevance at the nearest training anchor must dominate the competing retrieval threshold by a margin strictly larger than the Lipschitz slack term.
+where $\omega_0$ is a training anchor semantically proximal to $\omega^*$. Equation~\eqref{eq:margin_condition} is a sufficient condition only for top-$k$ inclusion. Successful prediction additionally depends on retrieved probability mass, the value representation, the output margin, and behavior on control queries.
 
 \begin{remark}[The Density--Lipschitz Trade-off]
 \label{rem:density_lipschitz}
-Equation~\eqref{eq:margin_condition} implies that post-hoc editing depends on both local geometric proximity $d_\Om(\omega^*, \omega_0)$ and the magnitude of $L$. When encoders are trained on denser pools of atoms, gradient updates optimize intra-cluster discrimination, which naturally increases the operator norm of the encoder layers and inflates $L$. While denser coverage reduces $d_\Om(\omega^*, \omega_0)$, it simultaneously increases $L$ and packs competing training scores closer to the maximum, tightening the required margin. Preserving editability therefore requires inductive biases that explicitly bound $L$.
+Equation~\eqref{eq:margin_condition} shows that top-$k$ inclusion depends on both local geometric proximity $d_\Om(\omega^*, \omega_0)$ and the magnitude of $L$. Denser training pools may reduce the distance to a useful anchor, but may also alter encoder norms and competing score margins. Whether density systematically changes the Lipschitz constant is an empirical hypothesis rather than a consequence of the proposition.
 \end{remark}
 
 \subsection{Anti-Atoms and Exact External-Read Cancellation}
 
-\begin{proposition}[Matched-Pair Cancellation to Maximum Entropy]
+\begin{proposition}[Matched-Pair Cancellation]
 \label{prop:unlearning}
-Let an atom $\omega^* \in \Om_{\mathrm{corpus}}$ encode a target fact with tied token value $v^* = E[y^*] / \|E[y^*]\|$. If an anti-atom $\omega^-$ is inserted into the signed atom space with identical key $\phi_k(\omega^-) = \phi_k(\omega^*)$, identical value $v^- = v^*$, and negative measure weight $\nu^-(\{\omega^-\}) = \nu^+(\{\omega^*\})$, then for any query $x$ that targets $\omega^*$:
+Let an atom $\omega^* \in \Om_{\mathrm{corpus}}$ encode a target fact with tied token value $v^* = E[y^*] / \|E[y^*]\|$. If an anti-atom $\omega^-$ is inserted into the signed atom space with identical key $\phi_k(\omega^-) = \phi_k(\omega^*)$, identical value $v^- = v^*$, and equal positive masses $\nu^-(\{\omega^-\}) = \nu^+(\{\omega^*\})$, then for any query $x$:
 \[
-  R(x; \{\omega^*, \omega^-\}) = \mathbf{0},
-\]
-and if background interference is negligible, the model distribution collapses to the exact uniform maximum entropy distribution over the vocabulary:
-\[
-  p(y \mid x) = \frac{1}{|\V|}.
+  R^{\pm}(x; \{\omega^*, \omega^-\}) = \mathbf{0}.
 \]
 \end{proposition}
 
@@ -246,13 +246,25 @@ Under the signed measure integral of Section~\ref{sec:signed_spaces}, the contri
 \[
   \int_{\{\omega^*, \omega^-\}} v(\omega)\, d\mu_x(\omega) = \frac{K_x(\omega^*) v^* - K_x(\omega^-) v^*}{Z} = \frac{K_x(\omega^*) (v^* - v^*)}{Z} = \mathbf{0}.
 \]
-Consequently, the context representation vector $z(x) = \mathbf{0}$. With tied projection $W_0 = E^\top$ and zero bias, the logits satisfy $\ell(x) = \frac{\mathbf{0} \cdot E^\top}{\tau} = \mathbf{0}$. The output distribution evaluates to:
-\[
-  p(y \mid x) = \mathrm{softmax}(\mathbf{0})_y = \frac{e^0}{\sum_{j=1}^{|\V|} e^0} = \frac{1}{|\V|}. \qedhere
-\]
+This establishes cancellation of the matched pair's contribution to the signed external read. \qedhere
 \end{proof}
 
-Proposition~\ref{prop:unlearning} establishes exact cancellation of a matched pair inside the external read operator. The positive record and anti-atom remain stored, and the proposition does not imply removal of information encoded in pretrained model parameters.
+Proposition~\ref{prop:unlearning} does not imply that the complete model representation is zero: background atoms, context, parameter experts, residual model states, and output bias may remain. Uniform output follows only in the special case where every other contribution and the output bias are exactly zero. The positive record and anti-atom remain stored, and the proposition does not imply removal of information encoded in pretrained model parameters.
+
+\begin{proposition}[Approximate Pair Cancellation]
+\label{prop:approximate_cancellation}
+Let $a=K_x(\omega^*)\nu^+(\{\omega^*\})$, $b=K_x(\omega^-)\nu^-(\{\omega^-\})$, and let $Z_x^{\pm}>0$ be the total-variation normalization of the complete signed read. For a positive value $v$ and anti-atom value $\tilde v$, the residual pair contribution satisfies
+\[
+  \left\|\frac{a v-b\tilde v}{Z_x^{\pm}}\right\|_2
+  \le \frac{|a-b|\,\|v\|_2+b\,\|v-\tilde v\|_2}{Z_x^{\pm}}.
+\]
+\end{proposition}
+
+\begin{proof}
+Write $a v-b\tilde v=(a-b)v+b(v-\tilde v)$ and apply the triangle inequality, then divide by $Z_x^{\pm}$. \qedhere
+\end{proof}
+
+Thus exact cancellation is sensitive to key-induced kernel mismatch, unequal signed mass, and value mismatch. Query paraphrases affect cancellation only through their effect on the two kernel weights; identical keys still cancel for every query.
 
 \section{Computational Tractability and the Quadrature Truncation Bound}
 \label{sec:quadrature}
@@ -278,7 +290,7 @@ For any query $x$ and any truncation depth $k \in \{1, \dots, N-1\}$, the Euclid
 \[
   \| R(x; \Om) - \hat{R}_k(x; \Om) \|_2 \;\le\; 2 V_{\max} \cdot (N - k) \cdot \exp\left( -\frac{\Delta_k(x)}{\tau} \right).
 \]
-Furthermore, if the top-$k$ retrieved atoms form a competitive cluster such that $s_{(k)} \approx s_{(1)}$, the bound tightens to:
+An alternative bound is:
 \[
   \| R(x; \Om) - \hat{R}_k(x; \Om) \|_2 \;\le\; 2 V_{\max} \cdot \left(\frac{N - k}{k}\right) \cdot \exp\left( -\frac{s_{(k)} - s_{(k+1)}}{\tau} \right).
 \]
@@ -305,35 +317,55 @@ To bound the tail ratio $\frac{Z_{\mathrm{tail}}}{Z}$, note that $Z \ge e^{s_{(1
 \[
   \frac{Z_{\mathrm{tail}}}{Z} \;\le\; \frac{(N - k) e^{s_{(k+1)}/\tau}}{e^{s_{(1)}/\tau}} \;=\; (N - k) \exp\left( -\frac{s_{(1)} - s_{(k+1)}}{\tau} \right).
 \]
-Substituting this back into the norm inequality completes the proof.
+Substituting this into the norm inequality proves the first bound. Alternatively, $Z\ge k e^{s_{(k)}/\tau}$ while $Z_{\mathrm{tail}}\le(N-k)e^{s_{(k+1)}/\tau}$, giving
+\[
+  \frac{Z_{\mathrm{tail}}}{Z}\le \frac{N-k}{k}\exp\left(-\frac{s_{(k)}-s_{(k+1)}}{\tau}\right),
+\]
+which proves the second bound. Neither bound uniformly dominates the other; the second is smaller when $s_{(1)}-s_{(k)}<\tau\log k$.
 \end{proof}
 
-Theorem~\ref{thm:quadrature_bound} bounds truncation after the exact score ordering is known: when $\tau$ is small relative to $\Delta_k(x)$, the omitted tail decays exponentially. An ANN system introduces an additional candidate-recall error and requires separate empirical evaluation.
+\begin{corollary}[Error-Budgeted Exact Truncation]
+\label{cor:adaptive_k}
+Let $\rho_k(x)=Z_{\mathrm{tail}}/Z$ be the exact softmax mass outside the first $k$ ranked atoms. For any requested $\varepsilon>0$, define
+\[
+  k_\varepsilon(x)=\min\{k\in\{1,\ldots,N\}:2V_{\max}\rho_k(x)\le\varepsilon\}.
+\]
+Then $\|R(x;\Om)-\hat R_{k_\varepsilon(x)}(x;\Om)\|_2\le\varepsilon$.
+\end{corollary}
+
+\begin{proof}
+The proof of Theorem~\ref{thm:quadrature_bound} first establishes $\|R-\hat R_k\|_2\le2V_{\max}\rho_k$ before bounding $\rho_k$ by score gaps. Substitution of the defining inequality for $k_\varepsilon(x)$ gives the result. \qedhere
+\end{proof}
+
+Theorem~\ref{thm:quadrature_bound} bounds truncation after the exact score ordering is known: when $\tau$ is small relative to $\Delta_k(x)$, the omitted tail decays exponentially. Corollary~\ref{cor:adaptive_k} turns the exact tail mass into a per-query stopping rule, but computing that certificate still requires all scores and therefore is not a sublinear retrieval algorithm. An ANN system introduces an additional candidate-recall error and requires separate empirical evaluation.
 
 \section{Empirical Evaluation}
 \label{sec:empirical}
 
-We evaluate the theoretical framework across six empirical investigations: (i) post-hoc editing reliability across variable training densities, (ii) numerical convergence of top-$k$ quadrature, (iii) lifelong cumulative knowledge editing, (iv) dynamic tri-space routing with functional ablation, (v) signed-measure unlearning and counterfactual updating, and (vi) autoregressive generative text completion with GPT-2.
+We examine inserted-record retrieval, adaptive exact top-$k$ truncation and scaling, CounterFact retrieval with HNSW candidates, cumulative insertion, tri-space routing, signed-read suppression under perturbation, and GPT-2 steering.
 
 \subsection{Experimental Setup}
 
 \paragraph{Corpus and Domain Design}
-We construct a benchmark of 200 structured, unambiguous technical facts distributed equally across four domains: \emph{Astronomy \& Astrophysics}, \emph{Systems \& Computing}, \emph{Chemistry \& Materials Science}, and \emph{Molecular Biology \& Genetics}. Each domain contains 50 factual triplets $(s, r, o)$ mapped to canonical declarative atoms (e.g., \emph{``Uranium undergoes fissile radioactive decay to sustain nuclear Reactions.''}), canonical queries (e.g., \emph{``What undergoes fissile radioactive decay to sustain nuclear Uranium?''}), and linguistic paraphrases (e.g., \emph{``Regarding Uranium, what does it undergo to sustain nuclear reactions?''}). The first 40 items per domain constitute the trainable pool (subsampled to establish controlled training density conditions); the remaining 10 items per domain (40 facts total) are strictly held out across initial runs as novel post-hoc edit insertions.
+We construct a benchmark of 200 structured technical facts distributed equally across four domains: \emph{Astronomy \& Astrophysics}, \emph{Systems \& Computing}, \emph{Chemistry \& Materials Science}, and \emph{Molecular Biology \& Genetics}. Each triplet $(s,r,o)$ is mapped to a declarative record, a canonical query, and one mechanically generated paraphrase. The first 40 items per domain form the adapter-training pool; the remaining 10 items per domain are excluded from adapter training and used as post-hoc insertions. Their labels remain present in the fixed global output vocabulary, making this a transductive label-space evaluation rather than a fully unseen-label split.
 
 \paragraph{Encoder Architecture and Inductive Bias}
 We employ a frozen sentence transformer (\texttt{sentence-transformers/all-MiniLM-L6-v2}, $d_{\mathrm{in}} = 384$) as the geometric backbone. To prevent the metric collapse observed when training unconstrained projection heads from scratch on small corpora, we adopt a metric-preserving residual adapter:
 \[
   \phi(x) = \mathrm{Normalize}\big( x + 0.1 \cdot \mathrm{MLP}(x) \big),
 \]
-where the final layer of the MLP is initialized to zero. Values are tied to unit-normalized token embeddings: $v(\omega) = E[y_\omega] / \|E[y_\omega]\|$, with predictions evaluated via the tied projection $p(y \mid x) \propto \langle z(x), E[y] \rangle / \tau$. To ensure complete reproducibility, all five experimental engines, dataset generation scripts, and plotting routines have been consolidated in an open-source repository at \url{https://github.com/mossaiby/RoAS}.
+where the final layer of the MLP is initialized to zero. Values are tied to unit-normalized token embeddings: $v(\omega) = E[y_\omega] / \|E[y_\omega]\|$, with predictions evaluated via the tied projection $p(y \mid x) \propto \langle z(x), E[y] \rangle / \tau$. All engines, benchmark definitions, aggregation scripts, and plotting routines are available at \url{https://github.com/mossaiby/RoAS}.
+
+\paragraph{Reproducibility Environment}
+Committed artifacts were generated on CPU using Python 3.11.9, PyTorch 2.14.0, NumPy 1.26.4, sentence-transformers 6.0.1, and transformers 5.16.1 on an AMD Ryzen 7 5800U system with 15.4 GB RAM. Package versions are pinned in \texttt{requirements.txt}. The routing sweep reports seeds $\{40,41,42,43,44\}$ and sample standard deviations; seed 42 is retained as the canonical detailed run. Other experiments use deterministic seed 42.
 
 \subsection{Post-Hoc Knowledge Editing Results}
 
-Table~\ref{tab:editing_triad} summarizes the performance of the unified read operator across training pool densities $\Om_{\mathrm{train}} \in \{1, 3, 10, 40\}$ items per domain.
+Table~\ref{tab:editing_triad} compares the trained read with frozen MiniLM exact 1-nearest-neighbor retrieval across pool densities $\Om_{\mathrm{train}} \in \{1, 3, 10, 40\}$ items per domain.
 
 \begin{table}[t]
 \centering
-\caption{Model-editing evaluation across 200 technical facts. The atom-space read achieves perfect efficacy, generality, and specificity across all training densities. The slight decline in attention mass ($99.97\% \to 99.75\%$) and concurrent increase in $L$ confirm the theoretical density--Lipschitz trade-off.}
+\caption{Inserted-record retrieval across 200 templated technical facts. Efficacy and generality denote target classification for a canonical query and one generated paraphrase. Specificity denotes unchanged argmax predictions on active training queries. The adapter spectral product is a diagnostic, not a Lipschitz certificate.}
 \label{tab:editing_triad}
 \vspace{0.5em}
 \resizebox{\textwidth}{!}{%
@@ -341,10 +373,15 @@ Table~\ref{tab:editing_triad} summarizes the performance of the unified read ope
 \toprule
 \textbf{Metric} & \textbf{1 / topic} & \textbf{3 / topic} & \textbf{10 / topic} & \textbf{40 / topic} \\
 \midrule
-\multicolumn{5}{@{}l}{\textit{Model-Editing Triad}} \\
+\multicolumn{5}{@{}l}{\textit{Trained Residual Read}} \\
 Efficacy (Target Recall on $\omega^*$)   & 100.0\%  & 100.0\%  & 100.0\%  & 100.0\%  \\
 Generality (Paraphrase Query)           & 100.0\%  & 100.0\%  & 100.0\%  & 100.0\%  \\
 Specificity (Neighborhood Retention)    & 100.0\%  & 100.0\%  & 100.0\%  & 100.0\%  \\
+\midrule
+\multicolumn{5}{@{}l}{\textit{Frozen MiniLM Exact 1-Nearest-Neighbor Baseline}} \\
+Efficacy (Target Recall on $\omega^*$)   & 100.0\%  & 100.0\%  & 100.0\%  & 100.0\%  \\
+Generality (Paraphrase Query)           & 100.0\%  & 100.0\%  & 100.0\%  & 100.0\%  \\
+Specificity (Argmax Retention)          & 100.0\%  & 100.0\%  & 100.0\%  & 100.0\%  \\
 \midrule
 \multicolumn{5}{@{}l}{\textit{Representation and Metric Dynamics}} \\
 Novel Atom Attention Mass $\mu_x(\omega^*)$ & 99.97\%  & 99.97\%  & 99.94\%  & 99.75\%  \\
@@ -354,7 +391,7 @@ Adapter Linear Spectral Product         & 0.469    & 0.819    & 0.859    & 1.003
 }
 \end{table}
 
-Across all 40 held-out technical facts and all density conditions, the model achieves 100\% Efficacy and 100\% Generality. Crucially, Specificity remains at exactly 100.0\%: inserting $\omega^*$ into $\Om_{\mathrm{corpus}}$ produces zero collateral distortion or catastrophic forgetting on neighboring facts. This stands in stark contrast to dense parametric editing methods (e.g., standard fine-tuning, ROME \cite{meng2022locating}, or MEMIT \cite{meng2023mass}), where modifying weights to accommodate new facts routinely damages neighboring knowledge representations.
+Across the 40 insertion records and all density conditions, both methods obtain 100\% target classification for the canonical query and the single templated paraphrase, with no argmax changes on active training queries. The frozen exact-retrieval baseline therefore matches the trained read: the benchmark does not demonstrate that the residual adapter improves retrieval. At density 40, the trained read's maximum output-probability shift is nonzero ($3.22\times10^{-6}$), so this is evidence only of stability on the evaluated controls, not zero representational distortion or superiority to parametric editing. ROME, MEMIT, fine-tuning, and generative RAG baselines are not evaluated.
 
 As training density scales from $1$ to $40$ atoms per domain, the product of the adapter's linear-layer spectral norms increases from $0.469$ to $1.003$, while attention mass decreases from $99.97\%$ to $99.75\%$. This product is a diagnostic of the MLP's linear components, not a certified Lipschitz constant for the complete residual-normalization map $\phi$; directly estimating that constant remains future work.
 
@@ -381,11 +418,42 @@ $\tau = 1.00$ & $0.988$ & $0.623$ & $0.477$ & $0.327$ & $0.217$ \\
 }
 \end{table}
 
-The numerical results directly validate Theorem~\ref{thm:quadrature_bound}:
+The numerical results illustrate the temperature dependence of exact truncation. We also compute both theorem bounds for every query. At density 40, $\tau=0.10$, and $k=1$, the maximum observed error is $0.0244$ and the smaller pointwise bound covers 100\% of queries with minimum slack $0.0923$. This checks the implemented inequalities in this finite numerical setting rather than establishing bound tightness or ANN behavior:
 \begin{itemize}[leftmargin=1.4em]
-  \item \textbf{Dirac Concentration at Low Temperatures (\texorpdfstring{$\tau = 0.05$}{tau = 0.05}):} At the operational reading temperature, the error for $k=1$ is only $3.75 \times 10^{-6}$, decaying to $1.35 \times 10^{-6}$ at $k=20$. In this regime, the query measure $\mu_x$ is concentrated almost entirely on the nearest metric neighbors. With semantic gap $\Delta_k \approx 0.5$, $\exp(-0.5 / 0.05) \approx 4.54 \times 10^{-5}$, matching the observed order of magnitude.
+  \item \textbf{Concentration at Low Temperatures (\texorpdfstring{$\tau = 0.05$}{tau = 0.05}):} At the operational reading temperature, the mean error for $k=1$ is $3.75 \times 10^{-6}$, decaying to $1.35 \times 10^{-6}$ at $k=20$. In this benchmark, the query measure is concentrated almost entirely on the nearest scored records.
   \item \textbf{Diffuse Measure Truncation at High Temperatures (\texorpdfstring{$\tau \ge 0.50$}{tau >= 0.50}):} When the kernel temperature is uncalibrated, probability mass spreads broadly across background atoms, producing truncation errors approaching $1.0$. Exact top-$k$ truncation is therefore faithful only when paired with sharp, metric-calibrated kernels.
 \end{itemize}
+
+\paragraph{Adaptive error budgets and scaling}
+We additionally evaluate Corollary~\ref{cor:adaptive_k} on 64 correlated synthetic queries with unit-normalized random keys and values in $\R^{128}$, for $N\in\{1000,5000,10000,25000\}$. Across both temperatures and all three budgets $\varepsilon\in\{0.01,0.05,0.10\}$, every measured read error satisfies its certificate (100\% empirical coverage). The result also exposes conservatism: at $N=25{,}000$ and $\varepsilon=0.05$, mean $k_\varepsilon$ is $12{,}974$ (51.9\% of the corpus) for $\tau=0.05$ and $21{,}467$ (85.9\%) for $\tau=0.10$. Exact scoring, sorting, and reading take 454 and 223 ms, respectively, on the reported CPU run. Thus the rule provides a checkable accuracy budget but does not guarantee a small $k$ for diffuse or weakly separated score distributions.
+
+\subsection{CounterFact External-Memory Retrieval and ANN Candidates}
+\label{sec:counterfact}
+
+We evaluate the frozen MiniLM retrieval geometry on the first 500 CounterFact records introduced with ROME~\cite{meng2022locating}. Each external-memory key is the benchmark rewrite prompt concatenated with its requested new target; evaluation uses 500 rewrite prompts, the first two paraphrases per record (1000 queries), and the first two neighborhood prompts (1000 queries). This is an external-memory retrieval experiment, not a parametric editing comparison with ROME or MEMIT.
+
+\begin{table}[t]
+\centering
+\caption{CounterFact-500 external-memory retrieval. ``Activated correct'' applies cosine threshold 0.60 after exact top-1 retrieval. Neighborhood activation is undesirable. HNSW candidate recall asks whether its ten candidates contain the exact top-1.}
+\label{tab:counterfact_retrieval}
+\vspace{0.5em}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{@{}lcc@{}}
+\toprule
+\textbf{Evaluation} & \textbf{Metric} & \textbf{Result} \\
+\midrule
+Rewrite prompts & Exact top-1 / activated correct & 99.2\% / 99.2\% \\
+Paraphrase prompts & Exact top-1 / activated correct & 91.0\% / 38.2\% \\
+Neighborhood prompts & False activation / paired wrong-edit retrieval & 9.6\% / 2.4\% \\
+Adaptive read ($\varepsilon=0.05$) & Mean $k$ / maximum error / coverage & 246.0 / 0.0237 / 100\% \\
+Fixed read ($k=10$) & Mean / maximum vector error & 0.1769 / 0.4461 \\
+HNSW, 10 candidates & Exact top-1 candidate recall & 100\% \\
+\bottomrule
+\end{tabular}
+}
+\end{table}
+
+Table~\ref{tab:counterfact_retrieval} shows that pretrained embedding geometry retrieves most corresponding records, but the fixed threshold rejects a majority of otherwise-correct paraphrase matches. A FAISS HNSW index obtains 100\% exact-top-1 candidate recall in this 500-record run, with 6.6 ms construction and 15.2 ms search for all 2500 queries. These timings are implementation- and hardware-specific, and the corpus is too small to establish large-scale ANN behavior.
 
 \subsection{Lifelong Cumulative Knowledge Editing Benchmark}
 \label{sec:lifelong}
@@ -401,7 +469,7 @@ Table~\ref{tab:lifelong_editing} and Figure~\ref{fig:lifelong_curve} present the
 
 \begin{table}[t]
 \centering
-\caption{Lifelong cumulative knowledge editing performance across 40 sequential fact insertions without teardown. The atom-space read maintains 100\% recall across all past edits and 100\% specificity across the base training pool, demonstrating complete immunity to sequential interference.}
+\caption{Cumulative insertion performance across 40 sequential records without teardown. Target argmax recall and training-query argmax agreement remain $100.0\pm0.0\%$ across five seeds.}
 \label{tab:lifelong_editing}
 \vspace{0.5em}
 \resizebox{\textwidth}{!}{%
@@ -426,35 +494,35 @@ Mean Attention Mass $\mu_x(\omega^*)$  & 99.84\% & 99.76\% & 99.46\% & 99.60\% &
 \label{fig:lifelong_curve}
 \end{figure}
 
-The lifelong benchmark demonstrates that atom spaces are immune to catastrophic forgetting: when the 40th fact is added, all 39 previously inserted facts remain recalled at 100.0\% accuracy. Background specificity remains at 100.0\% across the entire sequence. Furthermore, the average attention mass $\mu_x(\omega^*)$ allocated to the intended target atom exhibits remarkable stability, starting at $99.84\%$ and settling at $99.70\%$ at edit 40. Under Theorem~\ref{thm:quadrature_bound}, the exponential suppression factor $\exp(-\Delta_k / \tau) \approx 7.8 \times 10^{-4}$ dominates the linear pool growth ($N = 160 \to 200$), preventing measure dilution.
+Across five seeds, all 39 earlier insertions remain correctly classified when the 40th record is added, and no argmax changes are observed on the 160 training queries. At 40 insertions, mean target-atom attention mass is $99.681\pm0.014\%$. These observations apply to this small exact-scoring benchmark; the truncation theorem does not itself prove resistance to forgetting or memory dilution.
 
-\subsection{Dynamic Tri-Space Routing and Functional Orthogonality}
+\subsection{Dynamic Tri-Space Routing and Path Ablation}
 \label{sec:trigating}
 
-To evaluate the integrated tri-space architecture of Section~\ref{sec:atomspaces}, we construct an empirical environment with three mutually non-substitutable task domains:
+To evaluate the integrated tri-space architecture of Section~\ref{sec:atomspaces}, we construct an empirical environment with three task domains assigned to different information paths:
 \begin{enumerate}[leftmargin=1.4em]
   \item \textbf{In-Context Ephemeral Reasoning ($\Om_{\mathrm{ctx}}$):} Input sequences provide ad-hoc premises unavailable in world memory (e.g., synthetic cryptographic bindings). The model must attend to local token positions $\Om_{\mathrm{ctx}}$.
   \item \textbf{Corpus World Knowledge ($\Om_{\mathrm{corpus}}$):} Prompts ask declarative technical questions from our factual repository without providing premise context. The model must route to $\Om_{\mathrm{corpus}}$.
   \item \textbf{Parameter-Resident Expert Outputs ($\Om_{\mathrm{params}}$):} Queries describe small procedural classification tasks. Trigger keys select trainable, unit-normalized expert vectors stored as model parameters rather than corpus values.
 \end{enumerate}
 
-The tri-space router $\lambda(x) \in \Delta^2$ is parameterized as a lightweight projection network trained jointly with the representation heads. To prevent the norm scale mismatch analyzed in Section~\ref{sec:atomspaces}, parameter-expert keys are normalized to the unit sphere, matching the geometric scale of the corpus embeddings.
+The tri-space router $\lambda(x) \in \Delta^2$ is parameterized as a lightweight projection network trained jointly with the representation heads. To prevent the norm scale mismatch analyzed in Section~\ref{sec:atomspaces}, parameter-expert keys are normalized to the unit sphere, matching the geometric scale of the corpus embeddings. Evaluation uses unseen query strings with the identical wrapper ``Determine the output for:'' across all three families, removing explicit route words such as ``premise,'' ``stored,'' and ``expert.''
 
 \begin{table}[t]
 \centering
-\caption{Dynamic routing allocation $\lambda(x)$ and systematic ablation analysis across the three atom spaces. The router achieves $>91.8\%$ allocation purity on every domain. Dedicated-space ablation reduces accuracy from 100\% to 6.7\% or below.}
+\caption{Five-seed surface-matched routing and ablation (mean $\pm$ sample standard deviation). Route accuracy is the fraction whose largest gate selects the intended space. Tasks and labels are known during training, but evaluation strings are unseen and share one wrapper across families.}
 \label{tab:tri_space_gating}
 \vspace{0.5em}
 \resizebox{\textwidth}{!}{%
-\begin{tabular}{@{}lccccc@{}}
+\begin{tabular}{@{}lcccccc@{}}
 \toprule
-\textbf{Task Domain} & \textbf{Accuracy} & \multicolumn{3}{c}{\textbf{Mean Gating Distribution $\lambda(x)$}} & \textbf{Ablated Accuracy} \\
-\cmidrule(lr){3-5}
-& & $\lambda_{\mathrm{ctx}}$ & $\lambda_{\mathrm{corpus}}$ & $\lambda_{\mathrm{params}}$ & (Dedicated Space Severed) \\
+\textbf{Task Domain} & \textbf{Task Acc.} & \textbf{Route Acc.} & \multicolumn{3}{c}{\textbf{Mean Gating Distribution $\lambda(x)$}} & \textbf{Ablated Acc.} \\
+\cmidrule(lr){4-6}
+& & & $\lambda_{\mathrm{ctx}}$ & $\lambda_{\mathrm{corpus}}$ & $\lambda_{\mathrm{params}}$ & \\
 \midrule
-In-Context Reasoning ($\Omega_{\mathrm{ctx}}$)     & 100.0\% & \textbf{93.2\%} & 4.1\%           & 2.6\%           & 100.0\% $\to$ \textbf{6.7\%} \\
-Corpus World Knowledge ($\Omega_{\mathrm{corpus}}$) & 100.0\% & 4.5\%           & \textbf{91.8\%} & 3.6\%           & 100.0\% $\to$ \textbf{0.0\%} \\
-Parameter Expert Outputs ($\Omega_{\mathrm{params}}$) & 100.0\% & 3.5\%           & 3.3\%           & \textbf{93.2\%} & 100.0\% $\to$ \textbf{0.0\%} \\
+In-Context Reasoning ($\Omega_{\mathrm{ctx}}$) & $100.0{\pm}0.0$ & $100.0{\pm}0.0$ & $\mathbf{67.9{\pm}2.1}$ & $6.2{\pm}0.9$ & $25.8{\pm}1.3$ & $0.0{\pm}0.0$ \\
+Corpus World Knowledge ($\Omega_{\mathrm{corpus}}$) & $97.2{\pm}1.8$ & $82.4{\pm}0.9$ & $12.9{\pm}0.7$ & $\mathbf{56.5{\pm}2.2}$ & $30.5{\pm}1.7$ & $0.0{\pm}0.0$ \\
+Parameter Expert Outputs ($\Omega_{\mathrm{params}}$) & $100.0{\pm}0.0$ & $100.0{\pm}0.0$ & $3.2{\pm}0.2$ & $3.1{\pm}0.4$ & $\mathbf{93.7{\pm}0.4}$ & $0.0{\pm}0.0$ \\
 \bottomrule
 \end{tabular}%
 }
@@ -463,28 +531,28 @@ Parameter Expert Outputs ($\Omega_{\mathrm{params}}$) & 100.0\% & 3.5\%         
 \begin{figure}[t]
 \centering
 \includegraphics[width=0.88\linewidth]{figures/tri_space_gating_ablation.png}
-\caption{Tri-space gating dynamics and functional ablation analysis. Left: the router allocation matrix forms a diagonal with $>91.8\%$ purity. Right: dedicated-space ablation reduces task accuracy to 6.7\% or below.}
+\caption{Five-seed surface-matched tri-space evaluation. Left: mean router allocation on unseen strings with a shared wrapper. Right: mean task accuracy with sample-standard-deviation error bars; intended-path ablation reduces accuracy to zero.}
 \label{fig:tri_space_ablation}
 \end{figure}
 
-Table~\ref{tab:tri_space_gating} and Figure~\ref{fig:tri_space_ablation} present the gating allocations and systematic ablation results:
+Table~\ref{tab:tri_space_gating} and Figure~\ref{fig:tri_space_ablation} present the surface-matched results:
 \begin{itemize}[leftmargin=1.4em]
-  \item \textbf{Routing Purity:} The learned gate allocates $93.2\%$ mass to $\Om_{\mathrm{ctx}}$ on context tasks, $91.8\%$ to $\Om_{\mathrm{corpus}}$ on corpus tasks, and $93.2\%$ to $\Om_{\mathrm{params}}$ on parameter-expert tasks. Accuracy is 100.0\% across all three domains.
-  \item \textbf{Functional Ablation:} Removing $\Om_{\mathrm{ctx}}$ reduces context accuracy to 6.7\%; removing $\Om_{\mathrm{corpus}}$ or $\Om_{\mathrm{params}}$ reduces its corresponding task accuracy to 0.0\%.
+  \item \textbf{Routing Generalization:} Mean route accuracy is $100.0\%$, $82.4\%$, and $100.0\%$ for context, corpus, and parameter tasks. Mean intended-space allocation is $67.9\%$, $56.5\%$, and $93.7\%$, respectively.
+  \item \textbf{Task and Ablation Results:} Mean full-model accuracy is $100.0\%$, $97.2\%$, and $100.0\%$; ablating the intended space reduces every corresponding accuracy to 0\% in all five runs.
 \end{itemize}
-This ablation profile confirms that none of the three spaces are redundant: each space provides a distinct computational capability that cannot be substituted by the others.
+Removing explicit route words exposes partial corpus confusion with the parameter path. These results establish limited surface-form robustness over the same records, operations, and labels. They do not establish transfer to held-out task families, expert composition, or adversarial robustness.
 
 \subsection{Knowledge Contradiction and Anti-Atom External-Memory Suppression}
 \label{sec:unlearning}
 
-In practical applications, knowledge management requires not only appending facts, but also correcting obsolete information and permanently erasing private, sensitive, or copyrighted data. We evaluate both scenarios using signed atom spaces.
+In practical applications, external-memory records may require correction or suppression. We examine both operations in a controlled signed-read classifier; we do not evaluate physical deletion, privacy guarantees, or removal from pretrained parameters.
 
 \paragraph{External-Memory Suppression via Anti-Atoms}
-To test zero-retraining suppression in the external read, five synthetic sensitive records are inserted into the base corpus. Without gradient descent or index reconstruction, we insert an anti-atom $\omega^-$ with measure weight $\nu^- = -1.0$ and value $v^- = E[y_{\mathrm{sensitive}}]$ at the same metric coordinate as each record. This benchmark evaluates matched-query output suppression, not certified deletion from pretrained weights.
+To test zero-retraining suppression in the external read, five synthetic sensitive records are inserted into the base corpus. Without gradient descent or index reconstruction, we insert an anti-atom $\omega^-$ with positive mass $1.0$ under $\nu^-$ and value $v^- = E[y_{\mathrm{sensitive}}]$ at the same metric coordinate as each record. This benchmark evaluates matched-query output suppression, not certified deletion from pretrained weights.
 
 \begin{table}[t]
 \centering
-\caption{External-memory suppression and counterfactual updating via signed reads. Matched anti-atoms drive target recall to uniform entropy ($1/|\mathcal{V}| = 2.04\%$) without retraining, preserving 100.0\% specificity on unedited control facts.}
+\caption{External-memory suppression and counterfactual updating via signed reads. Exact matched pairs reduce target probability to approximately $1/|\mathcal{V}|=2.04\%$ in this external-read-only classifier. Clean-control argmax accuracy remains 100.0\%.}
 \label{tab:unlearning_results}
 \vspace{0.5em}
 \resizebox{\textwidth}{!}{%
@@ -492,12 +560,12 @@ To test zero-retraining suppression in the external read, five synthetic sensiti
 \toprule
 \textbf{Target Entity / Query} & \textbf{Pre-Edit P(Target)} & \textbf{Post-Edit P(Target)} & \textbf{Status} & \textbf{Background Specificity} \\
 \midrule
-\multicolumn{5}{@{}l}{\textit{External-Memory Suppression via Anti-Atoms ($\nu^- = -1.0$)}} \\
-Secret Base Alpha Coordinates   & 100.0\% & \textbf{2.04\%} ($1/|\mathcal{V}|$) & Fully Erased & 100.0\% \\
-Patient Confidential Diagnosis  & 100.0\% & \textbf{2.04\%} ($1/|\mathcal{V}|$) & Fully Erased & 100.0\% \\
-Proprietary Patent Number       & 100.0\% & \textbf{2.04\%} ($1/|\mathcal{V}|$) & Fully Erased & 100.0\% \\
-Classified Document Location    & 100.0\% & \textbf{2.04\%} ($1/|\mathcal{V}|$) & Fully Erased & 100.0\% \\
-VIP Cryptographic Key           & 100.0\% & \textbf{2.04\%} ($1/|\mathcal{V}|$) & Fully Erased & 100.0\% \\
+\multicolumn{5}{@{}l}{\textit{External-Memory Suppression via Anti-Atoms (unit mass under $\nu^-$)}} \\
+Secret Base Alpha Coordinates   & 99.998\% & \textbf{2.04\%} ($1/|\mathcal{V}|$) & Suppressed & 100.0\% \\
+Patient Confidential Diagnosis  & 99.998\% & \textbf{2.04\%} ($1/|\mathcal{V}|$) & Suppressed & 100.0\% \\
+Proprietary Patent Number       & 99.998\% & \textbf{2.04\%} ($1/|\mathcal{V}|$) & Suppressed & 100.0\% \\
+Classified Document Location    & 99.998\% & \textbf{2.04\%} ($1/|\mathcal{V}|$) & Suppressed & 100.0\% \\
+VIP Cryptographic Key           & 99.998\% & \textbf{2.04\%} ($1/|\mathcal{V}|$) & Suppressed & 100.0\% \\
 \midrule
 \multicolumn{5}{@{}l}{\textit{Counterfactual Competitive Updating ($w_{\mathrm{new}} = 2.5$, Append-Only)}} \\
 Ethereum $\to$ Proof-of-Stake   & 3.0\% (old) & \textbf{40.0\%} (new) & Overridden & 100.0\% \\
@@ -517,13 +585,16 @@ Python $\to$ PyPy JIT           & 98.9\% (old)& 0.24\% (new)          & Lexical 
 \label{fig:unlearning_plots}
 \end{figure}
 
-Table~\ref{tab:unlearning_results} and Figure~\ref{fig:unlearning_plots} (right) show that matched anti-atoms drive target-token probability to \textbf{2.04\%}. In a vocabulary of $|\V| = 49$ tokens, $1/49 \approx 0.0204$: pairwise cancellation drives the external-read representation to $z(x) = \mathbf{0}$ up to negligible background mass. Specificity on unedited baseline facts remains \textbf{100.0\%}.
+Table~\ref{tab:unlearning_results} and Figure~\ref{fig:unlearning_plots} (right) show that matched anti-atoms reduce target-token probability to approximately \textbf{2.04\%}. In a vocabulary of $|\V|=49$ tokens, $1/49\approx0.0204$. The paired contribution is exactly zero by construction; small background contributions remain in the complete read. Argmax accuracy on 35 clean control facts remains \textbf{100.0\%}.
+
+\paragraph{Approximate cancellation stress test}
+We next perturb the anti-atom key, value, mass, or query over 50 random trials at magnitudes 0, 0.01, 0.05, 0.10, and 0.20, with background sizes 10, 100, and 1000. The analytical bound covers all 3000 trials. At $N=100$, key perturbations of 0.01, 0.05, and 0.10 leave mean pair residuals of 4.5\%, 72.1\%, and 98.0\% relative to the original positive contribution; corresponding value perturbations leave 5.5\%, 25.5\%, and 40.5\%, while 1\%, 5\%, and 10\% mass errors leave 0.5\%, 2.4\%, and 4.8\%. Query perturbation alone leaves numerical-zero residual because both exactly matched keys receive the same changed kernel weight. Exact anti-atoms are therefore algebraically effective but fragile to key mismatch.
 
 \paragraph{Competitive Updating and the Lexical Bias Phenomenon}
 In an append-only log where old atoms cannot be physically deleted, we evaluate updating five technical statements by inserting contradictory atoms $\omega_{\mathrm{new}}$ with priority recency weighting $w_{\mathrm{new}} = 2.5$.
-As shown in Table~\ref{tab:unlearning_results} and Figure~\ref{fig:unlearning_plots} (left), updating succeeds decisively when semantic distance between old and new phrasings is balanced (e.g., \emph{Ethereum $\to$ Proof-of-Stake}, \emph{Java $\to$ Oracle}). However, when queries exhibit strong lexical overlap with the obsolete fact (e.g., \emph{Twitter $\to$ X Corp}, where the query contains the keyword ``Twitter''), the cosine similarity advantage of the old atom $\langle q, k_{\mathrm{old}} \rangle$ creates an exponential barrier $\exp(\Delta / \tau)$ that outguns passive linear weights. 
+Across five seeds, competitive updating succeeds on $44.0\pm8.9\%$ of the five records per run; the canonical seed succeeds for two records (\emph{Ethereum $\to$ Proof-of-Stake} and \emph{Java $\to$ Oracle}). In the remaining canonical cases, similarity to the old key outweighs the fixed recency weight under the exponential kernel. Matched anti-atom suppression succeeds on $100.0\pm0.0\%$ of records, with mean residual probability $2.0407\pm0.00002\%$ and $100.0\pm0.0\%$ background specificity.
 
-This finding establishes an important design principle for append-only memory: \textbf{passive recency weighting is insufficient under lexical query bias; true atomic updating requires active cancellation via an anti-atom $\omega_{\mathrm{old}}^-$ paired with the new atom $\omega_{\mathrm{new}}^+$.}
+This small result shows that a fixed passive recency weight is not sufficient for every evaluated update. Active cancellation is one possible design response, but broader benchmarks are required before selecting an update policy.
 
 \subsection{Autoregressive Generative Modeling with GPT-2}
 \label{sec:generative}
@@ -533,13 +604,18 @@ To establish that the atom-space read operator functions effectively in multi-la
 \paragraph{Continuous Hidden-State Augmentation with Relevance Gating}
 At each greedy decoding step $t$, the current textual prefix $x_{1:t}$ is encoded by the frozen sentence encoder, $q_t = \phi_q(x_{1:t}) \in \R^m$, and matched against the corpus atom space. GPT-2 independently maps the token prefix to $h_t \in \R^{d_{\mathrm{model}}}$. A matching atom is injected only if its cosine score exceeds 0.60 and it has not already been consumed in the current generation. This one-shot rule prevents repeated injection of the same target token:
 \[
-  \tilde{h}_t = (1 - \lambda_{\mathrm{read}}) h_t + \lambda_{\mathrm{read}} W_{\mathrm{proj}} z_t \quad \text{if the best atom is relevant and unconsumed}, \quad \text{else } h_t,
+  \tilde{h}_t =
+  \begin{cases}
+    (1-\lambda_{\mathrm{read}})h_t+\lambda_{\mathrm{read}}W_{\mathrm{proj}}z_t,
+      & \text{relevant and unconsumed},\\
+    h_t, & \text{otherwise}.
+  \end{cases}
 \]
 feeding directly into the language model head: $p(x_{t+1} \mid x_{1:t}) = \mathrm{softmax}(W_{\mathrm{LM}} \tilde{h}_t)$. Each atom's value $v_i$ is mapped to the token embedding of the target entity from GPT-2's vocabulary matrix.
 
 \begin{table}[t]
 \centering
-\caption{Greedy generative evaluation on GPT-2 (124M). Inserting factual atoms into $\Omega_{\mathrm{corpus}}$ boosts first-token target probabilities by up to $1100\times$ and flips the first prediction on all five evaluated prompts.}
+\caption{Selected rows from a ten-fact greedy GPT-2 (124M) evaluation. Factual atoms boost first-token target probabilities and flip all ten canonical first predictions.}
 \label{tab:generative_results}
 \vspace{0.5em}
 \resizebox{\textwidth}{!}{%
@@ -550,7 +626,7 @@ feeding directly into the language model head: $p(x_{t+1} \mid x_{1:t}) = \mathr
 & \textbf{Base GPT-2} & \textbf{Atom-Space} & & \textbf{Base GPT-2} & \textbf{Atom-Space} \\
 \midrule
 QUIC Transport Protocol (\texttt{UDP})         & 2.64\% & \textbf{70.00\%} & 26.5$\times$   & \texttt{the}     & \textbf{\texttt{UDP}} \\
-Milky Way Black Hole (\texttt{Sagittarius})    & 0.47\% & \textbf{64.36\%} & 137.0$\times$  & \texttt{after}   & \textbf{\texttt{Sagittarius}} \\
+Milky Way Black Hole (\texttt{Sagittarius})    & 0.47\% & \textbf{64.36\%} & 137.0$\times$  & \texttt{after}   & \textbf{\texttt{Sag}} \\
 Safe Systems Language (\texttt{Rust})          & 0.03\% & \textbf{33.06\%} & 1100.0$\times$ & \texttt{a}       & \textbf{\texttt{Rust}} \\
 Uranium Radiative Decay (\texttt{lead})        & 0.87\% & \textbf{9.80\%}  & 11.3$\times$   & \texttt{uranium} & \textbf{\texttt{lead}} \\
 CRISPR Bacterial Defense (\texttt{viruses})    & 2.25\% & \textbf{38.41\%} & 17.1$\times$   & \texttt{infect.} & \textbf{\texttt{viruses}} \\
@@ -562,18 +638,18 @@ CRISPR Bacterial Defense (\texttt{viruses})    & 2.25\% & \textbf{38.41\%} & 17.
 \begin{figure}[t]
 \centering
 \includegraphics[width=0.72\linewidth]{figures/generative_probability_boost.png}
-\caption{Target token probability surge in generative GPT-2 (124M) before vs. after atom insertion into $\Omega_{\mathrm{corpus}}$. Target probabilities increase by up to three orders of magnitude, flipping the argmax prediction to the exact factual completion across all evaluated tasks.}
+\caption{First-token target probabilities in GPT-2 (124M) before and after direct target-embedding intervention. The argmax changes toward the desired first token or subtoken on all five selected prompts.}
 \label{fig:generative_boost}
 \end{figure}
 
 \paragraph{First-Token Correction and Multi-Token Continuation}
 Table~\ref{tab:generative_results} and Figure~\ref{fig:generative_boost} summarize the quantitative performance. Base GPT-2 assigns $<3\%$ probability to the correct factual token in all cases, generating severe hallucinations upon free autoregressive decoding:
 \begin{itemize}[leftmargin=1.4em]
-  \item \textbf{Milky Way Black Hole Prompt:} Base GPT-2 generates: \emph{``The supermassive black hole at the center of the Milky Way is named \textbf{after the famous astronomer Johannes Kepler, who discovered the black hole\dots}''} (blatant hallucination). Augmented with the atom space, the top prediction flips immediately to \texttt{Sagittarius} ($0.47\% \to 64.36\%$), generating: \emph{``The supermassive black hole at the center of the Milky Way is named \textbf{Sagittarius A. Sagittarius A is the brightest\dots}''} (factually exact).
-  \item \textbf{Uranium Decay Prompt:} Base GPT-2 produces nonsensical self-decay: \emph{``Over geological timescales, natural uranium decays radiatively into stable isotopes of \textbf{uranium, which are then used to make nuclear weapons\dots}''} Augmented with the atom space, the prediction flips to \texttt{lead} ($0.87\% \to 9.80\%$), generating: \emph{``Over geological timescales, natural uranium decays radiatively into stable isotopes of \textbf{lead, thorium, and lead-based materials\dots}''} (scientifically accurate).
+  \item \textbf{Milky Way Black Hole Prompt:} Base GPT-2 generates: \emph{``The supermassive black hole at the center of the Milky Way is named \textbf{after the famous astronomer Johannes Kepler, who discovered the black hole\dots}''}. The intervention changes the first generated subtoken from \texttt{after} to \texttt{Sag} ($0.47\% \to 64.36\%$ target probability), and the tokenizer completes ``Sagittarius A'' before the continuation later becomes unreliable.
+  \item \textbf{Uranium Decay Prompt:} Base GPT-2 generates \emph{``natural uranium decays radiatively into stable isotopes of \textbf{uranium\dots}''}. The intervention changes the first generated token to \texttt{lead} ($0.87\% \to 9.80\%$), but the later phrase ``lead, thorium, and lead-based materials'' is not a reliable scientific continuation.
   \item \textbf{Systems Language Prompt:} Base GPT-2 generates generic filler: \emph{``The systems programming language offering memory safety without garbage collection is \textbf{a great way to get around the limitations\dots}''} Augmented with the atom space, probability surges by $1100\times$ ($0.03\% \to 33.06\%$), generating: \emph{``The systems programming language offering memory safety without garbage collection is \textbf{Rust. The Rust compiler is a powerful tool for\dots}''}
 \end{itemize}
-Crucially, evaluating generation on unrelated control prompts (e.g., \emph{``The capital city of France is\dots''}, \emph{``In computer programming, a loop is used to\dots''}) under relevance-gated injection produces completely unperturbed, natural outputs, verifying that continuous atom-space injection induces zero degradation on general language capabilities.
+Across all ten canonical prompts, the intervention changes the first-token argmax to the desired token or subtoken. Teacher-forced scoring over complete target strings obtains 96.7\% target-token accuracy, reflecting one later-subtoken error for ``chloroplast.'' On ten manually constructed paraphrases, retrieval selects the intended atom and changes the first-token argmax on 9/10. Across ten unrelated control texts, the similarity threshold prevents activation at every teacher-forced step, so the augmented/base perplexity ratio is exactly 1.0 by construction. A grid over thresholds $\{0.4,0.5,0.6,0.7,0.8\}$ and $\lambda_{\mathrm{read}}\in\{0.25,0.5,0.75,0.85\}$ records factual and false activation separately. These tests remain too small to establish naturalness, broad language preservation, or factuality gains.
 
 \section{Discussion and Related Work}
 \label{sec:discussion}
@@ -587,24 +663,24 @@ The individual components unified under our framework have extensive histories i
 
 What this formulation contributes beyond existing empirical literature is fivefold:
 \begin{enumerate}[leftmargin=1.4em]
-  \item \textbf{A Common Mathematical Object:} By expressing context, corpus retrieval, and parameter routing as integrals over measurable atom spaces, these mechanisms can be analyzed within a unified framework. The empirical gate allocates at least $91.8\%$ mass to the intended space on the reported tasks.
-  \item \textbf{A Falsifiable Theory of Post-Hoc Editability:} Rather than viewing model editing as an ad-hoc optimization heuristic, our analysis reveals that reliable editing is governed by a precise trade-off between key encoder Lipschitz smoothness ($L$), query-key margin conditions, and kernel temperature calibration ($\tau$).
-  \item \textbf{A Quadrature Foundation for Vector Retrieval:} Theorem~\ref{thm:quadrature_bound} provides a formal link between the read integral and exact ranked top-$k$ truncation. Approximate indexes require an additional candidate-recall analysis.
-  \item \textbf{Lifelong Non-Interference:} Our findings explain why non-parametric atom spaces outperform parametric editing techniques (e.g., ROME \cite{meng2022locating}, MEMIT \cite{meng2023mass}) in lifelong deployment: parametric updates apply cumulative rank-one weight modifications that inevitably corrupt neighboring representations, whereas atom-space knowledge updates are strictly additive over measure space ($\Om_{t} = \Om_0 \cup \{\omega^*\}$), preserving complete background isolation across 200 atoms.
+  \item \textbf{A Common Mathematical Object:} By expressing context, corpus retrieval, and parameter routing as integrals over measurable atom spaces, these mechanisms can be analyzed within a unified framework. Surface-matched evaluation quantifies both successful routing and corpus-to-parameter confusion.
+  \item \textbf{A Checkable Retrieval Condition:} The Lipschitz-margin inequality gives a sufficient condition for exact top-$k$ inclusion. It is not by itself a guarantee of edit success, generalization, or specificity.
+  \item \textbf{A Quadrature Foundation for Vector Retrieval:} Theorem~\ref{thm:quadrature_bound} and Corollary~\ref{cor:adaptive_k} link the read integral to exact ranked truncation and error-budgeted $k$. HNSW candidate recall is measured separately~\cite{malkov2020hnsw}.
+  \item \textbf{Cumulative External-Memory Insertion:} External records are additive over the measured atom space ($\Om_t=\Om_0\cup\{\omega^*\}$). In the 200-record experiment, no argmax changes are observed on training controls. Comparison with parametric editing methods such as ROME \cite{meng2022locating} and MEMIT \cite{meng2023mass} requires a shared benchmark and is left for future work.
   \item \textbf{Zero-Retraining External-Memory Suppression:} Signed reads enable matched anti-atoms to cancel selected external-memory contributions without weight retraining or index reconstruction.
 \end{enumerate}
 
 Finally, our generative experiment applies relevance-gated atom reads throughout greedy decoding, demonstrating first-token factual steering without fine-tuning.
 
 \subsection{Limitations}
-The experiments use small, templated benchmarks and one deterministic seed. The exact top-$k$ study computes all pairwise scores and does not measure ANN recall, latency, or scaling. The parameter space contains trainable expert output vectors rather than full neural subnetworks or LoRA patches. Anti-atoms suppress matched external reads but retain both records and do not remove knowledge from pretrained weights; broader paraphrase, extraction, and privacy attacks are not evaluated. The GPT-2 study contains five factual prompts and three controls, so it supports a mechanism demonstration rather than a general claim of hallucination elimination.
+The trainable synthetic studies use five seeds but remain small and templated. Frozen exact 1-nearest-neighbor retrieval matches the trained read on synthetic insertions. CounterFact retrieval uses only 500 records and does not compare end-to-end generation or parameter editing against ROME, MEMIT, MEND, fine-tuning, or RAG. Exact adaptive certification computes all pairwise scores; its large selected fractions show that it is not itself a scaling solution. The HNSW corpus is too small for large-scale latency conclusions. Tri-space tasks and labels are known during training, and parameter experts are output vectors rather than subnetworks or LoRA patches. Anti-atoms retain both records and do not remove pretrained knowledge; key mismatch rapidly weakens cancellation, and extraction/privacy attacks are not evaluated. The GPT-2 study has ten facts, ten paraphrases, and ten controls, so it remains a mechanism study rather than evidence of general hallucination reduction.
 
 \section{Conclusion}
 \label{sec:conclusion}
 
-We have presented a measure-theoretic reformulation of language models that casts next-token prediction as an integral of a query-conditioned measure against a value map over arbitrary atom spaces. This abstraction unifies in-context attention, dense retrieval, and parameter-expert routing under a single operator $R(x; \Om)$, providing a principled foundation for modular, editable AI systems. We established the theoretical conditions governing post-hoc knowledge insertion, derived a closed-form quadrature truncation error bound, and validated these results across six comprehensive benchmarks.
+We have presented a measure-theoretic abstraction that casts finite attention, dense retrieval, and parameter-expert output routing as weighted reads into a common output space. We derived a sufficient condition for top-$k$ inclusion, exact-ranked truncation bounds, an adaptive error-budget rule, and an approximate cancellation bound, then examined them in controlled synthetic and CounterFact studies.
 
-The unified read operator achieves perfect editing efficacy, generality, and specificity on the reported density and cumulative-insertion benchmarks. Exact ranked top-$k$ truncation closely approximates the full read at sharp temperatures. The tri-space experiment demonstrates learned routing among context, corpus, and parameter-resident expert vectors, while signed reads provide exact matched-pair cancellation in external memory. The GPT-2 experiment demonstrates relevance-gated first-token factual steering across five prompts. Together, these results support atom-space integration as a mathematically analyzable design for modular knowledge access while leaving large-scale ANN, stronger expert modules, and certified unlearning for future work.
+The synthetic insertion studies obtain perfect five-seed target classification and retention, but frozen exact 1-nearest-neighbor retrieval obtains the same result. Error-budgeted exact truncation achieves complete empirical coverage while often requiring a large fraction of the corpus. CounterFact reveals strong exact retrieval but weak fixed-threshold paraphrase activation and nonzero neighborhood activation; HNSW recovers the exact top-1 among ten candidates in this small run. The remaining studies show imperfect routing, fragile approximate cancellation, and limited GPT-2 factual-token steering. Competitive end-to-end baselines, larger corpora and models, held-out task families, privacy attacks, and broad language evaluations remain necessary before comparative performance claims.
 
 \section*{CRediT Authorship Contribution Statement}
 \textbf{Farshid Mossaiby}: Conceptualization, Methodology, Formal analysis, Software, Investigation, Validation, Data curation, Writing - original draft, Writing - review \& editing.

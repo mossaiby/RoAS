@@ -1,0 +1,624 @@
+{
+  "benchmark": "approximate_signed_pair_cancellation",
+  "bound": "||a v - b v_tilde|| / Z <= (|a-b| ||v|| + b ||v-v_tilde||) / Z",
+  "config": {
+    "seed": 42,
+    "dimension": 128,
+    "temperature": 0.07,
+    "trials": 50,
+    "background_sizes": [
+      10,
+      100,
+      1000
+    ],
+    "perturbations": [
+      0.0,
+      0.01,
+      0.05,
+      0.1,
+      0.2
+    ]
+  },
+  "results": [
+    {
+      "axis": "key_noise",
+      "background_size": 10,
+      "perturbation": 0.0,
+      "mean_pair_residual": 3.730095355002285e-16,
+      "max_pair_residual": 2.743266763278184e-15,
+      "mean_pair_bound": 3.80864885339783e-16,
+      "mean_relative_residual": 3.7301357164736597e-16,
+      "bound_coverage": 1.0
+    },
+    {
+      "axis": "key_noise",
+      "background_size": 10,
+      "perturbation": 0.01,
+      "mean_pair_residual": 0.04431452622609515,
+      "max_pair_residual": 0.05690559270148507,
+      "mean_pair_bound": 0.0443145262260952,
+      "mean_relative_residual": 0.04431519086168735,
+      "bound_coverage": 1.0
+    },
+    {
+      "axis": "key_noise",
+      "background_size": 10,
+      "perturbation": 0.05,
+      "mean_pair_residual": 0.7309927680469851,
+      "max_pair_residual": 0.8772769122784988,
+      "mean_pair_bound": 0.7309927680469851,
+      "mean_relative_residual": 0.7310031531203259,
+      "bound_coverage": 1.0
+    },
+    {
+      "axis": "key_noise",
+      "background_size": 10,
+      "perturbation": 0.1,
+      "mean_pair_residual": 0.9805271765289371,
+      "max_pair_residual": 0.9966323855628837,
+      "mean_pair_bound": 0.980527176528937,
+      "mean_relative_residual": 0.9805408804756606,
+      "bound_coverage": 1.0
+    },
+    {
+      "axis": "key_noise",
+      "background_size": 10,
+      "perturbation": 0.2,
+      "mean_pair_residual": 0.9993154189632297,
+      "max_pair_residual": 0.9999697138239312,
+      "mean_pair_bound": 0.9993154189632297,
+      "mean_relative_residual": 0.9993279643911981,
+      "bound_coverage": 1.0
+    },
+    {
+      "axis": "key_noise",
+      "background_size": 100,
+      "perturbation": 0.0,
+      "mean_pair_residual": 4.904391657531586e-16,
+      "max_pair_residual": 2.665904811081871e-15,
+      "mean_pair_bound": 4.909291228532349e-16,
+      "mean_relative_residual": 4.905068638800489e-16,
+      "bound_coverage": 1.0
+    },
+    {
+      "axis": "key_noise",
+      "background_size": 100,
+      "perturbation": 0.01,
+      "mean_pair_residual": 0.045175009479129585,
+      "max_pair_residual": 0.05687801303617119,
+      "mean_pair_bound": 0.04517500947912964,
+      "mean_relative_residual": 0.04518137566656722,
+      "bound_coverage": 1.0
+    },
+    {
+      "axis": "key_noise",
+      "background_size": 100,
+      "perturbation": 0.05,
+      "mean_pair_residual": 0.7209712194889755,
+      "max_pair_residual": 0.8909873932019282,
+      "mean_pair_bound": 0.7209712194889755,
+      "mean_relative_residual": 0.721070833586279,
+      "bound_coverage": 1.0
+    },
+    {
+      "axis": "key_noise",
+      "background_size": 100,
+      "perturbation": 0.1,
+      "mean_pair_residual": 0.9799421078014228,
+      "max_pair_residual": 0.9967776275768144,
+      "mean_pair_bound": 0.9799421078014228,
+      "mean_relative_residual": 0.9800782702860721,
+      "bound_coverage": 1.0
+    },
+    {
+      "axis": "key_noise",
+      "background_size": 100,
+      "perturbation": 0.2,
+      "mean_pair_residual": 0.9990871073950351,
+      "max_pair_residual": 0.9997885139397028,
+      "mean_pair_bound": 0.9990871073950354,
+      "mean_relative_residual": 0.9992277528443054,
+      "bound_coverage": 1.0
+    },
+    {
+      "axis": "key_noise",
+      "background_size": 1000,
+      "perturbation": 0.0,
+      "mean_pair_residual": 4.526307713282416e-16,
+      "max_pair_residual": 2.744280253725205e-15,
+      "mean_pair_bound": 4.528591871356563e-16,
+      "mean_relative_residual": 4.532619807597849e-16,
+      "bound_coverage": 1.0
+    },
+    {
+      "axis": "key_noise",
+      "background_size": 1000,
+      "perturbation": 0.01,
+      "mean_pair_residual": 0.046197430526091675,
+      "max_pair_residual": 0.05890395572831802,
+      "mean_pair_bound": 0.046197430526091716,
+      "mean_relative_residual": 0.04626143273641621,
+      "bound_coverage": 1.0
+    },
+    {
+      "axis": "key_noise",
+      "background_size": 1000,
+      "perturbation": 0.05,
+      "mean_pair_residual": 0.722201303584429,
+      "max_pair_residual": 0.8400172143942316,
+      "mean_pair_bound": 0.7222013035844289,
+      "mean_relative_residual": 0.7232041841042325,
+      "bound_coverage": 1.0
+    },
+    {
+      "axis": "key_noise",
+      "background_size": 1000,
+      "perturbation": 0.1,
+      "mean_pair_residual": 0.9803660373867228,
+      "max_pair_residual": 0.994898237633722,
+      "mean_pair_bound": 0.9803660373867228,
+      "mean_relative_residual": 0.9817087641265962,
+      "bound_coverage": 1.0
+    },
+    {
+      "axis": "key_noise",
+      "background_size": 1000,
+      "perturbation": 0.2,
+      "mean_pair_residual": 0.9980059828337694,
+      "max_pair_residual": 0.9987124116011904,
+      "mean_pair_bound": 0.9980059828337693,
+      "mean_relative_residual": 0.9993871007344296,
+      "bound_coverage": 1.0
+    },
+    {
+      "axis": "value_noise",
+      "background_size": 10,
+      "perturbation": 0.0,
+      "mean_pair_residual": 4.619411380770751e-16,
+      "max_pair_residual": 2.7501753775097997e-15,
+      "mean_pair_bound": 4.662945831318276e-16,
+      "mean_relative_residual": 4.619485718867152e-16,
+      "bound_coverage": 1.0
+    },
+    {
+      "axis": "value_noise",
+      "background_size": 10,
+      "perturbation": 0.01,
+      "mean_pair_residual": 0.05627166123887128,
+      "max_pair_residual": 0.06458469493409377,
+      "mean_pair_bound": 0.0562716612388719,
+      "mean_relative_residual": 0.056272431108212256,
+      "bound_coverage": 1.0
+    },
+    {
+      "axis": "value_noise",
+      "background_size": 10,
+      "perturbation": 0.05,
+      "mean_pair_residual": 0.24996628540638494,
+      "max_pair_residual": 0.293864887768912,
+      "mean_pair_bound": 0.2499662854063855,
+      "mean_relative_residual": 0.24996991551324624,
+      "bound_coverage": 1.0
+    },
+    {
+      "axis": "value_noise",
+      "background_size": 10,
+      "perturbation": 0.1,
+      "mean_pair_residual": 0.4159806549152023,
+      "max_pair_residual": 0.48290372831779926,
+      "mean_pair_bound": 0.41598065491520286,
+      "mean_relative_residual": 0.4159861419567305,
+      "bound_coverage": 1.0
+    },
+    {
+      "axis": "value_noise",
+      "background_size": 10,
+      "perturbation": 0.2,
+      "mean_pair_residual": 0.5449416039403193,
+      "max_pair_residual": 0.6237860701074203,
+      "mean_pair_bound": 0.5449416039403199,
+      "mean_relative_residual": 0.5449479810777432,
+      "bound_coverage": 1.0
+    },
+    {
+      "axis": "value_noise",
+      "background_size": 100,
+      "perturbation": 0.0,
+      "mean_pair_residual": 3.041683095640614e-16,
+      "max_pair_residual": 1.7800305641317585e-15,
+      "mean_pair_bound": 3.0865328781994704e-16,
+      "mean_relative_residual": 3.042146928518202e-16,
+      "bound_coverage": 1.0
+    },
+    {
+      "axis": "value_noise",
+      "background_size": 100,
+      "perturbation": 0.01,
+      "mean_pair_residual": 0.05520471097208876,
+      "max_pair_residual": 0.06400011740141791,
+      "mean_pair_bound": 0.05520471097208925,
+      "mean_relative_residual": 0.05521272006022187,
+      "bound_coverage": 1.0
+    },
+    {
+      "axis": "value_noise",
+      "background_size": 100,
+      "perturbation": 0.05,
+      "mean_pair_residual": 0.25480703079215644,
+      "max_pair_residual": 0.28305384651041005,
+      "mean_pair_bound": 0.2548070307921569,
+      "mean_relative_residual": 0.2548418718652311,
+      "bound_coverage": 1.0
+    },
+    {
+      "axis": "value_noise",
+      "background_size": 100,
+      "perturbation": 0.1,
+      "mean_pair_residual": 0.40486154735690877,
+      "max_pair_residual": 0.4973580360093956,
+      "mean_pair_bound": 0.4048615473569093,
+      "mean_relative_residual": 0.40491537675668227,
+      "bound_coverage": 1.0
+    },
+    {
+      "axis": "value_noise",
+      "background_size": 100,
+      "perturbation": 0.2,
+      "mean_pair_residual": 0.547498665272918,
+      "max_pair_residual": 0.6275459740402656,
+      "mean_pair_bound": 0.5474986652729184,
+      "mean_relative_residual": 0.5475750102687598,
+      "bound_coverage": 1.0
+    },
+    {
+      "axis": "value_noise",
+      "background_size": 1000,
+      "perturbation": 0.0,
+      "mean_pair_residual": 4.855957318927256e-16,
+      "max_pair_residual": 3.5526282094521166e-15,
+      "mean_pair_bound": 4.855727326696924e-16,
+      "mean_relative_residual": 4.862693655668643e-16,
+      "bound_coverage": 1.0
+    },
+    {
+      "axis": "value_noise",
+      "background_size": 1000,
+      "perturbation": 0.01,
+      "mean_pair_residual": 0.05602988195157251,
+      "max_pair_residual": 0.06369808214108127,
+      "mean_pair_bound": 0.05602988195157284,
+      "mean_relative_residual": 0.05610662227218895,
+      "bound_coverage": 1.0
+    },
+    {
+      "axis": "value_noise",
+      "background_size": 1000,
+      "perturbation": 0.05,
+      "mean_pair_residual": 0.2537342375719658,
+      "max_pair_residual": 0.29308249246911033,
+      "mean_pair_bound": 0.2537342375719662,
+      "mean_relative_residual": 0.25407719049865607,
+      "bound_coverage": 1.0
+    },
+    {
+      "axis": "value_noise",
+      "background_size": 1000,
+      "perturbation": 0.1,
+      "mean_pair_residual": 0.4100645345075524,
+      "max_pair_residual": 0.46358002242387536,
+      "mean_pair_bound": 0.41006453450755304,
+      "mean_relative_residual": 0.4106439588468329,
+      "bound_coverage": 1.0
+    },
+    {
+      "axis": "value_noise",
+      "background_size": 1000,
+      "perturbation": 0.2,
+      "mean_pair_residual": 0.5507445359341546,
+      "max_pair_residual": 0.6191753781134846,
+      "mean_pair_bound": 0.5507445359341552,
+      "mean_relative_residual": 0.5515101820568108,
+      "bound_coverage": 1.0
+    },
+    {
+      "axis": "mass_error",
+      "background_size": 10,
+      "perturbation": 0.0,
+      "mean_pair_residual": 3.797721879448251e-16,
+      "max_pair_residual": 2.6606599547457278e-15,
+      "mean_pair_bound": 3.798188094494551e-16,
+      "mean_relative_residual": 3.797789613544603e-16,
+      "bound_coverage": 1.0
+    },
+    {
+      "axis": "mass_error",
+      "background_size": 10,
+      "perturbation": 0.01,
+      "mean_pair_residual": 0.004975093005192039,
+      "max_pair_residual": 0.004975114655694992,
+      "mean_pair_bound": 0.004975093005192048,
+      "mean_relative_residual": 0.0049751560647569686,
+      "bound_coverage": 1.0
+    },
+    {
+      "axis": "mass_error",
+      "background_size": 10,
+      "perturbation": 0.05,
+      "mean_pair_residual": 0.02439007725873921,
+      "max_pair_residual": 0.024390203137973028,
+      "mean_pair_bound": 0.024390077258739224,
+      "mean_relative_residual": 0.024390418878324823,
+      "bound_coverage": 1.0
+    },
+    {
+      "axis": "mass_error",
+      "background_size": 10,
+      "perturbation": 0.1,
+      "mean_pair_residual": 0.04761872376082382,
+      "max_pair_residual": 0.0476189314637484,
+      "mean_pair_bound": 0.04761872376082382,
+      "mean_relative_residual": 0.04761940386309467,
+      "bound_coverage": 1.0
+    },
+    {
+      "axis": "mass_error",
+      "background_size": 10,
+      "perturbation": 0.2,
+      "mean_pair_residual": 0.09090852787900153,
+      "max_pair_residual": 0.09090889849150392,
+      "mean_pair_bound": 0.0909085278790015,
+      "mean_relative_residual": 0.09090976654519857,
+      "bound_coverage": 1.0
+    },
+    {
+      "axis": "mass_error",
+      "background_size": 100,
+      "perturbation": 0.0,
+      "mean_pair_residual": 4.2094275267628585e-16,
+      "max_pair_residual": 2.668438344509832e-15,
+      "mean_pair_bound": 4.2105080047024296e-16,
+      "mean_relative_residual": 4.209972381763635e-16,
+      "bound_coverage": 1.0
+    },
+    {
+      "axis": "mass_error",
+      "background_size": 100,
+      "perturbation": 0.01,
+      "mean_pair_residual": 0.00497476944257826,
+      "max_pair_residual": 0.004974904955118674,
+      "mean_pair_bound": 0.004974769442578269,
+      "mean_relative_residual": 0.0049754828629967225,
+      "bound_coverage": 1.0
+    },
+    {
+      "axis": "mass_error",
+      "background_size": 100,
+      "perturbation": 0.05,
+      "mean_pair_residual": 0.024388534243558628,
+      "max_pair_residual": 0.02438903017882588,
+      "mean_pair_bound": 0.024388534243558645,
+      "mean_relative_residual": 0.02439203904426417,
+      "bound_coverage": 1.0
+    },
+    {
+      "axis": "mass_error",
+      "background_size": 100,
+      "perturbation": 0.1,
+      "mean_pair_residual": 0.047615875075961905,
+      "max_pair_residual": 0.0476167559043508,
+      "mean_pair_bound": 0.04761587507596191,
+      "mean_relative_residual": 0.04762253741644308,
+      "bound_coverage": 1.0
+    },
+    {
+      "axis": "mass_error",
+      "background_size": 100,
+      "perturbation": 0.2,
+      "mean_pair_residual": 0.0909033780932852,
+      "max_pair_residual": 0.09090560931009192,
+      "mean_pair_bound": 0.09090337809328522,
+      "mean_relative_residual": 0.09091594628805844,
+      "bound_coverage": 1.0
+    },
+    {
+      "axis": "mass_error",
+      "background_size": 1000,
+      "perturbation": 0.0,
+      "mean_pair_residual": 4.874289206060913e-16,
+      "max_pair_residual": 2.668919628376601e-15,
+      "mean_pair_bound": 4.8775189482033835e-16,
+      "mean_relative_residual": 4.880913734583441e-16,
+      "bound_coverage": 1.0
+    },
+    {
+      "axis": "mass_error",
+      "background_size": 1000,
+      "perturbation": 0.01,
+      "mean_pair_residual": 0.004971727553038575,
+      "max_pair_residual": 0.004972088082826208,
+      "mean_pair_bound": 0.004971727553038587,
+      "mean_relative_residual": 0.00497855517143177,
+      "bound_coverage": 1.0
+    },
+    {
+      "axis": "mass_error",
+      "background_size": 1000,
+      "perturbation": 0.05,
+      "mean_pair_residual": 0.024373922501811664,
+      "max_pair_residual": 0.024375375347611396,
+      "mean_pair_bound": 0.02437392250181168,
+      "mean_relative_residual": 0.024407381373098534,
+      "bound_coverage": 1.0
+    },
+    {
+      "axis": "mass_error",
+      "background_size": 1000,
+      "perturbation": 0.1,
+      "mean_pair_residual": 0.047587552174955076,
+      "max_pair_residual": 0.04759163802359595,
+      "mean_pair_bound": 0.047587552174955076,
+      "mean_relative_residual": 0.04765369260754986,
+      "bound_coverage": 1.0
+    },
+    {
+      "axis": "mass_error",
+      "background_size": 1000,
+      "perturbation": 0.2,
+      "mean_pair_residual": 0.09085258105197591,
+      "max_pair_residual": 0.09085861288244773,
+      "mean_pair_bound": 0.09085258105197591,
+      "mean_relative_residual": 0.09097690273762957,
+      "bound_coverage": 1.0
+    },
+    {
+      "axis": "query_noise",
+      "background_size": 10,
+      "perturbation": 0.0,
+      "mean_pair_residual": 4.959291596901685e-16,
+      "max_pair_residual": 3.656380569160906e-15,
+      "mean_pair_bound": 4.964766986188876e-16,
+      "mean_relative_residual": 4.959367218724937e-16,
+      "bound_coverage": 1.0
+    },
+    {
+      "axis": "query_noise",
+      "background_size": 10,
+      "perturbation": 0.01,
+      "mean_pair_residual": 4.0430960703521196e-16,
+      "max_pair_residual": 2.7756604693737373e-15,
+      "mean_pair_bound": 4.1088351918458716e-16,
+      "mean_relative_residual": 4.043144495956455e-16,
+      "bound_coverage": 1.0
+    },
+    {
+      "axis": "query_noise",
+      "background_size": 10,
+      "perturbation": 0.05,
+      "mean_pair_residual": 3.6233217092948573e-16,
+      "max_pair_residual": 2.7383888414628725e-15,
+      "mean_pair_bound": 3.6895023404357963e-16,
+      "mean_relative_residual": 3.6236519643988694e-16,
+      "bound_coverage": 1.0
+    },
+    {
+      "axis": "query_noise",
+      "background_size": 10,
+      "perturbation": 0.1,
+      "mean_pair_residual": 4.675314391078936e-16,
+      "max_pair_residual": 1.8551724430362587e-15,
+      "mean_pair_bound": 4.792916580259532e-16,
+      "mean_relative_residual": 4.686685982993442e-16,
+      "bound_coverage": 1.0
+    },
+    {
+      "axis": "query_noise",
+      "background_size": 10,
+      "perturbation": 0.2,
+      "mean_pair_residual": 2.363295637657124e-16,
+      "max_pair_residual": 1.3230960796810445e-15,
+      "mean_pair_bound": 2.394802905258051e-16,
+      "mean_relative_residual": 2.6342952388652274e-16,
+      "bound_coverage": 1.0
+    },
+    {
+      "axis": "query_noise",
+      "background_size": 100,
+      "perturbation": 0.0,
+      "mean_pair_residual": 4.955652120298333e-16,
+      "max_pair_residual": 2.670872622811103e-15,
+      "mean_pair_bound": 4.95837340023432e-16,
+      "mean_relative_residual": 4.956356210605927e-16,
+      "bound_coverage": 1.0
+    },
+    {
+      "axis": "query_noise",
+      "background_size": 100,
+      "perturbation": 0.01,
+      "mean_pair_residual": 7.920372961455138e-16,
+      "max_pair_residual": 3.4677692164853266e-15,
+      "mean_pair_bound": 7.953337083882851e-16,
+      "mean_relative_residual": 7.921574590769904e-16,
+      "bound_coverage": 1.0
+    },
+    {
+      "axis": "query_noise",
+      "background_size": 100,
+      "perturbation": 0.05,
+      "mean_pair_residual": 4.517991943378362e-16,
+      "max_pair_residual": 1.858304809646137e-15,
+      "mean_pair_bound": 4.518862052971666e-16,
+      "mean_relative_residual": 4.522259379888385e-16,
+      "bound_coverage": 1.0
+    },
+    {
+      "axis": "query_noise",
+      "background_size": 100,
+      "perturbation": 0.1,
+      "mean_pair_residual": 2.2365361263017195e-16,
+      "max_pair_residual": 1.8401741675318224e-15,
+      "mean_pair_bound": 2.2367891575373206e-16,
+      "mean_relative_residual": 2.287743931323829e-16,
+      "bound_coverage": 1.0
+    },
+    {
+      "axis": "query_noise",
+      "background_size": 100,
+      "perturbation": 0.2,
+      "mean_pair_residual": 2.242079560017801e-16,
+      "max_pair_residual": 9.329052519463175e-16,
+      "mean_pair_bound": 2.3034291092327544e-16,
+      "mean_relative_residual": 3.864882609405068e-16,
+      "bound_coverage": 1.0
+    },
+    {
+      "axis": "query_noise",
+      "background_size": 1000,
+      "perturbation": 0.0,
+      "mean_pair_residual": 6.692396985638012e-16,
+      "max_pair_residual": 2.5525775286606998e-15,
+      "mean_pair_bound": 6.739965139480398e-16,
+      "mean_relative_residual": 6.701707946006794e-16,
+      "bound_coverage": 1.0
+    },
+    {
+      "axis": "query_noise",
+      "background_size": 1000,
+      "perturbation": 0.01,
+      "mean_pair_residual": 4.0625579807034997e-16,
+      "max_pair_residual": 2.7452253216425712e-15,
+      "mean_pair_bound": 4.0627674391861814e-16,
+      "mean_relative_residual": 4.068764842090556e-16,
+      "bound_coverage": 1.0
+    },
+    {
+      "axis": "query_noise",
+      "background_size": 1000,
+      "perturbation": 0.05,
+      "mean_pair_residual": 4.3630994362979224e-16,
+      "max_pair_residual": 2.7275853625844415e-15,
+      "mean_pair_bound": 4.368073898562871e-16,
+      "mean_relative_residual": 4.4007242661062882e-16,
+      "bound_coverage": 1.0
+    },
+    {
+      "axis": "query_noise",
+      "background_size": 1000,
+      "perturbation": 0.1,
+      "mean_pair_residual": 2.2337335635452713e-16,
+      "max_pair_residual": 1.5515028377668767e-15,
+      "mean_pair_bound": 2.2658241876786847e-16,
+      "mean_relative_residual": 2.681884708936752e-16,
+      "bound_coverage": 1.0
+    },
+    {
+      "axis": "query_noise",
+      "background_size": 1000,
+      "perturbation": 0.2,
+      "mean_pair_residual": 7.586049833184219e-17,
+      "max_pair_residual": 9.615109949005985e-16,
+      "mean_pair_bound": 7.68390540770092e-17,
+      "mean_relative_residual": 4.256384628053313e-16,
+      "bound_coverage": 1.0
+    }
+  ]
+}

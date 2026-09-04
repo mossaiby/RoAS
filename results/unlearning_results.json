@@ -6,7 +6,8 @@
       "new_target": "Dwarf Planet",
       "override_success": false,
       "prob_new": 0.2392972856760025,
-      "prob_old": 0.32336992025375366
+      "prob_old": 0.32336992025375366,
+      "background_specificity": 1.0
     },
     {
       "subject": "Twitter",
@@ -14,7 +15,8 @@
       "new_target": "X Corp",
       "override_success": false,
       "prob_new": 0.00040440604789182544,
-      "prob_old": 0.9977853298187256
+      "prob_old": 0.9977853298187256,
+      "background_specificity": 1.0
     },
     {
       "subject": "Python",
@@ -22,7 +24,8 @@
       "new_target": "PyPy JIT",
       "override_success": false,
       "prob_new": 0.002356403274461627,
-      "prob_old": 0.9885799288749695
+      "prob_old": 0.9885799288749695,
+      "background_specificity": 1.0
     },
     {
       "subject": "Ethereum",
@@ -30,7 +33,8 @@
       "new_target": "Proof-of-Stake",
       "override_success": true,
       "prob_new": 0.3996165096759796,
-      "prob_old": 0.030186420306563377
+      "prob_old": 0.030186420306563377,
+      "background_specificity": 1.0
     },
     {
       "subject": "Java",
@@ -38,37 +42,43 @@
       "new_target": "Oracle",
       "override_success": true,
       "prob_new": 0.601428210735321,
-      "prob_old": 9.7292686405126e-05
+      "prob_old": 9.7292686405126e-05,
+      "background_specificity": 1.0
     }
   ],
-  "anti_atom_unlearning": [
+  "anti_atom_suppression": [
     {
       "target": "Location-Redacted",
-      "successfully_erased": true,
+      "successfully_suppressed": true,
+      "pre_suppression_probability": 0.9999785423278809,
       "residual_probability": 0.020408309996128082,
       "background_specificity": 1.0
     },
     {
       "target": "Confidential-Illness",
-      "successfully_erased": true,
+      "successfully_suppressed": true,
+      "pre_suppression_probability": 0.9999784231185913,
       "residual_probability": 0.020406778901815414,
       "background_specificity": 1.0
     },
     {
       "target": "Patent-Secret",
-      "successfully_erased": true,
+      "successfully_suppressed": true,
+      "pre_suppression_probability": 0.9999786615371704,
       "residual_probability": 0.02040788345038891,
       "background_specificity": 1.0
     },
     {
       "target": "Bunker-Zero",
-      "successfully_erased": true,
+      "successfully_suppressed": true,
+      "pre_suppression_probability": 0.9999785423278809,
       "residual_probability": 0.020406609401106834,
       "background_specificity": 1.0
     },
     {
       "target": "Master-Passphrase",
-      "successfully_erased": true,
+      "successfully_suppressed": true,
+      "pre_suppression_probability": 0.9999783039093018,
       "residual_probability": 0.02040610834956169,
       "background_specificity": 1.0
     }

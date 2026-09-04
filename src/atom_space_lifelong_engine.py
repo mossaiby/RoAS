@@ -24,7 +24,7 @@ OUT_DIR = os.path.join("results", "details", "lifelong_probe_outputs")
 
 @dataclass
 class EngineConfig:
-    seed: int = 42
+    seed: int = int(os.environ.get("ROAS_SEED", "42"))
     encoder_name: str = "sentence-transformers/all-MiniLM-L6-v2"
     device: str = "cuda" if torch.cuda.is_available() else "cpu"
     

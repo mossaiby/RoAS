@@ -25,43 +25,23 @@ Dear Editor-in-Chief,
 
 I am pleased to submit the above-titled original research paper for consideration for publication in \emph{Neurocomputing}.
 
-\subsection*{Motivation and Interdisciplinary Origin}
-
-While my formal academic affiliation is within Civil Engineering, my core research specialization lies in \textbf{computational mechanics, meshfree particle methods, and high-performance scientific computing}. In numerical continuum mechanics, meshfree particle methods evaluate continuous field quantities by integrating smoothing kernel functions against scattered particle values over spatial domains:
-\[
-  A(\mathbf{x}) \approx \int_{\Omega} A(\mathbf{x}') W(\mathbf{x} - \mathbf{x}', h)\, d\mathbf{x}' \approx \sum_{j} A_j W(\mathbf{x} - \mathbf{x}_j, h) V_j
-\]
-Upon investigating the mathematical mechanics of modern autoregressive Transformers and Large Language Models (LLMs), I recognized that the attention mechanism---typically formalized as discrete matrix multiplications over sequence coordinates---is conceptually similar to non-local kernel integration over scattered particle domains. In this mapping, queries act as field coordinates, keys act as particle positions, values represent discrete field quantities, and the softmax attention density corresponds to a partition-of-unity smoothing kernel.
-
-Motivated by this continuum-mechanics perspective, I reformulated language model inference not as an ad-hoc sequence operation, but as a continuous integral of a query-conditioned probability measure against a vector value map over an arbitrary \textbf{``atom space''} $(\Omega, \mathcal{F}, v)$.
-
-To bridge this mechanics-inspired formulation with modern deep learning and natural language processing standards, I collaborated interactively with an AI research assistant (Google Gemini). This dialogue assisted in formalizing the machine-learning terminology, deriving the analytical quadrature bounds, and engineering the PyTorch benchmark suites (in full compliance with Elsevier's policy on Generative AI).
-
-\subsection*{Core Scientific Contributions}
-
-This manuscript presents several theoretical and empirical contributions that will be of strong interest to the readership of \emph{Neurocomputing}:
+The manuscript develops a common output-space read abstraction for finite attention, external retrieval, and parameter-expert routing. Its main contributions are:
 \begin{enumerate}[leftmargin=1.6em, itemsep=0.3em]
-  \item \textbf{Unification of Context, Retrieval, and Parameters:} We formulate in-context attention, corpus retrieval, and parameter-resident expert routing as instances of one \textbf{Read Operator} $R(x; \Omega)$, with at least 91.8\% routing allocation to the intended space in the reported experiment.
-  \item \textbf{The Quadrature Truncation Bound Theorem:} We prove a closed-form exponential bound for exact ranked top-$k$ truncation under calibrated kernel temperatures ($\tau = 0.05$, measured error $\approx 10^{-6}$). ANN candidate retrieval is not benchmarked.
-  \item \textbf{Lifelong Scaling Without Observed Interference:} Forty sequential additions expand active memory to 200 atoms while retaining 100\% recall and background specificity on the reported benchmark.
-  \item \textbf{Signed External-Memory Suppression:} Matched negative ``anti-atoms'' cancel selected external-read contributions, driving target probability to uniform entropy ($1/|\mathcal{V}| = 2.04\%$) without retraining; this does not remove information from pretrained weights.
-  \item \textbf{Autoregressive Generative Steering:} Relevance-gated atom injection into \textbf{GPT-2 (124M)} boosts first-token target probabilities by up to $1100\times$ and flips the first prediction on all five evaluated factual prompts.
+  \item a measure-theoretic definition with explicit existence conditions and support for query-dependent expert outputs;
+  \item exact ranked top-$k$ bounds, an error-budgeted adaptive rule, and an approximate signed-cancellation bound; and
+  \item controlled synthetic and CounterFact studies of external memory, ANN candidates, routing, cancellation, and GPT-2 steering.
 \end{enumerate}
 
-\subsection*{Editorial and Ethical Declarations}
+The experiments are intentionally presented as mechanism studies. Trainable synthetic experiments use five seeds, while the manuscript explicitly identifies the absence of large-scale ANN evaluation, competitive end-to-end model-editing baselines, and certified unlearning as limitations. Code, benchmark definitions, result files, and plotting scripts are available at \url{https://github.com/mossaiby/RoAS}.
 
-In accordance with Elsevier editorial guidelines, I confirm the following:
+I confirm that:
 \begin{itemize}[leftmargin=1.6em, itemsep=0.2em]
-  \item This manuscript is an original work and is \textbf{not under consideration for publication elsewhere}, in whole or in part.
-  \item Publication has been approved by the author and the relevant institutional authorities.
-  \item To support open science and immediate reproducibility, all code, benchmark datasets, precomputed JSON evaluation logs, and plotting routines have been fully open-sourced in a dedicated public repository: \url{https://github.com/mossaiby/RoAS}.
-  \item In compliance with Elsevier's \emph{Declaration of Generative AI in Scientific Writing}, the interactive use of Google Gemini in the derivation of the quadrature bound and benchmark development has been fully disclosed in the manuscript.
-  \item The author declares no competing financial or personal conflicts of interest.
+  \item the manuscript is original and is not under consideration elsewhere;
+  \item the author declares no competing financial or personal interests; and
+  \item the use of generative AI during manuscript preparation is disclosed in the manuscript according to Elsevier policy.
 \end{itemize}
 
-Because \emph{Neurocomputing} sits at the premier intersection of neural network architectures, foundational learning theory, and applied machine learning systems, I believe this work will be of strong interest to your readership.
-
-Thank you very much for your time, consideration, and handling of this submission.
+The paper may be relevant to readers interested in neural memory, retrieval, sparse routing, and mathematical descriptions of attention. Thank you for considering the manuscript.
 
 \vspace{1.5em}
 Sincerely,

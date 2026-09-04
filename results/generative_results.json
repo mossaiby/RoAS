@@ -5,6 +5,8 @@
       "target": " UDP",
       "baseline_prob": 0.026404062286019325,
       "baseline_pred": " the",
+      "target_sequence_log_probability": -3.634237289428711,
+      "target_sequence_token_accuracy": 0.0,
       "generated_text": "QUIC protocol accelerates web transport streams natively over the Internet.\n\nThe protocol is designed to be used"
     },
     {
@@ -12,6 +14,8 @@
       "target": " Sagittarius",
       "baseline_prob": 0.004719614051282406,
       "baseline_pred": " after",
+      "target_sequence_log_probability": -5.357974302431103,
+      "target_sequence_token_accuracy": 0.6666666666666666,
       "generated_text": "The supermassive black hole at the center of the Milky Way is named after the famous astronomer Johannes Kepler, who discovered the black hole"
     },
     {
@@ -19,6 +23,8 @@
       "target": " Rust",
       "baseline_prob": 0.00029559488757513463,
       "baseline_pred": " a",
+      "target_sequence_log_probability": -8.126520156860352,
+      "target_sequence_token_accuracy": 0.0,
       "generated_text": "The systems programming language offering memory safety without garbage collection is a great way to get around the limitations of the current memory"
     },
     {
@@ -26,6 +32,8 @@
       "target": " lead",
       "baseline_prob": 0.008742746897041798,
       "baseline_pred": " uranium",
+      "target_sequence_log_probability": -4.73953104019165,
+      "target_sequence_token_accuracy": 0.0,
       "generated_text": "Over geological timescales, natural uranium decays radiatively into stable isotopes of uranium, which are then used to make nuclear weapons.\n"
     },
     {
@@ -33,71 +41,520 @@
       "target": " viruses",
       "baseline_prob": 0.02245870977640152,
       "baseline_pred": " infection",
+      "target_sequence_log_probability": -3.796076774597168,
+      "target_sequence_token_accuracy": 0.0,
       "generated_text": "CRISPR-Cas9 acts within bacterial systems as an adaptive defense mechanism against infection. The mechanism of action of Cas9 is not known"
+    },
+    {
+      "prompt": "The creator of the Python programming language is",
+      "target": " Guido van Rossum",
+      "baseline_prob": 0.0007149428129196167,
+      "baseline_pred": " a",
+      "target_sequence_log_probability": -7.692650764824066,
+      "target_sequence_token_accuracy": 0.8,
+      "generated_text": "The creator of the Python programming language is a former Microsoft engineer who has worked on many projects including the"
+    },
+    {
+      "prompt": "The capital city of Australia is",
+      "target": " Canberra",
+      "baseline_prob": 0.002616629935801029,
+      "baseline_pred": " home",
+      "target_sequence_log_probability": -5.945868492126465,
+      "target_sequence_token_accuracy": 0.0,
+      "generated_text": "The capital city of Australia is home to the world's largest population of people, and the"
+    },
+    {
+      "prompt": "The largest ocean on Earth is the",
+      "target": " Pacific Ocean",
+      "baseline_prob": 0.01766478270292282,
+      "baseline_pred": " largest",
+      "target_sequence_log_probability": -4.790297269821167,
+      "target_sequence_token_accuracy": 0.5,
+      "generated_text": "The largest ocean on Earth is the largest in the world, and it's the largest in the"
+    },
+    {
+      "prompt": "Photosynthesis takes place primarily inside the plant organelle called the",
+      "target": " chloroplast",
+      "baseline_prob": 0.0260543804615736,
+      "baseline_pred": " mitochond",
+      "target_sequence_log_probability": -6.018607018515468,
+      "target_sequence_token_accuracy": 0.3333333333333333,
+      "generated_text": "Photosynthesis takes place primarily inside the plant organelle called the mitochondria, which are responsible for the production of energy."
+    },
+    {
+      "prompt": "Mars has a moon named",
+      "target": " Phobos",
+      "baseline_prob": 0.007124590687453747,
+      "baseline_pred": " after",
+      "target_sequence_log_probability": -5.099979907274246,
+      "target_sequence_token_accuracy": 0.5,
+      "generated_text": "Mars has a moon named after it, and it's a very interesting place to visit"
     }
   ],
   "atom_space_gpt2": [
     {
       "prompt": "QUIC protocol accelerates web transport streams natively over",
       "target": " UDP",
-      "post_prob": 0.6999878883361816,
-      "atom_mu": 0.9999721050262451,
+      "post_prob": 0.6999593377113342,
+      "atom_mu": 0.9999576807022095,
       "post_pred": " UDP",
       "retrieval_steps": 1,
+      "target_sequence_log_probability": -0.3567330539226532,
+      "target_sequence_token_accuracy": 1.0,
+      "target_sequence_activations": 1,
       "generated_text": "QUIC protocol accelerates web transport streams natively over UDP.\n\nThe protocol is designed to be used by"
     },
     {
       "prompt": "The supermassive black hole at the center of the Milky Way is named",
       "target": " Sagittarius",
-      "post_prob": 0.6436121463775635,
-      "atom_mu": 0.999944806098938,
+      "post_prob": 0.6433064341545105,
+      "atom_mu": 0.9998088479042053,
       "post_pred": " Sag",
       "retrieval_steps": 1,
+      "target_sequence_log_probability": -0.44307981099700555,
+      "target_sequence_token_accuracy": 1.0,
+      "target_sequence_activations": 1,
       "generated_text": "The supermassive black hole at the center of the Milky Way is named Sagittarius A. Sagittarius A is the brightest"
     },
     {
       "prompt": "The systems programming language offering memory safety without garbage collection is",
       "target": " Rust",
-      "post_prob": 0.33059996366500854,
-      "atom_mu": 0.9999287128448486,
+      "post_prob": 0.3299243152141571,
+      "atom_mu": 0.9995688796043396,
       "post_pred": " Rust",
       "retrieval_steps": 1,
+      "target_sequence_log_probability": -1.1088919639587402,
+      "target_sequence_token_accuracy": 1.0,
+      "target_sequence_activations": 1,
       "generated_text": "The systems programming language offering memory safety without garbage collection is Rust.\n\nThe Rust compiler is a powerful tool for"
     },
     {
       "prompt": "Over geological timescales, natural uranium decays radiatively into stable isotopes of",
       "target": " lead",
-      "post_prob": 0.09801551699638367,
-      "atom_mu": 0.9999768733978271,
+      "post_prob": 0.09798726439476013,
+      "atom_mu": 0.9999350309371948,
       "post_pred": " lead",
       "retrieval_steps": 1,
+      "target_sequence_log_probability": -2.3229176998138428,
+      "target_sequence_token_accuracy": 1.0,
+      "target_sequence_activations": 1,
       "generated_text": "Over geological timescales, natural uranium decays radiatively into stable isotopes of lead, thorium, and lead-based materials. The"
     },
     {
       "prompt": "CRISPR-Cas9 acts within bacterial systems as an adaptive defense mechanism against",
       "target": " viruses",
-      "post_prob": 0.384136438369751,
-      "atom_mu": 0.999977707862854,
+      "post_prob": 0.3840981125831604,
+      "atom_mu": 0.9999573230743408,
       "post_pred": " viruses",
       "retrieval_steps": 1,
+      "target_sequence_log_probability": -0.9568572640419006,
+      "target_sequence_token_accuracy": 1.0,
+      "target_sequence_activations": 1,
       "generated_text": "CRISPR-Cas9 acts within bacterial systems as an adaptive defense mechanism against viruses. The Cas9-mediated antiviral effect of the"
+    },
+    {
+      "prompt": "The creator of the Python programming language is",
+      "target": " Guido van Rossum",
+      "post_prob": 0.0403301827609539,
+      "atom_mu": 0.9994415640830994,
+      "post_pred": " Gu",
+      "retrieval_steps": 1,
+      "target_sequence_log_probability": -3.6599979099046323,
+      "target_sequence_token_accuracy": 1.0,
+      "target_sequence_activations": 1,
+      "generated_text": "The creator of the Python programming language is Guido van Rossum, who has been working on the"
+    },
+    {
+      "prompt": "The capital city of Australia is",
+      "target": " Canberra",
+      "post_prob": 0.8150985836982727,
+      "atom_mu": 0.999850869178772,
+      "post_pred": " Canberra",
+      "retrieval_steps": 1,
+      "target_sequence_log_probability": -0.2044462412595749,
+      "target_sequence_token_accuracy": 1.0,
+      "target_sequence_activations": 1,
+      "generated_text": "The capital city of Australia is Canberra, with a population of just over 1.5 million"
+    },
+    {
+      "prompt": "The largest ocean on Earth is the",
+      "target": " Pacific Ocean",
+      "post_prob": 0.19958393275737762,
+      "atom_mu": 0.9999353885650635,
+      "post_pred": " Pacific",
+      "retrieval_steps": 1,
+      "target_sequence_log_probability": -2.3656352758407593,
+      "target_sequence_token_accuracy": 1.0,
+      "target_sequence_activations": 1,
+      "generated_text": "The largest ocean on Earth is the Pacific Ocean, which is about 1,000 miles deep."
+    },
+    {
+      "prompt": "Photosynthesis takes place primarily inside the plant organelle called the",
+      "target": " chloroplast",
+      "post_prob": 0.268656849861145,
+      "atom_mu": 0.9999741315841675,
+      "post_pred": " chlor",
+      "retrieval_steps": 1,
+      "target_sequence_log_probability": -3.685357926413417,
+      "target_sequence_token_accuracy": 0.6666666666666666,
+      "target_sequence_activations": 1,
+      "generated_text": "Photosynthesis takes place primarily inside the plant organelle called the chloroplasts. The chloroplasts are the main source"
+    },
+    {
+      "prompt": "Mars has a moon named",
+      "target": " Phobos",
+      "post_prob": 0.1001017615199089,
+      "atom_mu": 0.9990853071212769,
+      "post_pred": " Ph",
+      "retrieval_steps": 1,
+      "target_sequence_log_probability": -2.457344561815262,
+      "target_sequence_token_accuracy": 1.0,
+      "target_sequence_activations": 1,
+      "generated_text": "Mars has a moon named Phobos, which is a planet in the solar system."
+    }
+  ],
+  "paraphrase_evaluation": [
+    {
+      "prompt": "The transport protocol beneath QUIC is",
+      "target": " UDP",
+      "target_probability": 0.5122637748718262,
+      "target_is_argmax": true,
+      "activated": true,
+      "retrieved_correct_atom": true
+    },
+    {
+      "prompt": "Astronomers call the central black hole of our galaxy",
+      "target": " Sagittarius",
+      "target_probability": 0.5902990102767944,
+      "target_is_argmax": true,
+      "activated": true,
+      "retrieved_correct_atom": true
+    },
+    {
+      "prompt": "Memory-safe systems programming without a garbage collector is offered by",
+      "target": " Rust",
+      "target_probability": 0.36373621225357056,
+      "target_is_argmax": true,
+      "activated": true,
+      "retrieved_correct_atom": true
+    },
+    {
+      "prompt": "The stable end product of the uranium decay chain is",
+      "target": " lead",
+      "target_probability": 0.0519140250980854,
+      "target_is_argmax": true,
+      "activated": true,
+      "retrieved_correct_atom": true
+    },
+    {
+      "prompt": "Bacteria use CRISPR-Cas9 to defend themselves from",
+      "target": " viruses",
+      "target_probability": 0.44063660502433777,
+      "target_is_argmax": true,
+      "activated": true,
+      "retrieved_correct_atom": true
+    },
+    {
+      "prompt": "Python was originally designed by",
+      "target": " Guido van Rossum",
+      "target_probability": 0.04583163186907768,
+      "target_is_argmax": true,
+      "activated": true,
+      "retrieved_correct_atom": true
+    },
+    {
+      "prompt": "Australia's national capital is",
+      "target": " Canberra",
+      "target_probability": 0.7632302045822144,
+      "target_is_argmax": true,
+      "activated": true,
+      "retrieved_correct_atom": true
+    },
+    {
+      "prompt": "Earth's greatest ocean by area is the",
+      "target": " Pacific Ocean",
+      "target_probability": 0.19005712866783142,
+      "target_is_argmax": true,
+      "activated": true,
+      "retrieved_correct_atom": true
+    },
+    {
+      "prompt": "The organelle responsible for photosynthesis is the",
+      "target": " chloroplast",
+      "target_probability": 0.218837171792984,
+      "target_is_argmax": true,
+      "activated": true,
+      "retrieved_correct_atom": true
+    },
+    {
+      "prompt": "One of the two natural satellites orbiting Mars is",
+      "target": " Phobos",
+      "target_probability": 0.0001672507351031527,
+      "target_is_argmax": false,
+      "activated": false,
+      "retrieved_correct_atom": false
     }
   ],
   "control_specificity": [
     {
-      "prompt": "The capital city of France is",
+      "prompt": "A loop repeats a block of instructions until its stopping condition is",
       "retrieval_steps": 0,
-      "output": "The capital city of France is the capital of the French Republic, and"
+      "baseline_perplexity": 80.66030994166495,
+      "augmented_perplexity": 80.66030994166495,
+      "perplexity_ratio": 1.0,
+      "teacher_forced_activations": 0,
+      "output": "A loop repeats a block of instructions until its stopping condition is met.\n\nThe loop is then"
     },
     {
-      "prompt": "In computer programming, a loop is used to",
+      "prompt": "Rain forms when atmospheric water vapor condenses into",
       "retrieval_steps": 0,
-      "output": "In computer programming, a loop is used to create a new loop. The loop is"
+      "baseline_perplexity": 52.02015887896437,
+      "augmented_perplexity": 52.02015887896437,
+      "perplexity_ratio": 1.0,
+      "teacher_forced_activations": 0,
+      "output": "Rain forms when atmospheric water vapor condenses into a liquid.\n\nThe most common"
     },
     {
-      "prompt": "Photosynthesis in green plants converts radiant sunlight into",
+      "prompt": "A triangle has three sides and three interior",
       "retrieval_steps": 0,
-      "output": "Photosynthesis in green plants converts radiant sunlight into heat, which is then used to make"
+      "baseline_perplexity": 84.88248314707957,
+      "augmented_perplexity": 84.88248314707957,
+      "perplexity_ratio": 1.0,
+      "teacher_forced_activations": 0,
+      "output": "A triangle has three sides and three interior sides. The triangle has a triangle-"
+    },
+    {
+      "prompt": "Musical rhythm organizes sounds and silences through",
+      "retrieval_steps": 0,
+      "baseline_perplexity": 255.70643857633178,
+      "augmented_perplexity": 255.70643857633178,
+      "perplexity_ratio": 1.0,
+      "teacher_forced_activations": 0,
+      "output": "Musical rhythm organizes sounds and silences through the body.\n\nThe body is"
+    },
+    {
+      "prompt": "Bread dough rises when fermentation produces carbon dioxide",
+      "retrieval_steps": 0,
+      "baseline_perplexity": 358.55945088534367,
+      "augmented_perplexity": 358.55945088534367,
+      "perplexity_ratio": 1.0,
+      "teacher_forced_activations": 0,
+      "output": "Bread dough rises when fermentation produces carbon dioxide.\n\nThe carbon dioxide in the"
+    },
+    {
+      "prompt": "The library closes early on public",
+      "retrieval_steps": 0,
+      "baseline_perplexity": 208.19753542689784,
+      "augmented_perplexity": 208.19753542689784,
+      "perplexity_ratio": 1.0,
+      "teacher_forced_activations": 0,
+      "output": "The library closes early on public holidays, and the library is closed for"
+    },
+    {
+      "prompt": "A microscope enlarges objects that are difficult to see",
+      "retrieval_steps": 0,
+      "baseline_perplexity": 65.52340937225539,
+      "augmented_perplexity": 65.52340937225539,
+      "perplexity_ratio": 1.0,
+      "teacher_forced_activations": 0,
+      "output": "A microscope enlarges objects that are difficult to see.\n\n\"We're not going"
+    },
+    {
+      "prompt": "Regular exercise can improve cardiovascular",
+      "retrieval_steps": 0,
+      "baseline_perplexity": 112.10168112403575,
+      "augmented_perplexity": 112.10168112403575,
+      "perplexity_ratio": 1.0,
+      "teacher_forced_activations": 0,
+      "output": "Regular exercise can improve cardiovascular health, but it can also cause heart"
+    },
+    {
+      "prompt": "The novel follows its characters across several",
+      "retrieval_steps": 0,
+      "baseline_perplexity": 138.12533970708225,
+      "augmented_perplexity": 138.12533970708225,
+      "perplexity_ratio": 1.0,
+      "teacher_forced_activations": 0,
+      "output": "The novel follows its characters across several decades of history, from the early days"
+    },
+    {
+      "prompt": "Recycling aluminum generally requires less energy than producing new",
+      "retrieval_steps": 0,
+      "baseline_perplexity": 73.94178897523099,
+      "augmented_perplexity": 73.94178897523099,
+      "perplexity_ratio": 1.0,
+      "teacher_forced_activations": 0,
+      "output": "Recycling aluminum generally requires less energy than producing new parts, and the cost of new parts"
     }
-  ]
+  ],
+  "sensitivity": [
+    {
+      "threshold": 0.4,
+      "lambda_read": 0.25,
+      "mean_target_probability": 0.07285459684208036,
+      "first_token_accuracy": 0.7,
+      "factual_activation_rate": 1.0,
+      "control_false_activation_rate": 0.0
+    },
+    {
+      "threshold": 0.4,
+      "lambda_read": 0.5,
+      "mean_target_probability": 0.2277207739651203,
+      "first_token_accuracy": 1.0,
+      "factual_activation_rate": 1.0,
+      "control_false_activation_rate": 0.0
+    },
+    {
+      "threshold": 0.4,
+      "lambda_read": 0.75,
+      "mean_target_probability": 0.3481603190302849,
+      "first_token_accuracy": 1.0,
+      "factual_activation_rate": 1.0,
+      "control_false_activation_rate": 0.0
+    },
+    {
+      "threshold": 0.4,
+      "lambda_read": 0.85,
+      "mean_target_probability": 0.35790467746555804,
+      "first_token_accuracy": 1.0,
+      "factual_activation_rate": 1.0,
+      "control_false_activation_rate": 0.0
+    },
+    {
+      "threshold": 0.5,
+      "lambda_read": 0.25,
+      "mean_target_probability": 0.07285459684208036,
+      "first_token_accuracy": 0.7,
+      "factual_activation_rate": 1.0,
+      "control_false_activation_rate": 0.0
+    },
+    {
+      "threshold": 0.5,
+      "lambda_read": 0.5,
+      "mean_target_probability": 0.2277207739651203,
+      "first_token_accuracy": 1.0,
+      "factual_activation_rate": 1.0,
+      "control_false_activation_rate": 0.0
+    },
+    {
+      "threshold": 0.5,
+      "lambda_read": 0.75,
+      "mean_target_probability": 0.3481603190302849,
+      "first_token_accuracy": 1.0,
+      "factual_activation_rate": 1.0,
+      "control_false_activation_rate": 0.0
+    },
+    {
+      "threshold": 0.5,
+      "lambda_read": 0.85,
+      "mean_target_probability": 0.35790467746555804,
+      "first_token_accuracy": 1.0,
+      "factual_activation_rate": 1.0,
+      "control_false_activation_rate": 0.0
+    },
+    {
+      "threshold": 0.6,
+      "lambda_read": 0.25,
+      "mean_target_probability": 0.07285459684208036,
+      "first_token_accuracy": 0.7,
+      "factual_activation_rate": 1.0,
+      "control_false_activation_rate": 0.0
+    },
+    {
+      "threshold": 0.6,
+      "lambda_read": 0.5,
+      "mean_target_probability": 0.2277207739651203,
+      "first_token_accuracy": 1.0,
+      "factual_activation_rate": 1.0,
+      "control_false_activation_rate": 0.0
+    },
+    {
+      "threshold": 0.6,
+      "lambda_read": 0.75,
+      "mean_target_probability": 0.3481603190302849,
+      "first_token_accuracy": 1.0,
+      "factual_activation_rate": 1.0,
+      "control_false_activation_rate": 0.0
+    },
+    {
+      "threshold": 0.6,
+      "lambda_read": 0.85,
+      "mean_target_probability": 0.35790467746555804,
+      "first_token_accuracy": 1.0,
+      "factual_activation_rate": 1.0,
+      "control_false_activation_rate": 0.0
+    },
+    {
+      "threshold": 0.7,
+      "lambda_read": 0.25,
+      "mean_target_probability": 0.07285459684208036,
+      "first_token_accuracy": 0.7,
+      "factual_activation_rate": 1.0,
+      "control_false_activation_rate": 0.0
+    },
+    {
+      "threshold": 0.7,
+      "lambda_read": 0.5,
+      "mean_target_probability": 0.2277207739651203,
+      "first_token_accuracy": 1.0,
+      "factual_activation_rate": 1.0,
+      "control_false_activation_rate": 0.0
+    },
+    {
+      "threshold": 0.7,
+      "lambda_read": 0.75,
+      "mean_target_probability": 0.3481603190302849,
+      "first_token_accuracy": 1.0,
+      "factual_activation_rate": 1.0,
+      "control_false_activation_rate": 0.0
+    },
+    {
+      "threshold": 0.7,
+      "lambda_read": 0.85,
+      "mean_target_probability": 0.35790467746555804,
+      "first_token_accuracy": 1.0,
+      "factual_activation_rate": 1.0,
+      "control_false_activation_rate": 0.0
+    },
+    {
+      "threshold": 0.8,
+      "lambda_read": 0.25,
+      "mean_target_probability": 0.07285459684208036,
+      "first_token_accuracy": 0.7,
+      "factual_activation_rate": 1.0,
+      "control_false_activation_rate": 0.0
+    },
+    {
+      "threshold": 0.8,
+      "lambda_read": 0.5,
+      "mean_target_probability": 0.2277207739651203,
+      "first_token_accuracy": 1.0,
+      "factual_activation_rate": 1.0,
+      "control_false_activation_rate": 0.0
+    },
+    {
+      "threshold": 0.8,
+      "lambda_read": 0.75,
+      "mean_target_probability": 0.3481603190302849,
+      "first_token_accuracy": 1.0,
+      "factual_activation_rate": 1.0,
+      "control_false_activation_rate": 0.0
+    },
+    {
+      "threshold": 0.8,
+      "lambda_read": 0.85,
+      "mean_target_probability": 0.35790467746555804,
+      "first_token_accuracy": 1.0,
+      "factual_activation_rate": 1.0,
+      "control_false_activation_rate": 0.0
+    }
+  ],
+  "aggregate": {
+    "factual_count": 10,
+    "first_token_argmax_rate": 1.0,
+    "paraphrase_argmax_rate": 0.9,
+    "paraphrase_correct_retrieval_rate": 0.9,
+    "mean_control_perplexity_ratio": 1.0,
+    "control_activation_rate": 0.0
+  }
 }

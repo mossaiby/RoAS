@@ -31,12 +31,12 @@
 A Unified Measure-Theoretic Formulation of Context, Retrieval, and Parameters}
 
 \author[inst1]{Farshid Mossaiby\corref{cor1}}
-\ead{mossaiby@example.com}
+\ead{mossaiby@eng.ui.ac.ir}
 \cortext[cor1]{Corresponding author.}
 \affiliation[inst1]{organization={Department of Civil Engineering, University of Isfahan}, postcode={81744-73441}, city={Isfahan}, country={Iran}}
 
 \begin{keyword}
-Language models \sep Atom spaces \sep Measure theory \sep Model editing \sep Vector retrieval \sep Machine unlearning
+Language models \sep Atom spaces \sep Measure theory \sep External memory \sep Vector retrieval \sep Expert routing
 \end{keyword}
 
 \end{frontmatter}
@@ -46,11 +46,12 @@ Language models \sep Atom spaces \sep Measure theory \sep Model editing \sep Vec
 \section*{Research Highlights}
 
 \begin{itemize}
-  \item Attention is formalized as an integral over measurable atom spaces.
-  \item Unifies context attention, dense retrieval, and MoE under one read operator.
-  \item Bounds exact top-k read truncation by exponentially decaying tail mass.
-  \item Validates lifelong editing and signed external-memory suppression.
-  \item Causal GPT-2 steering flips factual predictions to 100\% target accuracy.
+  \item Weighted neural reads are expressed over valued measurable atom spaces.
+  \item Exact top-$k$ read truncation has two exponential error bounds.
+  \item CounterFact-500 exposes strong retrieval but weak thresholded paraphrase recall.
+  \item Exact tail mass selects $k$ under a certified vector-error budget.
+  \item Signed-read perturbation bounds quantify approximate cancellation failure.
+  \item Five-seed matched routing exposes corpus-to-parameter confusion.
 \end{itemize}
 
 \end{document}

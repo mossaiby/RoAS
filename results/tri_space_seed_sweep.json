@@ -1,0 +1,621 @@
+{
+  "metadata": {
+    "seeds": [
+      40,
+      41,
+      42,
+      43,
+      44
+    ],
+    "python": "3.11.9",
+    "platform": "Windows-10-10.0.26200-SP0",
+    "torch": "2.14.0",
+    "sentence_transformers": "6.0.1",
+    "transformers": "5.16.1",
+    "numpy": "1.26.4"
+  },
+  "surface_matched_aggregate": {
+    "context": {
+      "task_accuracy": {
+        "mean": 1.0,
+        "sample_std": 0.0,
+        "min": 1.0,
+        "max": 1.0
+      },
+      "route_accuracy": {
+        "mean": 1.0,
+        "sample_std": 0.0,
+        "min": 1.0,
+        "max": 1.0
+      },
+      "dedicated_space_ablated_accuracy": {
+        "mean": 0.0,
+        "sample_std": 0.0,
+        "min": 0.0,
+        "max": 0.0
+      },
+      "mean_gate": {
+        "context": {
+          "mean": 0.6792790770530701,
+          "sample_std": 0.02147343644853307,
+          "min": 0.6580101847648621,
+          "max": 0.7132791876792908
+        },
+        "corpus": {
+          "mean": 0.062498892098665236,
+          "sample_std": 0.008727395598672824,
+          "min": 0.0501536950469017,
+          "max": 0.07386435568332672
+        },
+        "parameter": {
+          "mean": 0.25822205245494845,
+          "sample_std": 0.01322900593148635,
+          "min": 0.2365671545267105,
+          "max": 0.2692364752292633
+        }
+      }
+    },
+    "corpus": {
+      "task_accuracy": {
+        "mean": 0.971999990940094,
+        "sample_std": 0.01788855674816661,
+        "min": 0.9599999785423279,
+        "max": 1.0
+      },
+      "route_accuracy": {
+        "mean": 0.8239999890327454,
+        "sample_std": 0.008944263380076757,
+        "min": 0.8199999928474426,
+        "max": 0.8399999737739563
+      },
+      "dedicated_space_ablated_accuracy": {
+        "mean": 0.0,
+        "sample_std": 0.0,
+        "min": 0.0,
+        "max": 0.0
+      },
+      "mean_gate": {
+        "context": {
+          "mean": 0.12934404015541076,
+          "sample_std": 0.0065388693788560595,
+          "min": 0.12031978368759155,
+          "max": 0.1371789425611496
+        },
+        "corpus": {
+          "mean": 0.5653568744659424,
+          "sample_std": 0.021600043193814877,
+          "min": 0.5332418084144592,
+          "max": 0.5915226340293884
+        },
+        "parameter": {
+          "mean": 0.30529908537864686,
+          "sample_std": 0.016857295991952653,
+          "min": 0.28815758228302,
+          "max": 0.32957926392555237
+        }
+      }
+    },
+    "parameter": {
+      "task_accuracy": {
+        "mean": 1.0,
+        "sample_std": 0.0,
+        "min": 1.0,
+        "max": 1.0
+      },
+      "route_accuracy": {
+        "mean": 1.0,
+        "sample_std": 0.0,
+        "min": 1.0,
+        "max": 1.0
+      },
+      "dedicated_space_ablated_accuracy": {
+        "mean": 0.0,
+        "sample_std": 0.0,
+        "min": 0.0,
+        "max": 0.0
+      },
+      "mean_gate": {
+        "context": {
+          "mean": 0.03159299455583096,
+          "sample_std": 0.001702679860776184,
+          "min": 0.02995905466377735,
+          "max": 0.03413156047463417
+        },
+        "corpus": {
+          "mean": 0.03139695636928082,
+          "sample_std": 0.004142097156704883,
+          "min": 0.027656663209199905,
+          "max": 0.03604421392083168
+        },
+        "parameter": {
+          "mean": 0.9370100498199463,
+          "sample_std": 0.004388450210303041,
+          "min": 0.9317954778671265,
+          "max": 0.9423843026161194
+        }
+      }
+    }
+  },
+  "runs": {
+    "40": {
+      "metadata": {
+        "seed": 40,
+        "encoder": "sentence-transformers/all-MiniLM-L6-v2",
+        "evaluation": "known tasks with held-out and surface-matched query formulations"
+      },
+      "full_model": {
+        "context_accuracy": 1.0,
+        "corpus_accuracy": 1.0,
+        "param_accuracy": 1.0,
+        "gate_on_context_task": [
+          0.9264400601387024,
+          0.042380210012197495,
+          0.03117969073355198
+        ],
+        "gate_on_corpus_task": [
+          0.027532516047358513,
+          0.9498831033706665,
+          0.02258436754345894
+        ],
+        "gate_on_param_task": [
+          0.031147323548793793,
+          0.03262503072619438,
+          0.9362276792526245
+        ]
+      },
+      "ablations": {
+        "context_task_without_ctx": 0.06666667014360428,
+        "corpus_task_without_corpus": 0.0,
+        "param_task_without_params": 0.0
+      },
+      "held_out_formulations": {
+        "context": {
+          "task_accuracy": 1.0,
+          "route_accuracy": 1.0,
+          "mean_gate": [
+            0.8074486255645752,
+            0.05390634387731552,
+            0.1386449784040451
+          ],
+          "dedicated_space_ablated_accuracy": 0.0
+        },
+        "corpus": {
+          "task_accuracy": 1.0,
+          "route_accuracy": 1.0,
+          "mean_gate": [
+            0.11467910557985306,
+            0.7533337473869324,
+            0.13198724389076233
+          ],
+          "dedicated_space_ablated_accuracy": 0.0
+        },
+        "parameter": {
+          "task_accuracy": 0.9333333373069763,
+          "route_accuracy": 1.0,
+          "mean_gate": [
+            0.05143995210528374,
+            0.03477271646261215,
+            0.913787305355072
+          ],
+          "dedicated_space_ablated_accuracy": 0.0
+        }
+      },
+      "surface_matched_formulations": {
+        "context": {
+          "task_accuracy": 1.0,
+          "route_accuracy": 1.0,
+          "mean_gate": [
+            0.6848649382591248,
+            0.05893463268876076,
+            0.2562004625797272
+          ],
+          "dedicated_space_ablated_accuracy": 0.0
+        },
+        "corpus": {
+          "task_accuracy": 0.9800000190734863,
+          "route_accuracy": 0.8399999737739563,
+          "mean_gate": [
+            0.12031978368759155,
+            0.5915226340293884,
+            0.28815758228302
+          ],
+          "dedicated_space_ablated_accuracy": 0.0
+        },
+        "parameter": {
+          "task_accuracy": 1.0,
+          "route_accuracy": 1.0,
+          "mean_gate": [
+            0.031059129163622856,
+            0.028909116983413696,
+            0.9400318264961243
+          ],
+          "dedicated_space_ablated_accuracy": 0.0
+        }
+      }
+    },
+    "41": {
+      "metadata": {
+        "seed": 41,
+        "encoder": "sentence-transformers/all-MiniLM-L6-v2",
+        "evaluation": "known tasks with held-out and surface-matched query formulations"
+      },
+      "full_model": {
+        "context_accuracy": 1.0,
+        "corpus_accuracy": 1.0,
+        "param_accuracy": 1.0,
+        "gate_on_context_task": [
+          0.918125331401825,
+          0.04935361444950104,
+          0.03252101317048073
+        ],
+        "gate_on_corpus_task": [
+          0.03846226632595062,
+          0.9333238005638123,
+          0.028213882818818092
+        ],
+        "gate_on_param_task": [
+          0.032565705478191376,
+          0.04065106064081192,
+          0.9267832636833191
+        ]
+      },
+      "ablations": {
+        "context_task_without_ctx": 0.0,
+        "corpus_task_without_corpus": 0.0,
+        "param_task_without_params": 0.0
+      },
+      "held_out_formulations": {
+        "context": {
+          "task_accuracy": 1.0,
+          "route_accuracy": 1.0,
+          "mean_gate": [
+            0.8047412037849426,
+            0.05961756780743599,
+            0.13564123213291168
+          ],
+          "dedicated_space_ablated_accuracy": 0.0
+        },
+        "corpus": {
+          "task_accuracy": 1.0,
+          "route_accuracy": 1.0,
+          "mean_gate": [
+            0.12304170429706573,
+            0.7328662276268005,
+            0.14409199357032776
+          ],
+          "dedicated_space_ablated_accuracy": 0.0
+        },
+        "parameter": {
+          "task_accuracy": 0.9333333373069763,
+          "route_accuracy": 1.0,
+          "mean_gate": [
+            0.0526561513543129,
+            0.04319273307919502,
+            0.9041510820388794
+          ],
+          "dedicated_space_ablated_accuracy": 0.0
+        }
+      },
+      "surface_matched_formulations": {
+        "context": {
+          "task_accuracy": 1.0,
+          "route_accuracy": 1.0,
+          "mean_gate": [
+            0.6744275689125061,
+            0.06459172070026398,
+            0.2609807252883911
+          ],
+          "dedicated_space_ablated_accuracy": 0.0
+        },
+        "corpus": {
+          "task_accuracy": 0.9599999785423279,
+          "route_accuracy": 0.8199999928474426,
+          "mean_gate": [
+            0.12913639843463898,
+            0.5744150876998901,
+            0.2964484989643097
+          ],
+          "dedicated_space_ablated_accuracy": 0.0
+        },
+        "parameter": {
+          "task_accuracy": 1.0,
+          "route_accuracy": 1.0,
+          "mean_gate": [
+            0.032439276576042175,
+            0.03576525300741196,
+            0.9317954778671265
+          ],
+          "dedicated_space_ablated_accuracy": 0.0
+        }
+      }
+    },
+    "42": {
+      "metadata": {
+        "seed": 42,
+        "encoder": "sentence-transformers/all-MiniLM-L6-v2",
+        "evaluation": "known tasks with held-out and surface-matched query formulations"
+      },
+      "full_model": {
+        "context_accuracy": 1.0,
+        "corpus_accuracy": 1.0,
+        "param_accuracy": 1.0,
+        "gate_on_context_task": [
+          0.9323284029960632,
+          0.04122590273618698,
+          0.026445675641298294
+        ],
+        "gate_on_corpus_task": [
+          0.04535606876015663,
+          0.9183319211006165,
+          0.03631199896335602
+        ],
+        "gate_on_param_task": [
+          0.034805234521627426,
+          0.03287520632147789,
+          0.9323195219039917
+        ]
+      },
+      "ablations": {
+        "context_task_without_ctx": 0.06666667014360428,
+        "corpus_task_without_corpus": 0.0,
+        "param_task_without_params": 0.0
+      },
+      "held_out_formulations": {
+        "context": {
+          "task_accuracy": 1.0,
+          "route_accuracy": 1.0,
+          "mean_gate": [
+            0.835333526134491,
+            0.04760538786649704,
+            0.1170610710978508
+          ],
+          "dedicated_space_ablated_accuracy": 0.0
+        },
+        "corpus": {
+          "task_accuracy": 1.0,
+          "route_accuracy": 1.0,
+          "mean_gate": [
+            0.1338099241256714,
+            0.7030942440032959,
+            0.16309577226638794
+          ],
+          "dedicated_space_ablated_accuracy": 0.0
+        },
+        "parameter": {
+          "task_accuracy": 0.9333333373069763,
+          "route_accuracy": 1.0,
+          "mean_gate": [
+            0.05538254976272583,
+            0.03417572006583214,
+            0.9104416966438293
+          ],
+          "dedicated_space_ablated_accuracy": 0.0
+        }
+      },
+      "surface_matched_formulations": {
+        "context": {
+          "task_accuracy": 1.0,
+          "route_accuracy": 1.0,
+          "mean_gate": [
+            0.7132791876792908,
+            0.0501536950469017,
+            0.2365671545267105
+          ],
+          "dedicated_space_ablated_accuracy": 0.0
+        },
+        "corpus": {
+          "task_accuracy": 0.9599999785423279,
+          "route_accuracy": 0.8199999928474426,
+          "mean_gate": [
+            0.1371789425611496,
+            0.5332418084144592,
+            0.32957926392555237
+          ],
+          "dedicated_space_ablated_accuracy": 0.0
+        },
+        "parameter": {
+          "task_accuracy": 1.0,
+          "route_accuracy": 1.0,
+          "mean_gate": [
+            0.03413156047463417,
+            0.028609534725546837,
+            0.9372588396072388
+          ],
+          "dedicated_space_ablated_accuracy": 0.0
+        }
+      }
+    },
+    "43": {
+      "metadata": {
+        "seed": 43,
+        "encoder": "sentence-transformers/all-MiniLM-L6-v2",
+        "evaluation": "known tasks with held-out and surface-matched query formulations"
+      },
+      "full_model": {
+        "context_accuracy": 1.0,
+        "corpus_accuracy": 1.0,
+        "param_accuracy": 1.0,
+        "gate_on_context_task": [
+          0.9178419709205627,
+          0.05207356438040733,
+          0.030084479600191116
+        ],
+        "gate_on_corpus_task": [
+          0.04163840785622597,
+          0.9318748712539673,
+          0.026486804708838463
+        ],
+        "gate_on_param_task": [
+          0.03092684969305992,
+          0.03172583132982254,
+          0.9373473525047302
+        ]
+      },
+      "ablations": {
+        "context_task_without_ctx": 0.0,
+        "corpus_task_without_corpus": 0.0,
+        "param_task_without_params": 0.0
+      },
+      "held_out_formulations": {
+        "context": {
+          "task_accuracy": 1.0,
+          "route_accuracy": 1.0,
+          "mean_gate": [
+            0.8054158687591553,
+            0.05897199362516403,
+            0.1356121450662613
+          ],
+          "dedicated_space_ablated_accuracy": 0.0
+        },
+        "corpus": {
+          "task_accuracy": 1.0,
+          "route_accuracy": 1.0,
+          "mean_gate": [
+            0.1366487592458725,
+            0.717609703540802,
+            0.1457415521144867
+          ],
+          "dedicated_space_ablated_accuracy": 0.0
+        },
+        "parameter": {
+          "task_accuracy": 0.9333333373069763,
+          "route_accuracy": 1.0,
+          "mean_gate": [
+            0.04857702553272247,
+            0.034980107098817825,
+            0.91644287109375
+          ],
+          "dedicated_space_ablated_accuracy": 0.0
+        }
+      },
+      "surface_matched_formulations": {
+        "context": {
+          "task_accuracy": 1.0,
+          "route_accuracy": 1.0,
+          "mean_gate": [
+            0.6658135056495667,
+            0.06495005637407303,
+            0.2692364752292633
+          ],
+          "dedicated_space_ablated_accuracy": 0.0
+        },
+        "corpus": {
+          "task_accuracy": 1.0,
+          "route_accuracy": 0.8199999928474426,
+          "mean_gate": [
+            0.13372936844825745,
+            0.5694299936294556,
+            0.2968406081199646
+          ],
+          "dedicated_space_ablated_accuracy": 0.0
+        },
+        "parameter": {
+          "task_accuracy": 1.0,
+          "route_accuracy": 1.0,
+          "mean_gate": [
+            0.02995905466377735,
+            0.027656663209199905,
+            0.9423843026161194
+          ],
+          "dedicated_space_ablated_accuracy": 0.0
+        }
+      }
+    },
+    "44": {
+      "metadata": {
+        "seed": 44,
+        "encoder": "sentence-transformers/all-MiniLM-L6-v2",
+        "evaluation": "known tasks with held-out and surface-matched query formulations"
+      },
+      "full_model": {
+        "context_accuracy": 1.0,
+        "corpus_accuracy": 1.0,
+        "param_accuracy": 1.0,
+        "gate_on_context_task": [
+          0.9111042022705078,
+          0.05463843420147896,
+          0.03425731882452965
+        ],
+        "gate_on_corpus_task": [
+          0.04049178585410118,
+          0.927086591720581,
+          0.03242161124944687
+        ],
+        "gate_on_param_task": [
+          0.03227057680487633,
+          0.04185659810900688,
+          0.925872802734375
+        ]
+      },
+      "ablations": {
+        "context_task_without_ctx": 0.06666667014360428,
+        "corpus_task_without_corpus": 0.0,
+        "param_task_without_params": 0.0
+      },
+      "held_out_formulations": {
+        "context": {
+          "task_accuracy": 1.0,
+          "route_accuracy": 1.0,
+          "mean_gate": [
+            0.799352765083313,
+            0.0688851848244667,
+            0.1317620426416397
+          ],
+          "dedicated_space_ablated_accuracy": 0.0
+        },
+        "corpus": {
+          "task_accuracy": 1.0,
+          "route_accuracy": 1.0,
+          "mean_gate": [
+            0.1288437843322754,
+            0.7194868326187134,
+            0.15166941285133362
+          ],
+          "dedicated_space_ablated_accuracy": 0.0
+        },
+        "parameter": {
+          "task_accuracy": 0.9333333373069763,
+          "route_accuracy": 1.0,
+          "mean_gate": [
+            0.05064298212528229,
+            0.044601719826459885,
+            0.9047552943229675
+          ],
+          "dedicated_space_ablated_accuracy": 0.0
+        }
+      },
+      "surface_matched_formulations": {
+        "context": {
+          "task_accuracy": 1.0,
+          "route_accuracy": 1.0,
+          "mean_gate": [
+            0.6580101847648621,
+            0.07386435568332672,
+            0.26812544465065
+          ],
+          "dedicated_space_ablated_accuracy": 0.0
+        },
+        "corpus": {
+          "task_accuracy": 0.9599999785423279,
+          "route_accuracy": 0.8199999928474426,
+          "mean_gate": [
+            0.12635570764541626,
+            0.5581748485565186,
+            0.3154694736003876
+          ],
+          "dedicated_space_ablated_accuracy": 0.0
+        },
+        "parameter": {
+          "task_accuracy": 1.0,
+          "route_accuracy": 1.0,
+          "mean_gate": [
+            0.030375951901078224,
+            0.03604421392083168,
+            0.9335798025131226
+          ],
+          "dedicated_space_ablated_accuracy": 0.0
+        }
+      }
+    }
+  }
+}

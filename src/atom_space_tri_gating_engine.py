@@ -2,7 +2,7 @@
 src/atom_space_tri_gating_engine.py
 
 FULL TRI-SPACE BENCHMARK (Context + Corpus + Parameters)
-Calibrated Routing & Functional Orthogonality:
+Calibrated Routing & Path Ablation:
 - Unit-norm parameter expert keys (resolves Section 3.2 scale mismatch)
 - Tied expert values to vocabulary embeddings
 - Exports synchronized summary JSON to both output and results directories
@@ -25,7 +25,7 @@ OUT_DIR = os.path.join("results", "details", "tri_gating_probe_outputs")
 
 @dataclass
 class TriEngineConfig:
-    seed: int = 42
+    seed: int = field(default_factory=lambda: int(os.environ.get("ROAS_SEED", "42")))
     encoder_name: str = "sentence-transformers/all-MiniLM-L6-v2"
     device: str = "cuda" if torch.cuda.is_available() else "cpu"
     
@@ -289,23 +289,35 @@ def run_tri_space_experiment():
     # Encode Corpus
     corp_sents = [f"{s} {r} {o}." for s, r, o in CORPUS_FACTS]
     corp_queries = [f"What {r} {s}?" for s, r, o in CORPUS_FACTS]
+    corp_test_queries = [f"Retrieve the stored completion for this statement: {s} {r} ___." for s, r, o in CORPUS_FACTS]
+    corp_matched_queries = [f"Determine the output for: {s} {r}." for s, r, o in CORPUS_FACTS]
     corp_tgts = torch.tensor([target2id[o] for _, _, o in CORPUS_FACTS], device=device)
     corp_k_raw = encode_clean(corp_sents)
     corp_q_raw = encode_clean(corp_queries)
+    corp_test_q_raw = encode_clean(corp_test_queries)
+    corp_matched_q_raw = encode_clean(corp_matched_queries)
 
     # Encode Context
     ctx_premises = [f"Premise: {s} {r} {o}." for s, r, o in CONTEXT_EPHEMERAL]
     ctx_queries = [f"According to premise, what {r} {s}?" for s, r, o in CONTEXT_EPHEMERAL]
+    ctx_test_queries = [f"Using only the temporary statement, identify what {s} {r}." for s, r, o in CONTEXT_EPHEMERAL]
+    ctx_matched_queries = [f"Determine the output for: {s} {r}." for s, r, o in CONTEXT_EPHEMERAL]
     ctx_tgts = torch.tensor([target2id[o] for _, _, o in CONTEXT_EPHEMERAL], device=device)
     ctx_k_raw = encode_clean(ctx_premises)
     ctx_q_raw = encode_clean(ctx_queries)
+    ctx_test_q_raw = encode_clean(ctx_test_queries)
+    ctx_matched_q_raw = encode_clean(ctx_matched_queries)
 
     # Encode Parameter Experts (Keys are unit-norm triggers)
     param_triggers = [f"Execute task: {desc}." for desc, _, _ in PARAM_EXPERT_TASKS]
     param_queries = [desc for desc, _, _ in PARAM_EXPERT_TASKS]
+    param_test_queries = [f"Return the expert result for this operation: {desc}." for desc, _, _ in PARAM_EXPERT_TASKS]
+    param_matched_queries = [f"Determine the output for: {desc}." for desc, _, _ in PARAM_EXPERT_TASKS]
     param_tgts = torch.tensor([target2id[o] for _, _, o in PARAM_EXPERT_TASKS], device=device)
     param_k_raw = encode_clean(param_triggers)
     param_q_raw = encode_clean(param_queries)
+    param_test_q_raw = encode_clean(param_test_queries)
+    param_matched_q_raw = encode_clean(param_matched_queries)
 
     in_dim = corp_k_raw.shape[-1]
     model = TriSpaceLanguageModel(cfg, in_dim, vocab_size, len(PARAM_EXPERT_TASKS)).to(device)
@@ -396,8 +408,73 @@ def run_tri_space_experiment():
         print(f"  When Omega_corpus is ablated -> Corpus Task Accuracy drops:    {acc_corp_full*100:5.1f}% -> {acc_corp_no_corp*100:5.1f}%")
         print(f"  When Omega_params is ablated -> Parameter Task Accuracy drops: {acc_param_full*100:5.1f}% -> {acc_param_no_param*100:5.1f}%")
 
+        print("\n[HELD-OUT QUERY FORMULATIONS]")
+        logits_ctx_test, gate_ctx_test, _ = model(
+            ctx_test_q_raw, ctx_keys=ctx_k_raw, ctx_values=ctx_vals
+        )
+        logits_corp_test, gate_corp_test, _ = model(corp_test_q_raw)
+        logits_param_test, gate_param_test, _ = model(param_test_q_raw)
+
+        acc_ctx_test = (logits_ctx_test.argmax(dim=-1) == ctx_tgts).float().mean().item()
+        acc_corp_test = (logits_corp_test.argmax(dim=-1) == corp_tgts).float().mean().item()
+        acc_param_test = (logits_param_test.argmax(dim=-1) == param_tgts).float().mean().item()
+        route_ctx_test = (gate_ctx_test.argmax(dim=-1) == 0).float().mean().item()
+        route_corp_test = (gate_corp_test.argmax(dim=-1) == 1).float().mean().item()
+        route_param_test = (gate_param_test.argmax(dim=-1) == 2).float().mean().item()
+        mean_gate_ctx_test = gate_ctx_test.mean(dim=0).tolist()
+        mean_gate_corp_test = gate_corp_test.mean(dim=0).tolist()
+        mean_gate_param_test = gate_param_test.mean(dim=0).tolist()
+
+        logits_ctx_test_ablated, _, _ = model(
+            ctx_test_q_raw, ctx_keys=ctx_k_raw, ctx_values=ctx_vals, ablate_space="ctx"
+        )
+        logits_corp_test_ablated, _, _ = model(corp_test_q_raw, ablate_space="corpus")
+        logits_param_test_ablated, _, _ = model(param_test_q_raw, ablate_space="params")
+        acc_ctx_test_ablated = (logits_ctx_test_ablated.argmax(dim=-1) == ctx_tgts).float().mean().item()
+        acc_corp_test_ablated = (logits_corp_test_ablated.argmax(dim=-1) == corp_tgts).float().mean().item()
+        acc_param_test_ablated = (logits_param_test_ablated.argmax(dim=-1) == param_tgts).float().mean().item()
+
+        print(f"  Context   -> Task: {acc_ctx_test*100:5.1f}% | Route: {route_ctx_test*100:5.1f}% | Ablated: {acc_ctx_test_ablated*100:5.1f}%")
+        print(f"  Corpus    -> Task: {acc_corp_test*100:5.1f}% | Route: {route_corp_test*100:5.1f}% | Ablated: {acc_corp_test_ablated*100:5.1f}%")
+        print(f"  Parameter -> Task: {acc_param_test*100:5.1f}% | Route: {route_param_test*100:5.1f}% | Ablated: {acc_param_test_ablated*100:5.1f}%")
+
+        print("\n[SURFACE-MATCHED QUERY FORMULATIONS]")
+        logits_ctx_matched, gate_ctx_matched, _ = model(
+            ctx_matched_q_raw, ctx_keys=ctx_k_raw, ctx_values=ctx_vals
+        )
+        logits_corp_matched, gate_corp_matched, _ = model(corp_matched_q_raw)
+        logits_param_matched, gate_param_matched, _ = model(param_matched_q_raw)
+
+        acc_ctx_matched = (logits_ctx_matched.argmax(dim=-1) == ctx_tgts).float().mean().item()
+        acc_corp_matched = (logits_corp_matched.argmax(dim=-1) == corp_tgts).float().mean().item()
+        acc_param_matched = (logits_param_matched.argmax(dim=-1) == param_tgts).float().mean().item()
+        route_ctx_matched = (gate_ctx_matched.argmax(dim=-1) == 0).float().mean().item()
+        route_corp_matched = (gate_corp_matched.argmax(dim=-1) == 1).float().mean().item()
+        route_param_matched = (gate_param_matched.argmax(dim=-1) == 2).float().mean().item()
+        mean_gate_ctx_matched = gate_ctx_matched.mean(dim=0).tolist()
+        mean_gate_corp_matched = gate_corp_matched.mean(dim=0).tolist()
+        mean_gate_param_matched = gate_param_matched.mean(dim=0).tolist()
+
+        logits_ctx_matched_ablated, _, _ = model(
+            ctx_matched_q_raw, ctx_keys=ctx_k_raw, ctx_values=ctx_vals, ablate_space="ctx"
+        )
+        logits_corp_matched_ablated, _, _ = model(corp_matched_q_raw, ablate_space="corpus")
+        logits_param_matched_ablated, _, _ = model(param_matched_q_raw, ablate_space="params")
+        acc_ctx_matched_ablated = (logits_ctx_matched_ablated.argmax(dim=-1) == ctx_tgts).float().mean().item()
+        acc_corp_matched_ablated = (logits_corp_matched_ablated.argmax(dim=-1) == corp_tgts).float().mean().item()
+        acc_param_matched_ablated = (logits_param_matched_ablated.argmax(dim=-1) == param_tgts).float().mean().item()
+
+        print(f"  Context   -> Task: {acc_ctx_matched*100:5.1f}% | Route: {route_ctx_matched*100:5.1f}% | Ablated: {acc_ctx_matched_ablated*100:5.1f}%")
+        print(f"  Corpus    -> Task: {acc_corp_matched*100:5.1f}% | Route: {route_corp_matched*100:5.1f}% | Ablated: {acc_corp_matched_ablated*100:5.1f}%")
+        print(f"  Parameter -> Task: {acc_param_matched*100:5.1f}% | Route: {route_param_matched*100:5.1f}% | Ablated: {acc_param_matched_ablated*100:5.1f}%")
+
     # Serialize Summary JSON to BOTH OUT_DIR and results/
     summary = {
+        "metadata": {
+            "seed": cfg.seed,
+            "encoder": cfg.encoder_name,
+            "evaluation": "known tasks with held-out and surface-matched query formulations"
+        },
         "full_model": {
             "context_accuracy": float(acc_ctx_full),
             "corpus_accuracy": float(acc_corp_full),
@@ -410,6 +487,46 @@ def run_tri_space_experiment():
             "context_task_without_ctx": float(acc_ctx_no_ctx),
             "corpus_task_without_corpus": float(acc_corp_no_corp),
             "param_task_without_params": float(acc_param_no_param)
+        },
+        "held_out_formulations": {
+            "context": {
+                "task_accuracy": float(acc_ctx_test),
+                "route_accuracy": float(route_ctx_test),
+                "mean_gate": mean_gate_ctx_test,
+                "dedicated_space_ablated_accuracy": float(acc_ctx_test_ablated)
+            },
+            "corpus": {
+                "task_accuracy": float(acc_corp_test),
+                "route_accuracy": float(route_corp_test),
+                "mean_gate": mean_gate_corp_test,
+                "dedicated_space_ablated_accuracy": float(acc_corp_test_ablated)
+            },
+            "parameter": {
+                "task_accuracy": float(acc_param_test),
+                "route_accuracy": float(route_param_test),
+                "mean_gate": mean_gate_param_test,
+                "dedicated_space_ablated_accuracy": float(acc_param_test_ablated)
+            }
+        },
+        "surface_matched_formulations": {
+            "context": {
+                "task_accuracy": float(acc_ctx_matched),
+                "route_accuracy": float(route_ctx_matched),
+                "mean_gate": mean_gate_ctx_matched,
+                "dedicated_space_ablated_accuracy": float(acc_ctx_matched_ablated)
+            },
+            "corpus": {
+                "task_accuracy": float(acc_corp_matched),
+                "route_accuracy": float(route_corp_matched),
+                "mean_gate": mean_gate_corp_matched,
+                "dedicated_space_ablated_accuracy": float(acc_corp_matched_ablated)
+            },
+            "parameter": {
+                "task_accuracy": float(acc_param_matched),
+                "route_accuracy": float(route_param_matched),
+                "mean_gate": mean_gate_param_matched,
+                "dedicated_space_ablated_accuracy": float(acc_param_matched_ablated)
+            }
         }
     }
     
@@ -420,7 +537,11 @@ def run_tri_space_experiment():
 
     # Plotting
     labels = ["Context Tasks", "Corpus Tasks", "Parameter Tasks"]
-    gate_matrix = np.array([mean_gate_ctx, mean_gate_corp, mean_gate_param]) * 100
+    gate_matrix = np.array([
+        mean_gate_ctx_matched,
+        mean_gate_corp_matched,
+        mean_gate_param_matched
+    ]) * 100
     
     fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(11, 4.5))
     im = ax1.imshow(gate_matrix, cmap="Blues", vmin=0, vmax=100)
@@ -428,7 +549,7 @@ def run_tri_space_experiment():
     ax1.set_yticks([0, 1, 2])
     ax1.set_xticklabels([r"$\Omega_{\mathrm{ctx}}$", r"$\Omega_{\mathrm{corpus}}$", r"$\Omega_{\mathrm{params}}$"], fontsize=11)
     ax1.set_yticklabels(labels, fontsize=11)
-    ax1.set_title(r"Dynamic Router Allocation $\lambda(x)$ (%)", fontsize=12)
+    ax1.set_title(r"Surface-Matched Router Allocation $\lambda(x)$ (%)", fontsize=12)
     for i in range(3):
         for j in range(3):
             ax1.text(j, i, f"{gate_matrix[i, j]:.1f}%", ha="center", va="center", 
@@ -436,16 +557,20 @@ def run_tri_space_experiment():
             
     x_indices = np.arange(3)
     width = 0.35
-    full_accs = [acc_ctx_full * 100, acc_corp_full * 100, acc_param_full * 100]
-    ablated_accs = [acc_ctx_no_ctx * 100, acc_corp_no_corp * 100, acc_param_no_param * 100]
+    full_accs = [acc_ctx_matched * 100, acc_corp_matched * 100, acc_param_matched * 100]
+    ablated_accs = [
+        acc_ctx_matched_ablated * 100,
+        acc_corp_matched_ablated * 100,
+        acc_param_matched_ablated * 100
+    ]
     
-    ax2.bar(x_indices - width/2, full_accs, width, label="Full Tri-Space Model", color="#1f77b4")
+    ax2.bar(x_indices - width/2, full_accs, width, label="Full Model (Surface-Matched)", color="#1f77b4")
     ax2.bar(x_indices + width/2, ablated_accs, width, label="Dedicated Space Ablated", color="#d62728")
     ax2.set_xticks(x_indices)
     ax2.set_xticklabels(labels, fontsize=10)
     ax2.set_ylabel("Accuracy (%)", fontsize=11)
     ax2.set_ylim(0, 115)
-    ax2.set_title("Orthogonality Ablation Study", fontsize=12)
+    ax2.set_title("Held-Out Path Ablation", fontsize=12)
     ax2.grid(True, linestyle="--", alpha=0.4, axis="y")
     ax2.legend()
     

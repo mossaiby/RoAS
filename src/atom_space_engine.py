@@ -32,7 +32,7 @@ OUT_DIR = os.path.join("results", "details", "advanced_probe_outputs")
 
 @dataclass
 class EngineConfig:
-    seed: int = 42
+    seed: int = int(os.environ.get("ROAS_SEED", "42"))
     encoder_name: str = "sentence-transformers/all-MiniLM-L6-v2"
     device: str = "cuda" if torch.cuda.is_available() else "cpu"
     
@@ -303,7 +303,7 @@ class UnifiedResidualTiedLM(nn.Module):
     """
     Unified LM with Metric-Preserving Residual Projection:
       phi(x) = Normalize(x + 0.1 * MLP(x))
-    Guarantees out-of-distribution cosine alignment for unseen pairs.
+        The zero-initialized residual preserves the backbone geometry at initialization.
     """
     def __init__(self, cfg: EngineConfig, in_feat_dim: int, vocab_size: int):
         super().__init__()
@@ -507,11 +507,19 @@ def run_experiment():
         # Post-Hoc Model Editing Benchmark
         model.eval()
         efficacy_list, generality_list, specificity_list, mu_mass_list = [], [], [], []
+        specificity_kl_list, specificity_max_prob_shift_list = [], []
+        baseline_efficacy_list, baseline_generality_list, baseline_specificity_list = [], [], []
         
         # Pre-edit baseline on existing atoms
         with torch.no_grad():
             base_logits, _ = model(cur_q)
             base_preds = base_logits.argmax(dim=-1)
+            base_probs = F.softmax(base_logits, dim=-1)
+            base_accuracy = (base_preds == cur_tgts).float().mean().item()
+            normalized_cur_keys = F.normalize(cur_k, p=2, dim=-1)
+            normalized_cur_queries = F.normalize(cur_q, p=2, dim=-1)
+            baseline_base_indices = (normalized_cur_queries @ normalized_cur_keys.T).argmax(dim=-1)
+            baseline_base_preds = cur_tgts[baseline_base_indices]
 
         norm_E = model.get_normalized_embeddings()
         for i in range(len(holdout_triplets)):
@@ -538,35 +546,106 @@ def run_experiment():
                 # 3. Specificity
                 post_logits, _ = model(cur_q)
                 post_preds = post_logits.argmax(dim=-1)
+                post_probs = F.softmax(post_logits, dim=-1)
                 spec = (base_preds == post_preds).float().mean().item()
                 specificity_list.append(spec)
+                specificity_kl_list.append(
+                    F.kl_div(post_probs.log(), base_probs, reduction="batchmean").item()
+                )
+                specificity_max_prob_shift_list.append(
+                    torch.max(torch.abs(post_probs - base_probs)).item()
+                )
+
+                # Frozen MiniLM exact 1-nearest-neighbor baseline.
+                baseline_keys = torch.cat([cur_k, k_star.unsqueeze(0)], dim=0)
+                baseline_targets = torch.cat([
+                    cur_tgts,
+                    torch.tensor([tgt_star], device=device)
+                ])
+                normalized_baseline_keys = F.normalize(baseline_keys, p=2, dim=-1)
+                baseline_q_index = (
+                    F.normalize(q_star, p=2, dim=-1) @ normalized_baseline_keys.T
+                ).argmax(dim=-1)
+                baseline_p_index = (
+                    F.normalize(p_star, p=2, dim=-1) @ normalized_baseline_keys.T
+                ).argmax(dim=-1)
+                baseline_post_indices = (
+                    normalized_cur_queries @ normalized_baseline_keys.T
+                ).argmax(dim=-1)
+                baseline_efficacy_list.append(
+                    int(baseline_targets[baseline_q_index].item() == tgt_star)
+                )
+                baseline_generality_list.append(
+                    int(baseline_targets[baseline_p_index].item() == tgt_star)
+                )
+                baseline_specificity_list.append(
+                    (baseline_targets[baseline_post_indices] == baseline_base_preds).float().mean().item()
+                )
                 
                 model.omega_corpus.delete_last_atom()
 
         # TRUE QUADRATURE TRUNCATION ERROR: ||z_exact - z_k||_2 on context vectors
         quad_errors = {tau: {} for tau in cfg.temperatures}
+        quad_diagnostics = {tau: {} for tau in cfg.temperatures}
         with torch.no_grad():
+            normalized_values = F.normalize(model.omega_corpus.values, p=2, dim=-1)
+            value_max = torch.linalg.vector_norm(normalized_values, dim=-1).max().item()
+            query_vectors = model.phi(cur_q)
+            key_vectors = model.phi(model.omega_corpus.keys)
+            raw_scores = query_vectors @ key_vectors.T
+            sorted_scores, _ = torch.sort(raw_scores, dim=-1, descending=True)
             for tau in cfg.temperatures:
                 z_exact = model.read_vector(cur_q, tau=tau, top_k=None)
                 for k in cfg.top_k_list:
                     if k <= len(cur_k):
                         z_k = model.read_vector(cur_q, tau=tau, top_k=k)
-                        err = torch.norm(z_exact - z_k, p=2, dim=-1).mean().item()
-                        quad_errors[tau][k] = err
+                        per_query_error = torch.norm(z_exact - z_k, p=2, dim=-1)
+                        quad_errors[tau][k] = per_query_error.mean().item()
+                        if k < len(cur_k):
+                            first_gap = sorted_scores[:, 0] - sorted_scores[:, k]
+                            boundary_gap = sorted_scores[:, k - 1] - sorted_scores[:, k]
+                            bound_1 = 2 * value_max * (len(cur_k) - k) * torch.exp(-first_gap / tau)
+                            bound_2 = 2 * value_max * ((len(cur_k) - k) / k) * torch.exp(-boundary_gap / tau)
+                            best_bound = torch.minimum(bound_1, bound_2)
+                            quad_diagnostics[tau][k] = {
+                                "mean_error": per_query_error.mean().item(),
+                                "max_error": per_query_error.max().item(),
+                                "mean_bound": best_bound.mean().item(),
+                                "min_bound_slack": (best_bound - per_query_error).min().item(),
+                                "empirical_coverage": (per_query_error <= best_bound + 1e-6).float().mean().item(),
+                                "mean_first_gap": first_gap.mean().item(),
+                                "mean_boundary_gap": boundary_gap.mean().item()
+                            }
 
         results_across_densities[density] = {
             "efficacy": float(np.mean(efficacy_list)),
             "generality": float(np.mean(generality_list)),
             "specificity": float(np.mean(specificity_list)),
+            "base_training_accuracy": base_accuracy,
+            "specificity_mean_kl": float(np.mean(specificity_kl_list)),
+            "specificity_max_probability_shift": float(np.max(specificity_max_prob_shift_list)),
+            "frozen_exact_1nn_baseline": {
+                "efficacy": float(np.mean(baseline_efficacy_list)),
+                "generality": float(np.mean(baseline_generality_list)),
+                "specificity": float(np.mean(baseline_specificity_list))
+            },
             "novel_atom_attention_mass": float(np.mean(mu_mass_list)),
             "adapter_spectral_product": L_bound,
-            "truncation_error": quad_errors
+            "truncation_error": quad_errors,
+            "truncation_bound_diagnostics": quad_diagnostics
         }
         
-        print(f"  [Results] Efficacy: {np.mean(efficacy_list)*100:5.1f}% | "
-              f"Generality: {np.mean(generality_list)*100:5.1f}% | "
-              f"Specificity: {np.mean(specificity_list)*100:5.1f}% | "
-              f"Novel Attention Mass: {np.mean(mu_mass_list)*100:5.1f}%")
+        print(
+            f"  [Results] Efficacy: {np.mean(efficacy_list)*100:5.1f}% | "
+            f"Generality: {np.mean(generality_list)*100:5.1f}% | "
+            f"Specificity: {np.mean(specificity_list)*100:5.1f}% | "
+            f"Novel Attention Mass: {np.mean(mu_mass_list)*100:5.1f}%"
+        )
+        print(
+            f"  [Frozen Exact 1-NN] Efficacy: {np.mean(baseline_efficacy_list)*100:5.1f}% | "
+            f"Generality: {np.mean(baseline_generality_list)*100:5.1f}% | "
+            f"Specificity: {np.mean(baseline_specificity_list)*100:5.1f}%"
+        )
 
     # Save to both OUT_DIR and results/
     with open(os.path.join(OUT_DIR, "summary_v3.json"), "w") as f:

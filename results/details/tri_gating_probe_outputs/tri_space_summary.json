@@ -1,4 +1,9 @@
 {
+  "metadata": {
+    "seed": 42,
+    "encoder": "sentence-transformers/all-MiniLM-L6-v2",
+    "evaluation": "known tasks with held-out and surface-matched query formulations"
+  },
   "full_model": {
     "context_accuracy": 1.0,
     "corpus_accuracy": 1.0,
@@ -23,5 +28,69 @@
     "context_task_without_ctx": 0.06666667014360428,
     "corpus_task_without_corpus": 0.0,
     "param_task_without_params": 0.0
+  },
+  "held_out_formulations": {
+    "context": {
+      "task_accuracy": 1.0,
+      "route_accuracy": 1.0,
+      "mean_gate": [
+        0.835333526134491,
+        0.04760538786649704,
+        0.1170610710978508
+      ],
+      "dedicated_space_ablated_accuracy": 0.0
+    },
+    "corpus": {
+      "task_accuracy": 1.0,
+      "route_accuracy": 1.0,
+      "mean_gate": [
+        0.1338099241256714,
+        0.7030942440032959,
+        0.16309577226638794
+      ],
+      "dedicated_space_ablated_accuracy": 0.0
+    },
+    "parameter": {
+      "task_accuracy": 0.9333333373069763,
+      "route_accuracy": 1.0,
+      "mean_gate": [
+        0.05538254976272583,
+        0.03417572006583214,
+        0.9104416966438293
+      ],
+      "dedicated_space_ablated_accuracy": 0.0
+    }
+  },
+  "surface_matched_formulations": {
+    "context": {
+      "task_accuracy": 1.0,
+      "route_accuracy": 1.0,
+      "mean_gate": [
+        0.7132791876792908,
+        0.0501536950469017,
+        0.2365671545267105
+      ],
+      "dedicated_space_ablated_accuracy": 0.0
+    },
+    "corpus": {
+      "task_accuracy": 0.9599999785423279,
+      "route_accuracy": 0.8199999928474426,
+      "mean_gate": [
+        0.1371789425611496,
+        0.5332418084144592,
+        0.32957926392555237
+      ],
+      "dedicated_space_ablated_accuracy": 0.0
+    },
+    "parameter": {
+      "task_accuracy": 1.0,
+      "route_accuracy": 1.0,
+      "mean_gate": [
+        0.03413156047463417,
+        0.028609534725546837,
+        0.9372588396072388
+      ],
+      "dedicated_space_ablated_accuracy": 0.0
+    }
   }
 }

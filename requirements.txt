@@ -1,11 +1,7 @@
-# Instruct pip to pull GPU wheels from PyTorch's CUDA repository
---extra-index-url https://download.pytorch.org/whl/cu121
-
-# PyTorch with CUDA support
-torch>=2.1.0
-
-# Core dependencies
-numpy>=1.24.0,<2.0.0
-sentence-transformers>=2.3.0
-transformers>=4.36.0
-matplotlib>=3.7.0
+# Versions used to generate the committed result artifacts with Python 3.11.9.
+torch==2.14.0
+numpy==1.26.4
+sentence-transformers==6.0.1
+transformers==5.16.1
+matplotlib==3.11.1
+faiss-cpu==1.13.2

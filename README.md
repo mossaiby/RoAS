@@ -78,6 +78,9 @@ python src/gpt2_finetune_baseline.py
 
 # Benchmark 10: Simplified single-layer rank-one edit (ROME-lite) baseline for the ten GPT-2 facts
 python src/rome_baseline_engine.py
+
+# Benchmark 11: Covariance-regularized ROME reproduction on the full 500-record CounterFact set
+python src/counterfact_rome_benchmark.py
 ```
 
 The CounterFact script downloads the official dataset to `data/counterfact.json` on first use. Use `--limit`, `--max-queries-per-type`, and the other command-line flags for smaller diagnostic runs.
@@ -100,6 +103,7 @@ The CounterFact script downloads the official dataset to `data/counterfact.json`
 | **GPT-2 Steering** | Canonical / paraphrase first-token correction | **10/10 / 9/10** | Ten controls bypassed intervention |
 | **Naive Fine-Tuning Baseline** | Efficacy / generality / neighborhood specificity | **100% / 70% / 58.9%** | Full-parameter FT on the same ten facts; higher drift than the atom-space read |
 | **ROME-Lite Baseline** | Efficacy / generality / neighborhood specificity | **100% / 40% / 87.8%** | Simplified single-layer rank-one edit on the same ten facts; better locality than FT, weaker paraphrase generality |
+| **CounterFact-Scale ROME** | Efficacy / Paraphrase / Neighborhood Score | **85.2% / 59.5% / 70.1%** | Covariance-regularized rank-one edit, real subject spans, 500 CounterFact records; not a like-for-like reproduction of published ROME numbers |
 
 ---
 

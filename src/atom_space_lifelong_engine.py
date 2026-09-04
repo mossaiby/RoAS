@@ -1,12 +1,10 @@
 """
-atom_space_lifelong_engine.py
+src/atom_space_lifelong_engine.py
 
 STANDALONE LIFELONG CUMULATIVE EDITING ENGINE
 Tests long-term memory stability and capacity:
-- Sequentially inserts all 40 holdout facts permanently (no teardown)
-- Evaluates cumulative recall of earlier vs. later edits
-- Monitors background interference on the original 160 facts
-- Measures attention mass drift under pool expansion
+- Sequentially inserts all 40 holdout facts permanently (no teardown).
+- Synchronizes output logs directly to both OUT_DIR and results/.
 """
 
 import json
@@ -21,12 +19,8 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-OUT_DIR = "lifelong_probe_outputs"
+OUT_DIR = os.path.join("results", "details", "lifelong_probe_outputs")
 
-
-# ============================================================================
-# 1. Configuration
-# ============================================================================
 
 @dataclass
 class EngineConfig:
@@ -34,22 +28,14 @@ class EngineConfig:
     encoder_name: str = "sentence-transformers/all-MiniLM-L6-v2"
     device: str = "cuda" if torch.cuda.is_available() else "cpu"
     
-    # Model dimensions
     token_embed_dim: int = 128
     hidden_dim: int = 128
     
-    # Training
     lr: float = 1e-3
     epochs: int = 1500
     patience: int = 150
-    
-    # Softmax read temperature
     read_temperature: float = 0.07
 
-
-# ============================================================================
-# 2. Structured Dataset (4 Domains x 50 Facts = 200 Facts)
-# ============================================================================
 
 RAW_DOMAINS = {
     "space": [
@@ -93,7 +79,6 @@ RAW_DOMAINS = {
         ("Kepler", "discovered thousands of transit", "Exoplanets"),
         ("Chandra", "observes high-energy emissions in", "X-Rays"),
         ("Spitzer", "studied cool astronomical targets using", "Infrared"),
-        # Holdouts (10 novel facts to be inserted sequentially)
         ("Eris", "is a massive trans-Neptunian dwarf planet in the", "Scattered Disc"),
         ("Haumea", "is a rapidly spinning elongated dwarf", "Planet"),
         ("Makemake", "is a distant frozen dwarf planet in the", "Kuiper Belt"),
@@ -146,7 +131,6 @@ RAW_DOMAINS = {
         ("Kafka", "distributes streaming partitioned message logs across fault-tolerant", "Clusters"),
         ("GraphQL", "allows clients to request precisely structured custom response", "Fields"),
         ("WebAssembly", "executes near-native binary instructions inside modern web", "Browsers"),
-        # Holdouts
         ("QUIC", "accelerates web transport streams natively over", "UDP"),
         ("Raft", "achieves distributed state machine agreement through leader", "Election"),
         ("Paxos", "is a foundational distributed network consensus", "Protocol"),
@@ -199,7 +183,6 @@ RAW_DOMAINS = {
         ("Bromine", "is a fuming reddish-brown halogen that exists as a liquid at", "Room Temperature"),
         ("Iodine", "is a purple halogen essential for regulating the human thyroid", "Gland"),
         ("Xenon", "is a heavy noble gas used in specialized ion thruster", "Engines"),
-        # Holdouts
         ("Bismuth", "exhibits extremely weak radioactivity with half-life exceeding the universe", "Age"),
         ("Gallium", "is a post-transition metal that melts inside the warmth of a human", "Hand"),
         ("Cesium", "is an alkali metal used to define the precise scientific second in atomic", "Clocks"),
@@ -252,7 +235,6 @@ RAW_DOMAINS = {
         ("Liver", "synthesizes bile salts and detoxifies metabolic compounds in the", "Body"),
         ("Pancreas", "secretes both digestive enzymes and vital endocrine metabolic", "Hormones"),
         ("Thyroid", "synthesizes iodinated hormones to govern baseline metabolic", "Rates"),
-        # Holdouts
         ("Telomere", "caps chromosome ends to protect genomic integrity during repetitive", "Replication"),
         ("Prion", "is a misfolded infectious protein that induces neurological degenerative", "Diseases"),
         ("Epigenetics", "modulates gene expression without altering underlying nucleotide DNA", "Sequences"),
@@ -266,10 +248,6 @@ RAW_DOMAINS = {
     ]
 }
 
-
-# ============================================================================
-# 3. Model Architecture
-# ============================================================================
 
 class AtomSpace(nn.Module):
     def __init__(self, name: str, value_dim: int):
@@ -295,7 +273,6 @@ class UnifiedResidualTiedLM(nn.Module):
         self.vocab_size = vocab_size
         self.value_dim = cfg.token_embed_dim
         
-        # Zero-initialized residual adapter
         self.adapter = nn.Sequential(
             nn.Linear(in_feat_dim, cfg.hidden_dim),
             nn.LayerNorm(cfg.hidden_dim),
@@ -305,7 +282,6 @@ class UnifiedResidualTiedLM(nn.Module):
         nn.init.zeros_(self.adapter[-1].weight)
         nn.init.zeros_(self.adapter[-1].bias)
         
-        # Tied Token Embeddings
         self.token_embeddings = nn.Embedding(vocab_size, cfg.token_embed_dim)
         nn.init.normal_(self.token_embeddings.weight, std=0.02)
         
@@ -334,24 +310,26 @@ class UnifiedResidualTiedLM(nn.Module):
         return logits, mu
 
 
-# ============================================================================
-# 4. Lifelong Cumulative Benchmark Execution
-# ============================================================================
-
 def run_lifelong_experiment():
     os.makedirs(OUT_DIR, exist_ok=True)
+    os.makedirs("results", exist_ok=True)
     cfg = EngineConfig()
+    
+    # Deterministic Seeding
+    torch.manual_seed(cfg.seed)
+    np.random.seed(cfg.seed)
+    if torch.cuda.is_available():
+        torch.cuda.manual_seed_all(cfg.seed)
+        
     device = cfg.device
     print(f"=== Running Lifelong Cumulative Editing Engine on {device} ===")
     
     from sentence_transformers import SentenceTransformer
     backbone = SentenceTransformer(cfg.encoder_name, device=device)
     
-    # Helper to safely encode and clone tensors (strips inference-mode flags)
     def encode_clean(texts: List[str]) -> torch.Tensor:
         return backbone.encode(texts, convert_to_tensor=True, device=device).clone()
     
-    # 1. Build Vocabulary
     all_targets = set()
     for cat in RAW_DOMAINS:
         for s, r, o in RAW_DOMAINS[cat]:
@@ -360,7 +338,6 @@ def run_lifelong_experiment():
     vocab_size = len(target2id)
     print(f"Total vocabulary: {vocab_size} tokens")
 
-    # 2. Split: 160 Training Facts (Base pool) and 40 Holdout Facts
     train_triplets, holdout_triplets = [], []
     for cat in RAW_DOMAINS:
         train_triplets.extend(RAW_DOMAINS[cat][:40])
@@ -385,7 +362,6 @@ def run_lifelong_experiment():
     hold_q_raw = encode_clean(hold_queries)
     hold_p_raw = encode_clean(hold_paras)
 
-    # 3. Train Base Model on the 160 Facts
     print("\nTraining base model on 160 atoms...")
     model = UnifiedResidualTiedLM(cfg, in_dim, vocab_size).to(device)
     with torch.no_grad():
@@ -416,7 +392,6 @@ def run_lifelong_experiment():
             
     print(f"Base model converged at Epoch {ep:4d} | Loss: {best_loss:.4f}")
 
-    # Baseline predictions on training pool
     model.eval()
     with torch.no_grad():
         base_logits, _ = model(train_q_raw)
@@ -424,10 +399,8 @@ def run_lifelong_experiment():
         initial_train_acc = (base_preds == train_tgts).float().mean().item()
     print(f"Initial Base Corpus Accuracy: {initial_train_acc * 100:.2f}%")
 
-    # 4. LIFELONG SEQUENTIAL INSERTION
     cum_steps = [1, 5, 10, 15, 20, 25, 30, 35, 40]
     history = []
-    
     norm_E = model.get_normalized_embeddings()
     
     print("\n" + "="*70)
@@ -435,7 +408,6 @@ def run_lifelong_experiment():
     print("="*70)
     
     for step in range(len(holdout_triplets)):
-        # Insert current holdout atom permanently
         k_star = hold_k_raw[step]
         tgt_star = hold_tgts[step]
         v_star = norm_E[tgt_star]
@@ -443,34 +415,28 @@ def run_lifelong_experiment():
         
         num_inserted = step + 1
         
-        # Log metrics at checkpoint intervals
         if num_inserted in cum_steps:
             with torch.no_grad():
-                # A. Cumulative Efficacy (Recall over ALL holdouts inserted so far)
                 cur_q = hold_q_raw[:num_inserted]
                 cur_tgts = torch.tensor(hold_tgts[:num_inserted], device=device)
                 logits_edits, mu_edits = model(cur_q)
                 preds_edits = logits_edits.argmax(dim=-1)
                 cum_efficacy = (preds_edits == cur_tgts).float().mean().item()
                 
-                # B. Cumulative Generality (Paraphrase robustness over ALL inserted facts)
                 cur_p = hold_p_raw[:num_inserted]
                 logits_para, _ = model(cur_p)
                 preds_para = logits_para.argmax(dim=-1)
                 cum_generality = (preds_para == cur_tgts).float().mean().item()
                 
-                # C. Background Specificity (Retention of original 160 baseline facts)
                 post_train_logits, _ = model(train_q_raw)
                 post_train_preds = post_train_logits.argmax(dim=-1)
                 specificity = (base_preds == post_train_preds).float().mean().item()
                 
-                # D. Mean Attention Probability Mass allocated to the correct atoms
-                # Index of edit i in omega_corpus is (160 + i)
                 diag_masses = [mu_edits[i, 160 + i].item() for i in range(num_inserted)]
                 avg_mass = float(np.mean(diag_masses))
                 
             print(f"Edits Inserted: {num_inserted:2d}/40 | Total Pool: {160 + num_inserted:3d} | "
-                  f"Cumulative Efficacy: {cum_efficacy * 100:5.1f}% | "
+                  f"Efficacy: {cum_efficacy * 100:5.1f}% | "
                   f"Generality: {cum_generality * 100:5.1f}% | "
                   f"Specificity: {specificity * 100:5.1f}% | "
                   f"Avg Mass: {avg_mass * 100:5.1f}%")
@@ -484,11 +450,12 @@ def run_lifelong_experiment():
                 "mean_attention_mass": avg_mass
             })
 
-    # Save JSON summary
+    # Export to both OUT_DIR and results/
     with open(os.path.join(OUT_DIR, "lifelong_results.json"), "w") as f:
         json.dump(history, f, indent=2)
+    with open(os.path.join("results", "lifelong_results.json"), "w") as f:
+        json.dump(history, f, indent=2)
 
-    # 5. Scientific Figure: Lifelong Retention Curves
     steps = [h["num_edits_inserted"] for h in history]
     effs = [h["cumulative_efficacy"] * 100 for h in history]
     gens = [h["cumulative_generality"] * 100 for h in history]
@@ -496,7 +463,6 @@ def run_lifelong_experiment():
     masses = [h["mean_attention_mass"] * 100 for h in history]
 
     fig, ax1 = plt.subplots(figsize=(7.5, 4.5))
-    
     ax1.plot(steps, effs, marker="o", color="#1f77b4", linewidth=2, label="Cumulative Efficacy (All Edits)")
     ax1.plot(steps, gens, marker="s", color="#2ca02c", linewidth=2, label="Cumulative Generality (Paraphrase)")
     ax1.plot(steps, specs, marker="^", color="#d62728", linewidth=2, label="Background Specificity (Original 160)")
@@ -514,9 +480,11 @@ def run_lifelong_experiment():
     plt.title("Lifelong Cumulative Knowledge Editing Stability", fontsize=12)
     plt.tight_layout()
     plt.savefig(os.path.join(OUT_DIR, "lifelong_retention_curve.png"), dpi=200)
+    if os.path.exists("paper/figures"):
+        plt.savefig("paper/figures/lifelong_retention_curve.png", dpi=200)
     plt.close()
     
-    print(f"\nLifelong experiment complete. Output saved to '{OUT_DIR}/'.")
+    print(f"\nLifelong experiment complete. Saved to '{OUT_DIR}/' and 'results/lifelong_results.json'.")
 
 
 if __name__ == "__main__":

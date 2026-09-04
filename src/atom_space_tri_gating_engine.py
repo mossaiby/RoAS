@@ -1,11 +1,11 @@
 """
-atom_space_tri_gating_engine.py (Optimized Version)
+src/atom_space_tri_gating_engine.py
 
 FULL TRI-SPACE BENCHMARK (Context + Corpus + Parameters)
-Fixes the Section 2.2 Norm Scale Mismatch:
-- Normalizes param_expert_keys to unit sphere
-- Ties expert values to vocabulary embeddings
-- Yields a pure 3x3 diagonal gating matrix
+Calibrated Routing & Functional Orthogonality:
+- Unit-norm parameter expert keys (resolves Section 3.2 scale mismatch)
+- Tied expert values to vocabulary embeddings
+- Exports synchronized summary JSON to both output and results directories
 """
 
 import json
@@ -20,7 +20,7 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-OUT_DIR = "tri_gating_probe_outputs"
+OUT_DIR = os.path.join("results", "details", "tri_gating_probe_outputs")
 
 
 @dataclass
@@ -147,6 +147,17 @@ class AtomSpace(nn.Module):
         self.values = values.detach().clone()
 
 
+class ParameterExpertBank(nn.Module):
+    def __init__(self, num_experts: int, value_dim: int):
+        super().__init__()
+        self.expert_values = nn.Parameter(torch.empty(num_experts, value_dim))
+        nn.init.normal_(self.expert_values, std=0.02)
+
+    def forward(self, routing_weights: torch.Tensor) -> torch.Tensor:
+        experts = F.normalize(self.expert_values, p=2, dim=-1)
+        return routing_weights @ experts
+
+
 class TriSpaceLanguageModel(nn.Module):
     def __init__(self, cfg: TriEngineConfig, in_feat_dim: int, vocab_size: int, num_param_tasks: int):
         super().__init__()
@@ -169,8 +180,9 @@ class TriSpaceLanguageModel(nn.Module):
         # Space 1: Corpus
         self.omega_corpus = AtomSpace("corpus", self.value_dim)
         
-        # Space 2: Parameters (Dedicated expert atoms with unit-norm keys!)
+        # Space 2: Parameter-resident experts selected by normalized trigger keys
         self.omega_params = AtomSpace("params", self.value_dim)
+        self.param_experts = ParameterExpertBank(num_param_tasks, self.value_dim)
         
         # Tri-Space Router
         self.gate_net = nn.Sequential(
@@ -204,7 +216,7 @@ class TriSpaceLanguageModel(nn.Module):
         k_param = self.phi(self.omega_params.keys)
         scores_param = (q @ k_param.T) / tau
         mu_param = F.softmax(scores_param, dim=-1)
-        z_param = mu_param @ self.omega_params.values
+        z_param = self.param_experts(mu_param)
         
         # 3. Read Omega_ctx
         if ctx_keys is not None and ctx_values is not None and len(ctx_keys) > 0:
@@ -249,7 +261,15 @@ class TriSpaceLanguageModel(nn.Module):
 
 def run_tri_space_experiment():
     os.makedirs(OUT_DIR, exist_ok=True)
+    os.makedirs("results", exist_ok=True)
     cfg = TriEngineConfig()
+    
+    # Explicit Deterministic Seeding
+    torch.manual_seed(cfg.seed)
+    np.random.seed(cfg.seed)
+    if torch.cuda.is_available():
+        torch.cuda.manual_seed_all(cfg.seed)
+        
     device = cfg.device
     print(f"=== Running Calibrated Tri-Space Benchmark on {device} ===")
     
@@ -280,11 +300,11 @@ def run_tri_space_experiment():
     ctx_k_raw = encode_clean(ctx_premises)
     ctx_q_raw = encode_clean(ctx_queries)
 
-    # Encode Parameter Experts (Keys are the canonical task triggers)
+    # Encode Parameter Experts (Keys are unit-norm triggers)
     param_triggers = [f"Execute task: {desc}." for desc, _, _ in PARAM_EXPERT_TASKS]
     param_queries = [desc for desc, _, _ in PARAM_EXPERT_TASKS]
     param_tgts = torch.tensor([target2id[o] for _, _, o in PARAM_EXPERT_TASKS], device=device)
-    param_k_raw = encode_clean(param_triggers) # Unit-norm representation!
+    param_k_raw = encode_clean(param_triggers)
     param_q_raw = encode_clean(param_queries)
 
     in_dim = corp_k_raw.shape[-1]
@@ -293,7 +313,8 @@ def run_tri_space_experiment():
     with torch.no_grad():
         norm_E = model.get_normalized_embeddings()
         model.omega_corpus.set_atoms(corp_k_raw, norm_E[corp_tgts])
-        model.omega_params.set_atoms(param_k_raw, norm_E[param_tgts])
+        model.omega_params.set_atoms(param_k_raw, torch.zeros_like(norm_E[param_tgts]))
+        model.param_experts.expert_values.copy_(norm_E[param_tgts])
         
     opt = torch.optim.AdamW(model.parameters(), lr=cfg.lr, weight_decay=1e-4)
 
@@ -305,7 +326,6 @@ def run_tri_space_experiment():
         model.train()
         norm_E = model.get_normalized_embeddings()
         model.omega_corpus.values = norm_E[corp_tgts]
-        model.omega_params.values = norm_E[param_tgts]
         
         logits_corp, _, _ = model(corp_q_raw)
         loss_corp = F.cross_entropy(logits_corp, corp_tgts)
@@ -376,6 +396,29 @@ def run_tri_space_experiment():
         print(f"  When Omega_corpus is ablated -> Corpus Task Accuracy drops:    {acc_corp_full*100:5.1f}% -> {acc_corp_no_corp*100:5.1f}%")
         print(f"  When Omega_params is ablated -> Parameter Task Accuracy drops: {acc_param_full*100:5.1f}% -> {acc_param_no_param*100:5.1f}%")
 
+    # Serialize Summary JSON to BOTH OUT_DIR and results/
+    summary = {
+        "full_model": {
+            "context_accuracy": float(acc_ctx_full),
+            "corpus_accuracy": float(acc_corp_full),
+            "param_accuracy": float(acc_param_full),
+            "gate_on_context_task": mean_gate_ctx,
+            "gate_on_corpus_task": mean_gate_corp,
+            "gate_on_param_task": mean_gate_param
+        },
+        "ablations": {
+            "context_task_without_ctx": float(acc_ctx_no_ctx),
+            "corpus_task_without_corpus": float(acc_corp_no_corp),
+            "param_task_without_params": float(acc_param_no_param)
+        }
+    }
+    
+    with open(os.path.join(OUT_DIR, "tri_space_summary.json"), "w") as f:
+        json.dump(summary, f, indent=2)
+    with open(os.path.join("results", "tri_space_summary.json"), "w") as f:
+        json.dump(summary, f, indent=2)
+
+    # Plotting
     labels = ["Context Tasks", "Corpus Tasks", "Parameter Tasks"]
     gate_matrix = np.array([mean_gate_ctx, mean_gate_corp, mean_gate_param]) * 100
     
@@ -408,9 +451,11 @@ def run_tri_space_experiment():
     
     plt.tight_layout()
     plt.savefig(os.path.join(OUT_DIR, "tri_space_gating_ablation.png"), dpi=200)
+    if os.path.exists("paper/figures"):
+        plt.savefig("paper/figures/tri_space_gating_ablation.png", dpi=200)
     plt.close()
-    
-    print(f"\nBenchmark finished. Saved to '{OUT_DIR}/'.")
+
+    print(f"\nBenchmark finished. Synchronized to '{OUT_DIR}/' and 'results/tri_space_summary.json'.")
 
 
 if __name__ == "__main__":

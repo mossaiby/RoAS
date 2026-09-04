@@ -1,10 +1,11 @@
 """
-atom_space_unlearning_engine.py (Corrected & Standalone)
+src/atom_space_unlearning_engine.py
 
-KNOWLEDGE CONTRADICTION & MACHINE UNLEARNING ENGINE
+KNOWLEDGE CONTRADICTION & EXTERNAL-MEMORY SUPPRESSION BENCHMARK
 Evaluates:
 1. Competitive Updating: Overwriting obsolete facts in append-only storage.
-2. Anti-Atom Unlearning: Destructive measure cancellation for zero-retraining erasure.
+2. Anti-Atom Suppression: Destructive cancellation in the external read operator.
+3. Fixes specificity evaluation to test strictly on unedited background control facts.
 """
 
 import json
@@ -19,12 +20,8 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-OUT_DIR = "unlearning_probe_outputs"
+OUT_DIR = os.path.join("results", "details", "unlearning_probe_outputs")
 
-
-# ============================================================================
-# 1. Configuration
-# ============================================================================
 
 @dataclass
 class UnlearnEngineConfig:
@@ -41,20 +38,26 @@ class UnlearnEngineConfig:
     read_temperature: float = 0.07
 
 
-# ============================================================================
-# 2. Benchmark Datasets: Base Knowledge, Updates, and Erasures
-# ============================================================================
-
-# 40 Base Facts (Active World Knowledge, including initial versions of facts to be updated)
-BASE_FACTS = [
-    # The 5 facts that will later be updated counterfactually:
+# 5 Facts initially trained that will later be updated counterfactually
+UPDATE_BASE_FACTS = [
     ("Pluto", "is scientifically classified as a", "Planet"),
     ("Twitter", "is officially rebranded worldwide as", "Twitter"),
     ("Python", "executes code primarily through", "CPython"),
     ("Ethereum", "secures its consensus ledger via", "Proof-of-Work"),
-    ("Java", "is maintained and developed primarily by", "Sun Microsystems"),
-    
-    # 35 General World Knowledge Facts:
+    ("Java", "is maintained and developed primarily by", "Sun Microsystems")
+]
+
+# 5 Contradictory Counterfactual Updates
+KNOWLEDGE_UPDATES = [
+    ("Pluto", "is scientifically classified as a", "Planet", "Dwarf Planet"),
+    ("Twitter", "is officially rebranded worldwide as", "Twitter", "X Corp"),
+    ("Python", "executes code primarily through", "CPython", "PyPy JIT"),
+    ("Ethereum", "secures its consensus ledger via", "Proof-of-Work", "Proof-of-Stake"),
+    ("Java", "is maintained and developed primarily by", "Sun Microsystems", "Oracle")
+]
+
+# 35 Clean, unedited background facts used as the pristine specificity control set
+CLEAN_BACKGROUND_FACTS = [
     ("Uranium", "undergoes fissile radioactive decay to sustain nuclear", "Reactions"),
     ("DNA", "encodes biological genetic instructions inside cellular", "Nuclei"),
     ("Linux", "is an open-source operating system", "Monolithic Kernel"),
@@ -92,16 +95,7 @@ BASE_FACTS = [
     ("Europa", "hides a warm salty liquid", "Subsurface Ocean")
 ]
 
-# 5 Contradictory Counterfactual Updates: (Subject, Relation, Old Fact, New Counterfactual Fact)
-KNOWLEDGE_UPDATES = [
-    ("Pluto", "is scientifically classified as a", "Planet", "Dwarf Planet"),
-    ("Twitter", "is officially rebranded worldwide as", "Twitter", "X Corp"),
-    ("Python", "executes code primarily through", "CPython", "PyPy JIT"),
-    ("Ethereum", "secures its consensus ledger via", "Proof-of-Work", "Proof-of-Stake"),
-    ("Java", "is maintained and developed primarily by", "Sun Microsystems", "Oracle")
-]
-
-# 5 Sensitive Facts to be Unlearned / Erased via Anti-Atoms
+# 5 Sensitive Facts to be Unlearned via Anti-Atoms
 SENSITIVE_TARGETS_FOR_UNLEARNING = [
     ("Secret Base Alpha", "is hidden at coordinates", "Location-Redacted"),
     ("Patient John Doe", "is medically diagnosed with", "Confidential-Illness"),
@@ -110,10 +104,6 @@ SENSITIVE_TARGETS_FOR_UNLEARNING = [
     ("VIP Cryptographic Key", "is secured with passphrase", "Master-Passphrase")
 ]
 
-
-# ============================================================================
-# 3. Model Architecture with Signed Measure Integration
-# ============================================================================
 
 class AtomSpace(nn.Module):
     def __init__(self, name: str, value_dim: int):
@@ -146,9 +136,7 @@ class AtomSpace(nn.Module):
         scores = (q @ k_emb.T) / tau
         raw_kernel = torch.exp(scores - scores.max(dim=-1, keepdim=True).values)
         
-        # Multiply by signed measure weights (positive vs. negative)
         weighted_kernel = raw_kernel * self.weights.T
-        
         Z = torch.sum(torch.abs(weighted_kernel), dim=-1, keepdim=True) + 1e-8
         signed_mu = weighted_kernel / Z
         
@@ -194,13 +182,17 @@ class ContradictionTiedLM(nn.Module):
         return logits, signed_mu
 
 
-# ============================================================================
-# 4. Benchmark Execution
-# ============================================================================
-
 def run_unlearning_experiment():
     os.makedirs(OUT_DIR, exist_ok=True)
+    os.makedirs("results", exist_ok=True)
     cfg = UnlearnEngineConfig()
+    
+    # Deterministic Seeding
+    torch.manual_seed(cfg.seed)
+    np.random.seed(cfg.seed)
+    if torch.cuda.is_available():
+        torch.cuda.manual_seed_all(cfg.seed)
+        
     device = cfg.device
     print(f"=== Running Contradiction & Anti-Atom Unlearning Benchmark on {device} ===")
     
@@ -210,52 +202,51 @@ def run_unlearning_experiment():
     def encode_clean(texts: List[str]) -> torch.Tensor:
         return backbone.encode(texts, convert_to_tensor=True, device=device).clone()
     
-    # 1. Build Global Vocabulary (ensuring BOTH o_old and o_new are present)
+    # 1. Build Global Vocabulary
     all_targets = set()
-    for _, _, o in BASE_FACTS: 
-        all_targets.add(o)
-    for _, _, o_old, o_new in KNOWLEDGE_UPDATES: 
-        all_targets.add(o_old)
-        all_targets.add(o_new)
-    for _, _, o in SENSITIVE_TARGETS_FOR_UNLEARNING: 
-        all_targets.add(o)
+    for _, _, o in UPDATE_BASE_FACTS: all_targets.add(o)
+    for _, _, _, o_new in KNOWLEDGE_UPDATES: all_targets.add(o_new)
+    for _, _, o in CLEAN_BACKGROUND_FACTS: all_targets.add(o)
+    for _, _, o in SENSITIVE_TARGETS_FOR_UNLEARNING: all_targets.add(o)
     all_targets.add("[REDACTED]")
     
     target2id = {tgt: i for i, tgt in enumerate(sorted(all_targets))}
     vocab_size = len(target2id)
     print(f"Total vocabulary size: {vocab_size} tokens")
 
-    # 2. Build Base Corpus (Initial state before updates or unlearning)
-    initial_facts = list(BASE_FACTS) + [
-        (s, r, o) for s, r, o in SENSITIVE_TARGETS_FOR_UNLEARNING
-    ]
+    # 2. Build Initial Base Training Pool (Update Base + Clean Background + Sensitive)
+    train_pool_facts = list(UPDATE_BASE_FACTS) + list(CLEAN_BACKGROUND_FACTS) + list(SENSITIVE_TARGETS_FOR_UNLEARNING)
     
-    base_sents = [f"{s} {r} {o}." for s, r, o in initial_facts]
-    base_queries = [f"What {r} {s}?" for s, r, o in initial_facts]
-    base_tgts = torch.tensor([target2id[o] for _, _, o in initial_facts], device=device)
+    train_sents = [f"{s} {r} {o}." for s, r, o in train_pool_facts]
+    train_queries = [f"What {r} {s}?" for s, r, o in train_pool_facts]
+    train_tgts = torch.tensor([target2id[o] for _, _, o in train_pool_facts], device=device)
 
-    base_k_raw = encode_clean(base_sents)
-    base_q_raw = encode_clean(base_queries)
-    in_dim = base_k_raw.shape[-1]
+    train_k_raw = encode_clean(train_sents)
+    train_q_raw = encode_clean(train_queries)
+    in_dim = train_k_raw.shape[-1]
+
+    # Clean Background Control Queries for Specificity Evaluation
+    clean_q_raw = encode_clean([f"What {r} {s}?" for s, r, o in CLEAN_BACKGROUND_FACTS])
+    clean_tgts = torch.tensor([target2id[o] for _, _, o in CLEAN_BACKGROUND_FACTS], device=device)
 
     # Initialize Model
     model = ContradictionTiedLM(cfg, in_dim, vocab_size).to(device)
     with torch.no_grad():
         norm_E = model.get_normalized_embeddings()
-        model.omega_corpus.set_atoms(base_k_raw, norm_E[base_tgts])
+        model.omega_corpus.set_atoms(train_k_raw, norm_E[train_tgts])
         
     opt = torch.optim.AdamW(model.parameters(), lr=cfg.lr, weight_decay=1e-4)
     
-    print("\nTraining base model with active initial and sensitive facts...")
+    print("\nTraining base model on initial facts...")
     best_loss = float("inf")
     patience = 0
     for ep in range(cfg.epochs):
         model.train()
         norm_E = model.get_normalized_embeddings()
-        model.omega_corpus.values = norm_E[base_tgts]
+        model.omega_corpus.values = norm_E[train_tgts]
         
-        logits, _ = model(base_q_raw)
-        loss = F.cross_entropy(logits, base_tgts)
+        logits, _ = model(train_q_raw)
+        loss = F.cross_entropy(logits, train_tgts)
         
         opt.zero_grad()
         loss.backward()
@@ -273,12 +264,12 @@ def run_unlearning_experiment():
     # Baseline verification
     model.eval()
     with torch.no_grad():
-        base_logits, _ = model(base_q_raw)
-        base_acc = (base_logits.argmax(dim=-1) == base_tgts).float().mean().item()
+        base_logits, _ = model(train_q_raw)
+        base_acc = (base_logits.argmax(dim=-1) == train_tgts).float().mean().item()
     print(f"Initial Overall Accuracy: {base_acc * 100:.1f}%\n")
 
     # ========================================================================
-    # EXPERIMENT 1: Competitive Contradictory Updating (The Pluto Benchmark)
+    # EXPERIMENT 1: Competitive Contradictory Updating
     # ========================================================================
     print("="*70)
     print("EXPERIMENT 1: COMPETITIVE CONTRADICTORY UPDATES (APPEND-ONLY LOG)")
@@ -293,12 +284,11 @@ def run_unlearning_experiment():
         id_old = target2id[o_old]
         id_new = target2id[o_new]
         
-        # APPEND-ONLY INSERTION: Insert new fact with recency/priority weight w=2.5
         new_sent = f"{s} {r} {o_new}."
         k_new_raw = encode_clean([new_sent])[0]
         v_new = norm_E[id_new]
         
-        # Insert without deleting old fact:
+        # Append without deletion with recency weight w=2.5
         model.omega_corpus.insert_atom(k_new_raw, v_new, weight=2.5)
         
         with torch.no_grad():
@@ -308,8 +298,8 @@ def run_unlearning_experiment():
             prob_old = F.softmax(post_logits, dim=-1)[0, id_old].item()
             
         success = (post_pred == id_new)
-        print(f"Update: '{s}' | Target: '{o_new}' | Correctly Overrode: {success} | "
-              f"P(New Target): {prob_new*100:5.1f}% | P(Obsolete Old): {prob_old*100:4.1f}%")
+        print(f"Update: '{s}' | Target: '{o_new}' | Overrode: {success} | "
+              f"P(New): {prob_new*100:5.1f}% | P(Old): {prob_old*100:4.1f}%")
         
         update_results.append({
             "subject": s,
@@ -321,42 +311,39 @@ def run_unlearning_experiment():
         })
 
     # ========================================================================
-    # EXPERIMENT 2: Machine Unlearning via Anti-Atoms (Destructive Interference)
+    # EXPERIMENT 2: External-memory suppression via anti-atoms
     # ========================================================================
     print("\n" + "="*70)
     print("EXPERIMENT 2: ZERO-RETRAINING UNLEARNING VIA ANTI-ATOMS (SIGNED MEASURES)")
     print("="*70)
     
     unlearn_results = []
-    clean_base_q = base_q_raw[:35]
-    clean_base_tgts = base_tgts[:35]
     
     for s, r, o_sensitive in SENSITIVE_TARGETS_FOR_UNLEARNING:
         q_text = f"What {r} {s}?"
         q_raw = encode_clean([q_text])
         id_sensitive = target2id[o_sensitive]
         
-        # INSERT ANTI-ATOM: Key matches sensitive fact, weight is NEGATIVE (-1.0)
+        # Insert Anti-Atom with weight -1.0
         sensitive_sent = f"{s} {r} {o_sensitive}."
         k_sensitive_raw = encode_clean([sensitive_sent])[0]
         v_sensitive = norm_E[id_sensitive]
         
-        # Destructive anti-atom insertion:
         model.omega_corpus.insert_atom(k_sensitive_raw, v_sensitive, weight=-1.0)
         
-        # Test post-unlearning recall & suppression
         with torch.no_grad():
             post_l, _ = model(q_raw)
             post_pred = post_l.argmax(dim=-1).item()
             post_prob = F.softmax(post_l, dim=-1)[0, id_sensitive].item()
             
-            clean_l, _ = model(clean_base_q)
-            clean_acc = (clean_l.argmax(dim=-1) == clean_base_tgts).float().mean().item()
+            # Specificity strictly on the 35 pristine, unedited background facts!
+            clean_l, _ = model(clean_q_raw)
+            clean_acc = (clean_l.argmax(dim=-1) == clean_tgts).float().mean().item()
             
         erased = (post_pred != id_sensitive)
         print(f"Unlearning: '{s}' | Sensitive Target: '{o_sensitive}' | "
               f"Erased: {erased} | P(Sensitive): {post_prob*100:5.2f}% | "
-              f"Background Specificity: {clean_acc*100:5.1f}%")
+              f"Clean Specificity: {clean_acc*100:5.1f}%")
         
         unlearn_results.append({
             "target": o_sensitive,
@@ -365,15 +352,17 @@ def run_unlearning_experiment():
             "background_specificity": clean_acc
         })
 
-    # Summary Export
+    # Export to both OUT_DIR and results/
     summary = {
         "counterfactual_updates": update_results,
         "anti_atom_unlearning": unlearn_results
     }
     with open(os.path.join(OUT_DIR, "unlearning_results.json"), "w") as f:
         json.dump(summary, f, indent=2)
+    with open(os.path.join("results", "unlearning_results.json"), "w") as f:
+        json.dump(summary, f, indent=2)
 
-    # Visualization
+    # Plotting
     fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(11, 4.5))
     
     up_names = [u["subject"] for u in update_results]
@@ -397,17 +386,19 @@ def run_unlearning_experiment():
     
     ax2.bar(un_names, res_probs, color="#9467bd", width=0.4)
     ax2.set_ylabel("Residual Sensitive Probability (%)")
-    ax2.set_title("Anti-Atom Machine Unlearning (Residual < 1%)")
+    ax2.set_title("Anti-Atom External-Memory Suppression")
     ax2.set_ylim(0, 10)
-    ax2.axhline(y=1.0, color="red", linestyle="--", label="1% Safety Threshold")
+    ax2.axhline(y=2.04, color="red", linestyle="--", label="Exact Uniform Entropy (1/|V|)")
     ax2.grid(True, linestyle="--", alpha=0.4, axis="y")
     ax2.legend()
 
     plt.tight_layout()
     plt.savefig(os.path.join(OUT_DIR, "unlearning_and_updates.png"), dpi=200)
+    if os.path.exists("paper/figures"):
+        plt.savefig("paper/figures/unlearning_and_updates.png", dpi=200)
     plt.close()
 
-    print(f"\nBenchmark complete. Summary and figures saved to '{OUT_DIR}/'.")
+    print(f"\nBenchmark complete. Saved to '{OUT_DIR}/' and 'results/unlearning_results.json'.")
 
 
 if __name__ == "__main__":

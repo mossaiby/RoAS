@@ -1,5 +1,5 @@
 """
-atom_space_engine.py
+src/atom_space_engine.py
 
 Complete, self-contained experimental engine for:
 "Language Models as Reads over Atom Spaces: A Unified Measure-Theoretic Formulation"
@@ -8,7 +8,7 @@ Key Architecture:
   - Metric-Preserving Residual Read Kernel: phi(x) = L2_Norm(x + 0.1 * MLP(x))
   - Tied Key-Value Alignment: v_i = Normalize(E[y_i])
   - Full Post-Hoc Model Editing Triad: Efficacy, Generality, and Specificity
-  - Quadrature Truncation Bound: ||R_exact - R_topk||
+  - Quadrature Truncation Bound: True Euclidean norm ||z_exact - z_k||_2
 """
 
 import json
@@ -17,12 +17,13 @@ import os
 from dataclasses import dataclass, field
 from typing import Dict, List, Tuple
 
+import matplotlib.pyplot as plt
 import numpy as np
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-OUT_DIR = "advanced_probe_outputs"
+OUT_DIR = os.path.join("results", "details", "advanced_probe_outputs")
 
 
 # ============================================================================
@@ -310,7 +311,7 @@ class UnifiedResidualTiedLM(nn.Module):
         self.vocab_size = vocab_size
         self.value_dim = cfg.token_embed_dim
         
-        # Zero-initialized residual adapter (starts as pure identity!)
+        # Zero-initialized residual adapter
         self.adapter = nn.Sequential(
             nn.Linear(in_feat_dim, cfg.hidden_dim),
             nn.LayerNorm(cfg.hidden_dim),
@@ -320,7 +321,7 @@ class UnifiedResidualTiedLM(nn.Module):
         nn.init.zeros_(self.adapter[-1].weight)
         nn.init.zeros_(self.adapter[-1].bias)
         
-        # Token Embedding Table (Tied to values)
+        # Tied Token Embeddings
         self.token_embeddings = nn.Embedding(vocab_size, cfg.token_embed_dim)
         nn.init.normal_(self.token_embeddings.weight, std=0.02)
         
@@ -328,12 +329,35 @@ class UnifiedResidualTiedLM(nn.Module):
         self.omega_corpus = AtomSpace("corpus", self.value_dim)
         
     def phi(self, x: torch.Tensor) -> torch.Tensor:
-        # Residual projection preserving semantic backbone space
         adapted = x + 0.1 * self.adapter(x)
         return F.normalize(adapted, p=2, dim=-1)
 
     def get_normalized_embeddings(self) -> torch.Tensor:
         return F.normalize(self.token_embeddings.weight, p=2, dim=-1)
+
+    def read_vector(self, query_feats: torch.Tensor, tau: float = None, top_k: int = None) -> torch.Tensor:
+        """
+        Directly evaluates the continuous or top-k truncated context vector:
+          z(x) = sum mu_i v_i
+        Used to measure true quadrature integration error ||z_exact - z_k||_2.
+        """
+        if tau is None:
+            tau = self.cfg.read_temperature
+            
+        q = self.phi(query_feats)
+        k = self.phi(self.omega_corpus.keys)
+        scores = (q @ k.T) / tau
+        
+        if top_k is not None and top_k < scores.size(-1):
+            top_scores, top_idx = torch.topk(scores, top_k, dim=-1)
+            mu_k = F.softmax(top_scores, dim=-1)
+            v_selected = self.omega_corpus.values[top_idx]
+            z = torch.bmm(mu_k.unsqueeze(1), v_selected).squeeze(1)
+        else:
+            mu = F.softmax(scores, dim=-1)
+            z = mu @ self.omega_corpus.values
+            
+        return z
 
     def forward(self, query_feats: torch.Tensor, tau: float = None, top_k: int = None) -> Tuple[torch.Tensor, torch.Tensor]:
         if tau is None:
@@ -341,27 +365,28 @@ class UnifiedResidualTiedLM(nn.Module):
             
         q = self.phi(query_feats)
         k = self.phi(self.omega_corpus.keys)
-        
-        # Cosine attention scores
         scores = (q @ k.T) / tau
         
         if top_k is not None and top_k < scores.size(-1):
             top_scores, top_idx = torch.topk(scores, top_k, dim=-1)
             mu_k = F.softmax(top_scores, dim=-1)
-            v_selected = self.omega_corpus.values[top_idx]  # [B, top_k, d]
+            v_selected = self.omega_corpus.values[top_idx]
             z = torch.bmm(mu_k.unsqueeze(1), v_selected).squeeze(1)
             mu = torch.zeros_like(scores).scatter_(-1, top_idx, mu_k)
         else:
             mu = F.softmax(scores, dim=-1)
             z = mu @ self.omega_corpus.values
             
-        # Tied prediction: logits = z @ E_norm^T / tau
         norm_E = self.get_normalized_embeddings()
         logits = (z @ norm_E.T) / tau
         return logits, mu
 
 
-def compute_operator_norm(model: nn.Module) -> float:
+def compute_adapter_spectral_product(model: nn.Module) -> float:
+    """
+    Computes the product of linear layer spectral norms within the residual adapter MLP.
+    Tracks the empirical inflation of layerwise operator norms under gradient updates.
+    """
     L = 1.0
     for m in model.modules():
         if isinstance(m, nn.Linear):
@@ -375,12 +400,23 @@ def compute_operator_norm(model: nn.Module) -> float:
 
 def run_experiment():
     os.makedirs(OUT_DIR, exist_ok=True)
+    os.makedirs("results", exist_ok=True)
     cfg = EngineConfig()
+    
+    # Explicit Deterministic Seeding
+    torch.manual_seed(cfg.seed)
+    np.random.seed(cfg.seed)
+    if torch.cuda.is_available():
+        torch.cuda.manual_seed_all(cfg.seed)
+        
     device = cfg.device
     print(f"=== Running Residual Tied Atom Space Engine on {device} ===")
     
     from sentence_transformers import SentenceTransformer
     backbone = SentenceTransformer(cfg.encoder_name, device=device)
+    
+    def encode_clean(texts: List[str]) -> torch.Tensor:
+        return backbone.encode(texts, convert_to_tensor=True, device=device).clone()
     
     # Build Global Vocabulary
     all_targets = set()
@@ -403,9 +439,9 @@ def run_experiment():
     train_paras = [f"Regarding {s}, what {r} it?" for s, r, o in train_triplets]
     train_tgts = torch.tensor([target2id[o] for _, _, o in train_triplets], device=device)
 
-    train_k_raw = backbone.encode(train_sents, convert_to_tensor=True, device=device)
-    train_q_raw = backbone.encode(train_queries, convert_to_tensor=True, device=device)
-    train_p_raw = backbone.encode(train_paras, convert_to_tensor=True, device=device)
+    train_k_raw = encode_clean(train_sents)
+    train_q_raw = encode_clean(train_queries)
+    train_p_raw = encode_clean(train_paras)
     in_dim = train_k_raw.shape[-1]
     
     # Pre-embed Holdout Data
@@ -414,9 +450,9 @@ def run_experiment():
     hold_paras = [f"Regarding {s}, what {r} it?" for s, r, o in holdout_triplets]
     hold_tgts = [target2id[o] for _, _, o in holdout_triplets]
 
-    hold_k_raw = backbone.encode(hold_sents, convert_to_tensor=True, device=device)
-    hold_q_raw = backbone.encode(hold_queries, convert_to_tensor=True, device=device)
-    hold_p_raw = backbone.encode(hold_paras, convert_to_tensor=True, device=device)
+    hold_k_raw = encode_clean(hold_sents)
+    hold_q_raw = encode_clean(hold_queries)
+    hold_p_raw = encode_clean(hold_paras)
 
     results_across_densities = {}
 
@@ -435,7 +471,6 @@ def run_experiment():
         
         model = UnifiedResidualTiedLM(cfg, in_dim, vocab_size).to(device)
         
-        # Populate training atoms
         with torch.no_grad():
             norm_E = model.get_normalized_embeddings()
             cur_values = norm_E[cur_tgts]
@@ -448,7 +483,6 @@ def run_experiment():
         patience = 0
         for ep in range(cfg.epochs):
             model.train()
-            # Values mirror normalized embeddings
             norm_E = model.get_normalized_embeddings()
             model.omega_corpus.values = norm_E[cur_tgts]
             
@@ -467,7 +501,7 @@ def run_experiment():
             if patience >= cfg.patience:
                 break
                 
-        L_bound = compute_operator_norm(model.adapter)
+        L_bound = compute_adapter_spectral_product(model.adapter)
         print(f"  Converged at Epoch {ep:4d} | Loss: {best_loss:.4f} | Adapter L: {L_bound:.2f}")
 
         # Post-Hoc Model Editing Benchmark
@@ -487,40 +521,36 @@ def run_experiment():
             tgt_star = hold_tgts[i]
             
             with torch.no_grad():
-                # Value matches the unit-normalized target token
                 v_star = norm_E[tgt_star]
-                
-                # Insert post-hoc atom w*
                 model.omega_corpus.insert_atom(k_star, v_star)
                 
-                # 1. Efficacy (Recall on novel query)
+                # 1. Efficacy
                 logits_q, mu_q = model(q_star)
                 pred_q = logits_q.argmax(dim=-1).item()
                 efficacy_list.append(int(pred_q == tgt_star))
                 mu_mass_list.append(mu_q[0, -1].item())
                 
-                # 2. Generality (Recall on paraphrase)
+                # 2. Generality
                 logits_p, _ = model(p_star)
                 pred_p = logits_p.argmax(dim=-1).item()
                 generality_list.append(int(pred_p == tgt_star))
                 
-                # 3. Specificity (Invariance of existing facts)
+                # 3. Specificity
                 post_logits, _ = model(cur_q)
                 post_preds = post_logits.argmax(dim=-1)
                 spec = (base_preds == post_preds).float().mean().item()
                 specificity_list.append(spec)
                 
-                # Teardown atom
                 model.omega_corpus.delete_last_atom()
 
-        # Truncation Quadrature Error: ||R_exact - R_topk||
+        # TRUE QUADRATURE TRUNCATION ERROR: ||z_exact - z_k||_2 on context vectors
         quad_errors = {tau: {} for tau in cfg.temperatures}
         with torch.no_grad():
             for tau in cfg.temperatures:
-                z_exact, _ = model(cur_q, tau=tau, top_k=None)
+                z_exact = model.read_vector(cur_q, tau=tau, top_k=None)
                 for k in cfg.top_k_list:
                     if k <= len(cur_k):
-                        z_k, _ = model(cur_q, tau=tau, top_k=k)
+                        z_k = model.read_vector(cur_q, tau=tau, top_k=k)
                         err = torch.norm(z_exact - z_k, p=2, dim=-1).mean().item()
                         quad_errors[tau][k] = err
 
@@ -529,7 +559,7 @@ def run_experiment():
             "generality": float(np.mean(generality_list)),
             "specificity": float(np.mean(specificity_list)),
             "novel_atom_attention_mass": float(np.mean(mu_mass_list)),
-            "lipschitz_bound": L_bound,
+            "adapter_spectral_product": L_bound,
             "truncation_error": quad_errors
         }
         
@@ -538,13 +568,15 @@ def run_experiment():
               f"Specificity: {np.mean(specificity_list)*100:5.1f}% | "
               f"Novel Attention Mass: {np.mean(mu_mass_list)*100:5.1f}%")
 
-    # ========================================================================
-    # 5. Scientific Plots & Export
-    # ========================================================================
-    import matplotlib.pyplot as plt
+    # Save to both OUT_DIR and results/
+    with open(os.path.join(OUT_DIR, "summary_v3.json"), "w") as f:
+        json.dump(results_across_densities, f, indent=2)
+    with open(os.path.join("results", "summary_v3.json"), "w") as f:
+        json.dump(results_across_densities, f, indent=2)
+
+    # Plotting
     densities = list(results_across_densities.keys())
     
-    # Figure 1: Editing Performance Triad vs Density
     plt.figure(figsize=(7, 4.5))
     eff = [results_across_densities[d]["efficacy"] * 100 for d in densities]
     gen = [results_across_densities[d]["generality"] * 100 for d in densities]
@@ -563,20 +595,6 @@ def run_experiment():
     plt.savefig(os.path.join(OUT_DIR, "editing_triad_vs_density.png"), dpi=200)
     plt.close()
 
-    # Figure 2: Attention Mass on Novel Atom
-    plt.figure(figsize=(6, 4))
-    mass = [results_across_densities[d]["novel_atom_attention_mass"] * 100 for d in densities]
-    plt.plot(densities, mass, marker="o", color="#9467bd", linewidth=2)
-    plt.xlabel("Training Atoms per Domain", fontsize=11)
-    plt.ylabel("Attention Mass on Novel Atom (%)", fontsize=11)
-    plt.title(r"Softmax Probability Mass $\mu_x(\omega^*)$ Allocated to Novel Atom", fontsize=12)
-    plt.ylim(0, 105)
-    plt.grid(True, linestyle="--", alpha=0.5)
-    plt.tight_layout()
-    plt.savefig(os.path.join(OUT_DIR, "novel_atom_attention_mass.png"), dpi=200)
-    plt.close()
-
-    # Figure 3: Quadrature Truncation Error
     plt.figure(figsize=(7, 4.5))
     high_d = densities[-1]
     for tau in cfg.temperatures:
@@ -584,20 +602,16 @@ def run_experiment():
         errs = [results_across_densities[high_d]["truncation_error"][tau][k] for k in k_keys]
         plt.plot(k_keys, errs, marker="x", label=rf"Temperature $\tau={tau}$")
     plt.xlabel("Top-$k$ Cutoff", fontsize=11)
-    plt.ylabel(r"Log Truncation Error $\|R_{\mathrm{exact}} - R_{\mathrm{top-}k}\|$", fontsize=11)
+    plt.ylabel(r"Log Truncation Error $\|R_{\mathrm{exact}} - \hat{R}_k\|_2$", fontsize=11)
     plt.yscale("log")
-    plt.title("Approximation Error of Sublinear Top-$k$ Quadrature", fontsize=12)
+    plt.title("Approximation Error of Exact Top-$k$ Truncation", fontsize=12)
     plt.grid(True, linestyle="--", alpha=0.5)
     plt.legend()
     plt.tight_layout()
     plt.savefig(os.path.join(OUT_DIR, "truncation_error.png"), dpi=200)
     plt.close()
 
-    # Save summary JSON
-    with open(os.path.join(OUT_DIR, "summary_v3.json"), "w") as f:
-        json.dump(results_across_densities, f, indent=2)
-        
-    print(f"\nAll benchmark runs complete. Figures and summary saved to '{OUT_DIR}/'.")
+    print(f"\nAll benchmark runs complete. Outputs synchronized to '{OUT_DIR}/' and 'results/'.")
 
 
 if __name__ == "__main__":

@@ -5,8 +5,8 @@
       "old_target": "Planet",
       "new_target": "Dwarf Planet",
       "override_success": false,
-      "prob_new": 0.2392972856760025,
-      "prob_old": 0.32336992025375366,
+      "prob_new": 0.23929110169410706,
+      "prob_old": 0.32338470220565796,
       "background_specificity": 1.0
     },
     {
@@ -14,8 +14,8 @@
       "old_target": "Twitter",
       "new_target": "X Corp",
       "override_success": false,
-      "prob_new": 0.00040440604789182544,
-      "prob_old": 0.9977853298187256,
+      "prob_new": 0.0004042792716063559,
+      "prob_old": 0.9977859258651733,
       "background_specificity": 1.0
     },
     {
@@ -23,8 +23,8 @@
       "old_target": "CPython",
       "new_target": "PyPy JIT",
       "override_success": false,
-      "prob_new": 0.002356403274461627,
-      "prob_old": 0.9885799288749695,
+      "prob_new": 0.0023565127048641443,
+      "prob_old": 0.9885795712471008,
       "background_specificity": 1.0
     },
     {
@@ -32,8 +32,8 @@
       "old_target": "Proof-of-Work",
       "new_target": "Proof-of-Stake",
       "override_success": true,
-      "prob_new": 0.3996165096759796,
-      "prob_old": 0.030186420306563377,
+      "prob_new": 0.3996340334415436,
+      "prob_old": 0.030169079080224037,
       "background_specificity": 1.0
     },
     {
@@ -41,8 +41,8 @@
       "old_target": "Sun Microsystems",
       "new_target": "Oracle",
       "override_success": true,
-      "prob_new": 0.601428210735321,
-      "prob_old": 9.7292686405126e-05,
+      "prob_new": 0.6014148592948914,
+      "prob_old": 9.735688945511356e-05,
       "background_specificity": 1.0
     }
   ],
@@ -50,36 +50,36 @@
     {
       "target": "Location-Redacted",
       "successfully_suppressed": true,
-      "pre_suppression_probability": 0.9999785423278809,
-      "residual_probability": 0.020408309996128082,
+      "pre_suppression_probability": 0.9999784231185913,
+      "residual_probability": 0.02040831558406353,
       "background_specificity": 1.0
     },
     {
       "target": "Confidential-Illness",
       "successfully_suppressed": true,
-      "pre_suppression_probability": 0.9999784231185913,
-      "residual_probability": 0.020406778901815414,
+      "pre_suppression_probability": 0.9999783039093018,
+      "residual_probability": 0.020406926050782204,
       "background_specificity": 1.0
     },
     {
       "target": "Patent-Secret",
       "successfully_suppressed": true,
-      "pre_suppression_probability": 0.9999786615371704,
-      "residual_probability": 0.02040788345038891,
+      "pre_suppression_probability": 0.9999785423278809,
+      "residual_probability": 0.02040788158774376,
       "background_specificity": 1.0
     },
     {
       "target": "Bunker-Zero",
       "successfully_suppressed": true,
-      "pre_suppression_probability": 0.9999785423278809,
-      "residual_probability": 0.020406609401106834,
+      "pre_suppression_probability": 0.9999784231185913,
+      "residual_probability": 0.020406896248459816,
       "background_specificity": 1.0
     },
     {
       "target": "Master-Passphrase",
       "successfully_suppressed": true,
-      "pre_suppression_probability": 0.9999783039093018,
-      "residual_probability": 0.02040610834956169,
+      "pre_suppression_probability": 0.9999784231185913,
+      "residual_probability": 0.0204060859978199,
       "background_specificity": 1.0
     }
   ]

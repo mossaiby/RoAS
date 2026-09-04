@@ -19,7 +19,7 @@
         "count": 500,
         "top1_recall": 0.992,
         "activated_correct_recall": 0.992,
-        "mean_max_similarity": 0.8757714629173279
+        "mean_max_similarity": 0.8757715821266174
       },
       "paraphrase": {
         "count": 1000,
@@ -31,32 +31,32 @@
         "count": 1000,
         "false_activation_rate": 0.096,
         "wrong_edit_retrieval_rate": 0.024,
-        "mean_max_similarity": 0.4557673931121826
+        "mean_max_similarity": 0.45576733350753784
       }
     },
     "fixed_k_read": {
       "k": 10,
       "mean_vector_error": 0.17691108584403992,
-      "max_vector_error": 0.44611701369285583
+      "max_vector_error": 0.4461172819137573
     },
     "adaptive_read": {
       "error_budget": 0.05,
       "mean_k": 246.03640747070312,
       "median_k": 305.0,
       "max_k": 446,
-      "mean_vector_error": 0.01120294164866209,
-      "max_vector_error": 0.023710403591394424,
-      "max_certificate": 0.05000007897615433,
+      "mean_vector_error": 0.011202885769307613,
+      "max_vector_error": 0.02371051162481308,
+      "max_certificate": 0.049999840557575226,
       "empirical_coverage": 1.0
     },
-    "exact_scoring_and_sort_ms": 21.58840000629425
+    "exact_scoring_and_sort_ms": 35.80170008353889
   },
   "ann": {
     "available": true,
     "index": "FAISS IndexHNSWFlat",
     "candidate_count": 10,
-    "exact_top1_candidate_recall": 1.0,
-    "build_ms": 6.577800028026104,
-    "search_ms": 15.186900040134788
+    "exact_top1_candidate_recall": 0.9996,
+    "build_ms": 12.747499975375831,
+    "search_ms": 23.46409996971488
   }
 }

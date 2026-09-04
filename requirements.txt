@@ -1,7 +1,13 @@
 # Versions used to generate the committed result artifacts with Python 3.11.9.
-torch==2.14.0
-numpy==1.26.4
-sentence-transformers==6.0.1
-transformers==5.16.1
-matplotlib==3.11.1
-faiss-cpu==1.13.2
+# GPU acceleration (CUDA 12.4) is optional but recommended for the generative/fine-tuning
+# benchmarks; install torch/torchvision from the CUDA index BEFORE this file, e.g.:
+#   pip install torch==2.6.0 torchvision==0.21.0 --index-url https://download.pytorch.org/whl/cu124
+#   pip install -r requirements.txt
+torch==2.6.0
+torchvision==0.21.0
+numpy==2.4.6
+sentence-transformers==5.7.0
+transformers==4.48.3
+huggingface-hub==0.36.2
+matplotlib==3.10.0
+faiss-cpu==1.15.0

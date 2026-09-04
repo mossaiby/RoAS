@@ -30,7 +30,7 @@ The repository studies these aspects of the framework:
 ## 🚀 Quickstart
 
 ### 1. Installation
-The committed results were generated with Python 3.11.9 and the exact package versions in `requirements.txt`.
+The committed results were generated with Python 3.11.9 and the exact package versions in `requirements.txt` (GPU-accelerated via CUDA 12.4; CPU-only execution also works).
 
 ```bash
 git clone https://github.com/mossaiby/RoAS.git
@@ -72,6 +72,9 @@ python src/signed_cancellation_stress.py
 
 # Five-seed insertion, lifelong, and update/suppression aggregation
 python src/multi_seed_benchmarks.py
+
+# Benchmark 9: Naive full-parameter fine-tuning baseline for the ten GPT-2 facts
+python src/gpt2_finetune_baseline.py
 ```
 
 The CounterFact script downloads the official dataset to `data/counterfact.json` on first use. Use `--limit`, `--max-queries-per-type`, and the other command-line flags for smaller diagnostic runs.
@@ -83,15 +86,16 @@ The CounterFact script downloads the official dataset to `data/counterfact.json`
 | Benchmark | Key Metric | Reported Result | Scope |
 | :--- | :--- | :--- | :--- |
 | **Inserted-Record Retrieval** | Trained read and frozen exact 1-NN | **Both 100% / 100% / 100%** | Generated templates, five seeds; no adapter advantage |
-| **Exact Truncation** | Mean error ($\tau = 0.05, k=1$) | **$3.75 \times 10^{-6}$** | Exact scoring over 160 records |
-| **Adaptive Scaling** | $N=25{,}000$, $\varepsilon=0.05$, $\tau=0.05$ | **100% coverage; mean $k=12{,}974$** | Exact scoring; certificate is conservative |
+| **Exact Truncation** | Mean error ($\tau = 0.05, k=1$) | **$3.82 \times 10^{-6}$** | Exact scoring over 160 records |
+| **Adaptive Scaling** | $N=25{,}000$, $\varepsilon=0.05$, $\tau=0.05$ | **100% coverage; mean $k=13{,}026$** | Exact scoring; certificate is conservative |
 | **CounterFact Retrieval** | Rewrite / paraphrase top-1 | **99.2% / 91.0%** | 500 records; activated paraphrase recall 38.2% |
-| **HNSW Candidates** | Exact top-1 in 10 candidates | **100% recall** | CounterFact-500; not large-scale ANN evidence |
+| **HNSW Candidates** | Exact top-1 in 10 candidates | **99.96% recall** | CounterFact-500; not large-scale ANN evidence |
 | **Cumulative Insertion** | 40 additions to 200 records | **100.0±0.0% target / control argmax** | Five seeds; training controls |
-| **Tri-Space Gating** | Five-seed surface-matched task / route accuracy | **100/97.2/100% task; 100/82.4/100% route** | Mean over five seeds; known tasks and labels |
+| **Tri-Space Gating** | Five-seed surface-matched task / route accuracy | **100/96.8/100% task; 100/82.4/100% route** | Mean over five seeds; known tasks and labels |
 | **Matched Suppression** | Residual target probability | **$2.0407\pm0.00002\%$** | Five seeds; exact paired-key construction |
 | **Cancellation Stress** | Analytical residual-bound coverage | **100% over 3,000 trials** | Key mismatch degrades rapidly |
 | **GPT-2 Steering** | Canonical / paraphrase first-token correction | **10/10 / 9/10** | Ten controls bypassed intervention |
+| **Naive Fine-Tuning Baseline** | Efficacy / generality / neighborhood specificity | **100% / 70% / 58.9%** | Full-parameter FT on the same ten facts; higher drift than the atom-space read |
 
 ---
 

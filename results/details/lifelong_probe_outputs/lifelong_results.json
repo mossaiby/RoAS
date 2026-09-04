@@ -5,7 +5,7 @@
     "cumulative_efficacy": 1.0,
     "cumulative_generality": 1.0,
     "background_specificity": 1.0,
-    "mean_attention_mass": 0.9983775615692139
+    "mean_attention_mass": 0.9983772039413452
   },
   {
     "num_edits_inserted": 5,
@@ -13,7 +13,7 @@
     "cumulative_efficacy": 1.0,
     "cumulative_generality": 1.0,
     "background_specificity": 1.0,
-    "mean_attention_mass": 0.997551953792572
+    "mean_attention_mass": 0.9975519418716431
   },
   {
     "num_edits_inserted": 10,
@@ -21,7 +21,7 @@
     "cumulative_efficacy": 1.0,
     "cumulative_generality": 1.0,
     "background_specificity": 1.0,
-    "mean_attention_mass": 0.9945505559444427
+    "mean_attention_mass": 0.9945513606071472
   },
   {
     "num_edits_inserted": 15,
@@ -29,7 +29,7 @@
     "cumulative_efficacy": 1.0,
     "cumulative_generality": 1.0,
     "background_specificity": 1.0,
-    "mean_attention_mass": 0.9953320145606994
+    "mean_attention_mass": 0.9953325271606446
   },
   {
     "num_edits_inserted": 20,
@@ -37,7 +37,7 @@
     "cumulative_efficacy": 1.0,
     "cumulative_generality": 1.0,
     "background_specificity": 1.0,
-    "mean_attention_mass": 0.996015727519989
+    "mean_attention_mass": 0.9960161715745925
   },
   {
     "num_edits_inserted": 25,
@@ -45,7 +45,7 @@
     "cumulative_efficacy": 1.0,
     "cumulative_generality": 1.0,
     "background_specificity": 1.0,
-    "mean_attention_mass": 0.9962295937538147
+    "mean_attention_mass": 0.9962298655509949
   },
   {
     "num_edits_inserted": 30,
@@ -53,7 +53,7 @@
     "cumulative_efficacy": 1.0,
     "cumulative_generality": 1.0,
     "background_specificity": 1.0,
-    "mean_attention_mass": 0.9965608159701029
+    "mean_attention_mass": 0.9965611735979716
   },
   {
     "num_edits_inserted": 35,
@@ -61,7 +61,7 @@
     "cumulative_efficacy": 1.0,
     "cumulative_generality": 1.0,
     "background_specificity": 1.0,
-    "mean_attention_mass": 0.9967988593237741
+    "mean_attention_mass": 0.9967992033277239
   },
   {
     "num_edits_inserted": 40,
@@ -69,6 +69,6 @@
     "cumulative_efficacy": 1.0,
     "cumulative_generality": 1.0,
     "background_specificity": 1.0,
-    "mean_attention_mass": 0.9970142677426338
+    "mean_attention_mass": 0.9970145985484123
   }
 ]

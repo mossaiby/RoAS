@@ -100,8 +100,25 @@ python src/generative_steering_decoupled.py
 
 The CounterFact scripts download the official dataset to `data/counterfact.json` on first use.
 
-### 3. Artifact Validation
+### 3. Automated Test Suite & Artifact Validation
 
+#### Running Unit & Theory Tests
+The repository includes a comprehensive 110-test suite covering analytical bounds, exact cancellations, dynamic memory buffers, tri-space gating, threshold calibration, and estimators:
+
+```bash
+# Run all unit, theoretical, and architectural tests
+pytest -v
+```
+
+The test suite validates:
+- **Theorem 1:** Tail truncation error bounds across temperatures ($\tau \in \{0.05, 0.1, 0.5, 1.0\}$) and truncation ranks $k$.
+- **Corollary 1:** Adaptive error-budgeted stopping rule ($\|R - \hat{R}_{k_\varepsilon}\|_2 \le \varepsilon$) across error budgets $\varepsilon \in \{0.01, 0.05, 0.1, 0.25\}$.
+- **Proposition 1:** Score stability under metric locality and Lipschitz encoder bounds.
+- **Propositions 3 & 4:** Exact algebraic anti-atom cancellation and approximate perturbation bounds across key, value, and mass errors.
+- **AtomSpace & TriSpace Architectures:** Buffer management, parameter expert routing, simplex normalization, and targeted space ablations.
+- **Calibration & Metrics:** ROC/AUC computation, Youden's $J$ optimization, retrieval recall summaries, and bootstrap confidence intervals.
+
+#### Validating Committed Artifacts
 After reproducing a benchmark, verify that the committed-result schema and the study sizes described in the manuscript remain intact:
 
 ```bash

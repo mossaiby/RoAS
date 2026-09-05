@@ -91,11 +91,14 @@ python src/gpt2_finetune_baseline.py
 # Benchmark 10: Simplified single-layer rank-one edit (ROME-lite) baseline for the ten GPT-2 facts
 python src/rome_baseline_engine.py
 
-# Benchmark 11: Covariance-regularized ROME reproduction on the full 500-record CounterFact set
+# Benchmark 11: Rank-one covariance-regularized (R1C) parametric edit on the 500-record CounterFact set
 python src/counterfact_rome_benchmark.py
 
 # Benchmark 12: Expanded CounterFact generative steering (N=50) with bootstrap confidence intervals
 python src/generative_steering_decoupled.py
+
+# Benchmark 13: GRACE (codebook editor) on the same 500 CounterFact records, sequential and per-record reset
+python src/counterfact_grace_benchmark.py
 ```
 
 The CounterFact scripts download the official dataset to `data/counterfact.json` on first use.

@@ -6,13 +6,13 @@
 \usepackage{enumitem}
 \usepackage{graphicx}
 \usepackage{lineno}
-\usepackage[hidelinks,colorlinks=true,citecolor=blue,linkcolor=red,urlcolor=green,pdfstartview=,pdfauthor=Farshid Mossaiby]{hyperref}
+\usepackage[colorlinks=true,citecolor=blue,linkcolor=red,urlcolor=green,pdfstartview=,pdfauthor=Farshid Mossaiby]{hyperref}
 
 \journal{Neurocomputing}
 
 \newtheorem{definition}{Definition}
+\newtheorem{lemma}{Lemma}
 \newtheorem{proposition}{Proposition}
-\newtheorem{theorem}{Theorem}
 \newtheorem{corollary}{Corollary}
 \newtheorem{remark}{Remark}
 
@@ -36,7 +36,7 @@ A Mathematical View of Context, Retrieval, and Parameter Routing in Language Mod
 \affiliation[inst1]{organization={Department of Civil Engineering, University of Isfahan}, postcode={81744-73441}, city={Isfahan}, country={Iran}}
 
 \begin{abstract}
-Finite attention, external retrieval, and parameter-expert routing all use query-conditioned weighted reads, despite differing substantially in their internal computation and training objectives. We provide a common mathematical vocabulary for these mechanisms through valued atom spaces $(\Om,\mathcal F,\nu,v)$ and a Bochner read operator $R(x;\Om)=\int_\Om v(\omega)\,d\mu_x(\omega)$. In finite neural implementations, this read specializes to a softmax-weighted combination of value vectors. Under this framework, we analyze a Lipschitz-margin condition sufficient for newly inserted atoms to enter an exact top-$k$ set under an explicit global premise, prove exact ranked top-$k$ truncation bounds exhibiting exponential tail decay with an error-budgeted stopping rule, and formalize signed reference measures where anti-atoms algebraically cancel external-read contributions alongside perturbation bounds. The accompanying studies are mechanism diagnostics rather than a claim of a new general-purpose language-model architecture. A finite-dataset Lipschitz diagnostic is vacuous despite perfect synthetic top-1 entry, and exact tail certification requires all scores. On CounterFact-500, held-out ROC calibration ($\tau^*=0.55$, calibration AUC $=0.817$) raises activated paraphrase recall from 38.2\% to 53.2\%, while neighborhood false activation rises from 9.6\% to 16.1\%. Five-seed synthetic routing exposes corpus-to-parameter confusion, and matched signed pairs cancel only the external-read contribution, with cancellation degrading rapidly under key mismatch. A direct target-embedding intervention in GPT-2 improves first-token CounterFact scores on $N=50$ records but does not constitute an end-to-end comparison with retrieval-augmented generation or model editors. The framework clarifies shared structure and its operational limits, and is positioned relative to RAG and memory-based editing methods.
+Finite attention, external retrieval, and parameter-expert routing all compute query-conditioned weighted reads, despite differing in internal computation and training objectives. We present a common analytical lens for these mechanisms: valued atom spaces $(\Om,\mathcal F,\nu,v)$ and a read operator $R(x;\Om)=\int_\Om v(\omega)\,d\mu_x(\omega)$ that specializes to softmax-weighted value combinations under a counting measure. The lens is deliberately lightweight; its purpose is to make three practical questions precise and testable on a shared footing. (i) When does an externally inserted record enter the retrieved set? We give a Lipschitz-margin sufficient condition and show empirically that it is vacuous in 384-dimensional semantic embeddings even when insertion succeeds, quantifying how conservative worst-case metric arguments are in practice. (ii) When can a read be truncated to top-$k$? We give an exact softmax tail certificate and an error-budgeted stopping rule, and show that it is a certificate, not a sublinear algorithm: at $N=25{,}000$ it selects 52--86\% of the corpus. (iii) When can an external record be cancelled without retraining? Signed reference measures allow matched anti-atoms to cancel the external-read contribution exactly, and a perturbation bound plus a 3,000-trial stress test show that cancellation collapses under key perturbations of order $0.05$. On CounterFact-500 with frozen MiniLM keys, held-out ROC calibration of the activation threshold ($\theta^*=0.55$; calibration AUC $0.817$, test AUC $0.829$) raises activated paraphrase recall from 38.2\% to 53.2\% at the cost of raising neighborhood false activation from 9.6\% to 16.1\%. Running GRACE and a rank-one covariance-regularized edit on the same 500 records, GPT-2 checkpoint, and scorer shows that GRACE's hidden-activation $\epsilon$-balls fire on 0--6\% of paraphrases and leave its paraphrase score at the unedited model's 28.1\%, so the two gated lookups sit at opposite ends of a generalization--locality trade-off determined by the key space. Controlled routing and GPT-2 first-token steering studies are reported as mechanism diagnostics, with their circularities and multi-token failure modes stated explicitly. The paper does not propose a new editing method or claim superiority over existing editors; it supplies a shared vocabulary, negative results that delimit what metric and tail arguments can certify, and a matched-scale comparison of gated external memory with parametric and codebook-based editing.
 \end{abstract}
 
 \begin{keyword}
@@ -54,9 +54,10 @@ Autoregressive language models encode linguistic abstractions, syntax, and factu
 
 To address the rigidity of dense parameter storage, multiple architectural strategies have emerged across distinct sub-disciplines. In-context reasoning caches dynamic token representations directly within the key-value sequence memory of the model \cite{vaswani2017attention}. In parallel, retrieval-augmented generation (RAG) and nearest-neighbor language models ($k$NN-LM) decouple memory from parameters by querying external vector databases of textual passages \cite{lewis2020rag, khandelwal2020generalization, borgeaud2022improving}. Meanwhile, modular computation mechanisms, including Mixture-of-Experts (MoE) architectures and parameter-efficient adapter banks, dynamically route tokens across banks of specialized sub-networks \cite{shazeer2017outrageously, hu2021lora, jiang2024mixtral}. Although these three paradigms all rely fundamentally on key-value similarity matching \cite{geva2021transformer, lample2019large, tsai2019transformer}, they are conventionally formulated using disconnected notations, disparate routing heuristics, and distinct operational semantics.
 
-In this work, we present a unified mathematical formulation for in-context attention, external retrieval, and parameter-expert output routing. By expressing each mechanism through an integral of a query-conditioned probability measure against a value map over a valued atom space, we establish a shared analytical umbrella. In discrete neural architectures, this Bochner read operator specializes algebraically to query-conditioned softmax-weighted convex combinations over value representations.
+In this work, we adopt a single analytical lens for in-context attention, external retrieval, and parameter-expert output routing: each is an integral of a value map against a query-conditioned probability measure over a \emph{valued atom space}. Under a counting measure this read is exactly a softmax-weighted combination, so the lens is a change of notation rather than a new algorithm, and we do not claim that the three mechanisms are algorithmically interchangeable. Related expectation-based views of attention appear in kernel attention \cite{tsai2019transformer} and sparse-transform attention \cite{martins2020sparse}; our contribution is to use one formalism across the three memory locations, so that insertion, truncation, cancellation, and calibration questions can be posed once and tested on each.
 
-Through this lens, we establish a unified analytical foundation and examine its operational properties. First, we define the read operator $R(x; \Om)$ over valued atom spaces $(\Om, \mathcal F, \nu, v)$ and formulate an integrated tri-space architecture that coordinates among context ($\Om_{\mathrm{ctx}}$), corpus retrieval ($\Om_{\mathrm{corpus}}$), and parameter experts ($\Om_{\mathrm{params}}$). Building upon this operator, we derive a checkable Lipschitz-margin condition sufficient for a novel atom to enter an exact top-$k$ retrieved set under an explicit global metric premise, pairing this result with finite-dataset diagnostics that demonstrate its conservatism in high-dimensional semantic corpora. To address computational tractability in large-scale retrieval, we prove Theorem~\ref{thm:quadrature_bound}, establishing two exponential tail bounds on exact ranked top-$k$ reads, and formulate Corollary~\ref{cor:adaptive_k} as an error-budgeted stopping rule that certifies numerical truncation error. Extending the reference measure to signed spaces ($\nu = \nu^+ - \nu^-$), we formalize the exact algebraic cancellation of external-read contributions via matched anti-atoms, accompanied by an analytical perturbation bound characterizing stability under key and value mismatches. Finally, across five random seeds, we evaluate the framework through controlled mechanism studies encompassing templated cumulative insertion, surface-matched tri-space routing, approximate cancellation stress tests, CounterFact retrieval with HNSW candidate indexing and ROC threshold calibration, and exploratory GPT-2 factual steering baselines.
+\paragraph{Contributions}
+The paper makes four contributions, two of which are negative results that we regard as informative. First, Section~\ref{sec:atomspaces} defines the read operator $R(x;\Om)$, specializes it to context, corpus, and parameter-expert spaces, and derives from the measure view the requirement that spaces of very different cardinality be normalized separately and combined by a gate, with unit-norm keys across spaces. Second, Section~\ref{sec:editing} states a checkable Lipschitz-margin sufficient condition for a newly inserted record to enter the top-$k$ set and then shows, on a 200-record benchmark, that it holds for 0\% of records while actual top-1 entry is 100\%; the gap quantifies how far worst-case metric arguments are from practice in 384-dimensional embeddings. Third, Section~\ref{sec:quadrature} gives two exact tail bounds for top-$k$ truncation and an error-budgeted stopping rule, and shows on synthetic corpora up to $N=25{,}000$ that the rule attains 100\% coverage but selects 52--86\% of atoms, so it is a certificate rather than a speed-up. Fourth, Sections~\ref{sec:editing} and~\ref{sec:counterfact} treat signed reads and calibrated retrieval: signed reference measures permit exact cancellation of an external record by a matched anti-atom, a perturbation bound and 3,000 stress trials show cancellation degrades to 72\% residual at key perturbation $0.05$, and on CounterFact-500 a held-out ROC-calibrated activation threshold improves paraphrase activation by 15 points at a 6.5-point cost in neighborhood false activation. The same 500 records are edited with a rank-one parametric update and with GRACE \cite{hartvigsen2023aging} under one scorer, so the retrieval read is placed beside both a parametric and a memory-based editor at matched scale. The remaining experiments (tri-space routing and GPT-2 first-token steering) are controlled mechanism studies whose limitations we state where they appear.
 
 \section{From a Discrete Function to an Integral}
 \label{sec:discrete_to_integral}
@@ -118,6 +119,10 @@ When $\nu$ is a discrete counting measure over a finite set $\Om = \{\omega_1, \
 \]
 As summarized in Table~\ref{tab:instances}, in-context attention, dense retrieval, and expert-output routing are structural realizations of this read operator, differing in their domain of integration and the query-dependence of their values.
 
+\begin{remark}[What the measure view does and does not add]
+Every result in this paper is proved on finite sums and could be stated without measure theory. The measure view is retained for three reasons. First, the reference measure $\nu$ is the natural carrier of per-record mass, so insertion, reweighting, and (via signed $\nu$) cancellation become operations on $\nu$ alone with $K_x$ and $v$ fixed (Section~\ref{sec:signed_spaces}). Second, the normalization $Z_x=\int K_x\,d\nu$ makes explicit that spaces with $|\Om|$ differing by many orders of magnitude cannot share one normalizer (Section~\ref{sec:calibration}). Third, the same object $\mu_x$ is what an activation threshold, a top-$k$ truncation, and a routing gate all act on, which lets Sections~\ref{sec:editing}--\ref{sec:quadrature} reuse one set of definitions across all three spaces.
+\end{remark}
+
 \begin{table}[t]
 \centering
 \caption{Three structural realizations of the unified read operator $R(x; \Omega)$.}
@@ -150,19 +155,16 @@ Context, external corpus memory, and parameter routing combine into an integrate
 where $\lambda(x) \in \Delta^2$ is an input-dependent gating distribution across the three spaces, and $W_0 \in \R^{d \times e}, b_0 \in \R^d$ represent the linguistic projection head. For parameter experts, the value is query-dependent, $v_x(\omega)=g_\omega(x)$; the read is therefore an output-space mixture, not an average of parameter tensors.
 
 \subsection{System, Calibration, and Tying Principles}
+\label{sec:calibration}
 
 Translating the tri-space read formulation into a functional architecture requires addressing scale calibration and representation tying. Because the cardinalities of the respective spaces vary across orders of magnitude---ranging from $|\Om_{\mathrm{ctx}}| \sim 10^3$ tokens in context and $|\Om_{\mathrm{params}}| \sim 10^1$ modular experts to $|\Om_{\mathrm{corpus}}| \sim 10^9$ external passages---normalizing a single joint softmax across their disjoint union $\Om_{\mathrm{ctx}} \sqcup \Om_{\mathrm{corpus}} \sqcup \Om_{\mathrm{params}}$ would cause the most populous space to artificially dominate probability mass. To preserve balanced access, separate intra-space measure normalization is coupled with calibrated convex gating $\lambda(x)$. Crucially, key representations across distinct spaces must share identical geometric scales through unit $L_2$-normalization, which prevents differing dot-product magnitudes from biasing the router toward unnormalized representations.
 
 Furthermore, for token generation tasks, the external read vector $z_{\mathrm{corpus}}(x)$ must project coherently onto candidate vocabulary tokens. Letting $E \in \R^{d \times e}$ denote the vocabulary embedding matrix, we tie atom values via $v(\omega) = E[y_\omega] / \|E[y_\omega]\|$ and evaluate final logits as $Ez / \tau$. Under this parameter tying, isolating an atom $\omega^*$ aligns $z(x)$ directly with the corresponding target row of the vocabulary matrix.
 
-\subsection{Signed Atom Spaces and the Hahn--Jordan Decomposition}
+\subsection{Signed Atom Spaces}
 \label{sec:signed_spaces}
 
-To support zero-retraining cancellation in external memory, we extend the reference measure $\nu$ to a \emph{signed measure}. By the Hahn--Jordan Decomposition Theorem, any signed reference measure uniquely decomposes into mutually singular non-negative measures:
-\[
-  \nu = \nu^+ - \nu^-, \qquad \nu^+ \perp \nu^-,
-\]
-where $\nu^+$ governs positive constructive atoms and $\nu^-$ governs negative ``anti-atoms''. Defining the total variation measure $|\nu| = \nu^+ + \nu^-$, we assume $0 < Z_x^{\pm} = \int_\Om K_x\,d|\nu| < \infty$. The normalized signed kernel-weighted measure is:
+To support zero-retraining cancellation in external memory, we allow the reference measure $\nu$ to be \emph{signed}. Any finite signed measure decomposes as $\nu = \nu^+ - \nu^-$ with $\nu^+ \perp \nu^-$ (Hahn--Jordan); in the finite counting case used throughout this paper this is simply the split of per-atom masses into positive records and negative ``anti-atoms'', and no measure-theoretic machinery is needed. Defining the total variation $|\nu| = \nu^+ + \nu^-$, we assume $0 < Z_x^{\pm} = \int_\Om K_x\,d|\nu| < \infty$. The normalized signed kernel-weighted measure is:
 \[
   d\mu_x^{\pm}(\omega) = \frac{K_x(\omega)}{Z_x^{\pm}}\big(d\nu^+(\omega)-d\nu^-(\omega)\big).
 \]
@@ -186,14 +188,14 @@ The key encoder $\phi_k$ is $L$-Lipschitz continuous with respect to a semantic 
 \]
 \end{definition}
 
-\begin{proposition}[Score Stability on Unseen Atoms]
+\begin{lemma}[Score Stability on Unseen Atoms]
 \label{prop:score_control}
 Let $\phi_k$ be $L$-Lipschitz with respect to $d_\Om$. For any training anchor $\omega_0 \in \Om_{\mathrm{train}}$ and any newly inserted atom $\omega^* \in \Om$:
 \[
   \big| \langle \phi_q(x), \phi_k(\omega^*) \rangle - \langle \phi_q(x), \phi_k(\omega_0) \rangle \big| 
   \;\le\; \|\phi_q(x)\|_2 \, L \, d_\Om(\omega^*, \omega_0).
 \]
-\end{proposition}
+\end{lemma}
 
 \begin{proof}
 By the Cauchy--Schwarz inequality and the Lipschitz condition:
@@ -204,7 +206,7 @@ By the Cauchy--Schwarz inequality and the Lipschitz condition:
 \end{align*}
 \end{proof}
 
-\subsection{The Retrieval Margin Condition}
+\subsection{The Retrieval Margin Condition and Its Empirical Vacuity}
 
 Let $\tau_k(x) = \max^{(k)}_{\omega \in \Om_{\mathrm{train}}} \langle \phi_q(x), \phi_k(\omega) \rangle$ denote the $k$-th highest score among existing training atoms. For the novel atom $\omega^*$ to enter the top-$k$ retrieved set under query $x$, it must satisfy $\langle \phi_q(x), \phi_k(\omega^*) \rangle > \tau_k(x)$. Combining this with Proposition~\ref{prop:score_control} yields a checkable sufficient condition:
 \begin{equation}
@@ -213,10 +215,14 @@ Let $\tau_k(x) = \max^{(k)}_{\omega \in \Om_{\mathrm{train}}} \langle \phi_q(x),
 \end{equation}
 where $\omega_0$ is a training anchor semantically proximal to $\omega^*$. Equation~\eqref{eq:margin_condition} is a sufficient condition for top-$k$ inclusion; successful prediction additionally depends on retrieved probability mass, value representation, output margin, and specificity on controls.
 
-\paragraph{Finite-Dataset Diagnostic and Conservatism of the Margin Condition}
-We diagnose Equation~\eqref{eq:margin_condition} on the finite benchmark. We instantiate $d_\Om(\omega, \omega') = \|\phi_0(\omega) - \phi_0(\omega')\|_2$ using the Euclidean distance between frozen MiniLM backbone embeddings. For the residual adapter $\phi(x) = \mathrm{Normalize}(x + 0.1 \cdot \mathrm{MLP}(x))$, an operator-norm calculation combined with the minimum adapted norm observed on this dataset gives a finite-dataset estimate $L \le 2.105$, while the maximum observed pairwise directional ratio is $\hat{L} = 2.236$. Neither quantity establishes the global premise of Proposition~\ref{prop:score_control}; they are diagnostics of its conservatism on the sampled records. Evaluating Equation~\eqref{eq:margin_condition} across all 40 insertion facts using their nearest training anchors $\omega_0$ reveals a stark contrast between observed entry and this diagnostic: actual top-1 entry is 100.0\%, whereas the margin is positive for 0.0\% of records across top-1, top-5, and top-10. Cauchy--Schwarz permits adversarial alignment in 384 dimensions; with inter-fact semantic distances averaging $d_\Om \approx 0.78$, the penalty $\hat L\,d_\Om \approx 1.74$ overwhelms the observed score margin ($\text{LHS} \approx -1.34$ versus $\tau_k \approx 0.35$). Thus, the experiment illustrates that a global worst-case condition can be vacuous on sparse semantic corpora; non-vacuous guarantees would require independently established local or directional bounds.
+\paragraph{Finite-Dataset Diagnostic}
+Equation~\eqref{eq:margin_condition} is the type of condition one would hope to check before inserting a record. We test whether it is ever satisfied on the 200-record benchmark of Section~\ref{sec:empirical}. We instantiate $d_\Om(\omega, \omega') = \|\phi_0(\omega) - \phi_0(\omega')\|_2$ using frozen MiniLM backbone embeddings. For the residual adapter $\phi(x) = \mathrm{Normalize}(x + 0.1 \cdot \mathrm{MLP}(x))$, an operator-norm calculation combined with the minimum adapted norm observed on the dataset gives $L \le 2.105$, while the maximum observed pairwise directional ratio is $\hat{L} = 2.236$. Neither establishes the global premise of Lemma~\ref{prop:score_control}; both are finite-sample diagnostics. Evaluating Equation~\eqref{eq:margin_condition} across all 40 insertion facts using their nearest training anchors $\omega_0$: actual top-1 entry is 100.0\%, whereas the margin is positive for 0.0\% of records at $k\in\{1,5,10\}$. With inter-fact distances averaging $d_\Om \approx 0.78$, the penalty $\hat L\,d_\Om \approx 1.74$ overwhelms the observed score margin (left-hand side $\approx -1.34$ versus $\tau_k \approx 0.35$).
+
+We report this as a negative result. Metric-locality arguments of the form of Lemma~\ref{prop:score_control} appear natural for reasoning about post-hoc insertion, but Cauchy--Schwarz permits adversarial alignment in 384 dimensions, and on a sparse semantic corpus the resulting worst-case condition certifies nothing even when insertion succeeds on every record. Any operational guarantee for insertion must therefore rest on local or directional bounds established independently of the global Lipschitz premise; we leave that construction to future work.
 
 \subsection{Anti-Atoms and Exact External-Read Cancellation}
+
+The following observation is algebraically immediate; we record it because it is the exact identity that the stress test of Section~\ref{sec:unlearning} perturbs.
 
 \begin{proposition}[Matched-Pair Cancellation]
 \label{prop:unlearning}
@@ -251,10 +257,10 @@ Write $a v-b\tilde v=(a-b)v+b(v-\tilde v)$ and apply the triangle inequality, th
 
 Exact cancellation is sensitive to key-induced kernel mismatch, unequal mass, and value mismatch. Paraphrases affect cancellation only through their effect on kernel weights; identical keys cancel for all queries.
 
-\section{Computational Tractability and the Softmax Tail Truncation Bound}
+\section{Softmax Tail Truncation: An Exact Certificate}
 \label{sec:quadrature}
 
-Evaluating $R(x; \Om) = \int_\Om v(\omega)\, d\mu_x(\omega)$ densely over a large corpus is computationally expensive. We analyze numerical truncation to the exact ranked top-$k$ elements:
+Evaluating $R(x; \Om)$ densely over a large corpus is expensive, and practical systems read only the top-$k$ ranked atoms. We ask what can be \emph{certified} about the resulting error once the scores are known. We analyze truncation to the exact ranked top-$k$ elements:
 \[
   \hat{R}_k(x; \Om) = \sum_{i=1}^k v(\omega_{(i)})\, \frac{K_x(\omega_{(i)})}{\sum_{j=1}^k K_x(\omega_{(j)})}.
 \]
@@ -265,7 +271,7 @@ In this discrete setting, numerical truncation corresponds to numerical quadratu
 
 Let $N = |\Om|$, and $V_{\max} \coloneqq \sup_{\omega \in \Om} \|v(\omega)\|_2 < \infty$. For query $x$, let $s_i \coloneqq \langle \phi_q(x), \phi_k(\omega_i) \rangle$, with ordering $s_{(1)} \ge \dots \ge s_{(N)}$. Define $Z \coloneqq \sum_{j=1}^N e^{s_{(j)}/\tau}$ and $Z_k \coloneqq \sum_{j=1}^k e^{s_{(j)}/\tau}$. Define the retrieval spectral gap at rank $k$ as $\Delta_k(x) \coloneqq s_{(1)} - s_{(k+1)} \ge 0$.
 
-\begin{theorem}[Softmax Tail Truncation Error Bound]
+\begin{proposition}[Softmax Tail Truncation Error Bound]
 \label{thm:quadrature_bound}
 For any query $x$ and truncation depth $k \in \{1, \dots, N-1\}$, the Euclidean approximation error of top-$k$ truncation satisfies:
 \[
@@ -275,7 +281,7 @@ An alternative bound is:
 \[
   \| R(x; \Om) - \hat{R}_k(x; \Om) \|_2 \;\le\; 2 V_{\max} \cdot \left(\frac{N - k}{k}\right) \cdot \exp\left( -\frac{s_{(k)} - s_{(k+1)}}{\tau} \right).
 \]
-\end{theorem}
+\end{proposition}
 
 \begin{proof}
 Decompose the difference between the full read and the top-$k$ truncation:
@@ -305,6 +311,8 @@ Substituting proves the first bound. Alternatively, $Z \ge k e^{s_{(k)}/\tau}$ w
 which proves the second bound. The second bound is tighter whenever $s_{(1)} - s_{(k)} < \tau \log k$.
 \end{proof}
 
+Both bounds are elementary consequences of $\|R-\hat R_k\|_2 \le 2V_{\max}\,Z_{\mathrm{tail}}/Z$; their value is that they are exact (no distributional assumption on scores) and that the intermediate quantity $Z_{\mathrm{tail}}/Z$ is directly computable, which yields the following stopping rule.
+
 \begin{corollary}[Error-Budgeted Exact Truncation]
 \label{cor:adaptive_k}
 Let $\rho_k(x) = Z_{\mathrm{tail}}/Z$ be the exact softmax mass outside the first $k$ ranked atoms. For any requested $\varepsilon > 0$, define
@@ -315,15 +323,15 @@ Then $\|R(x;\Om) - \hat R_{k_\varepsilon(x)}(x;\Om)\|_2 \le \varepsilon$.
 \end{corollary}
 
 \begin{proof}
-By the proof of Theorem~\ref{thm:quadrature_bound}, $\|R - \hat R_k\|_2 \le 2 V_{\max} \rho_k(x)$. Substituting the condition for $k_\varepsilon(x)$ yields the result. \qedhere
+By the proof of Proposition~\ref{thm:quadrature_bound}, $\|R - \hat R_k\|_2 \le 2 V_{\max} \rho_k(x)$. Substituting the condition for $k_\varepsilon(x)$ yields the result. \qedhere
 \end{proof}
 
-Theorem~\ref{thm:quadrature_bound} bounds truncation error once score ordering is known. Computing the certificate requires all scores, making it a certification rule rather than a sublinear algorithm.
+Computing $\rho_k(x)$ requires all $N$ scores, so Corollary~\ref{cor:adaptive_k} is a post-hoc certificate for a read that has already been scored densely (or whose candidate set is supplied by an approximate index), not a sublinear retrieval algorithm. Section~\ref{sec:empirical} shows that, on synthetic corpora, the certified $k_\varepsilon$ is a large fraction of $N$; we regard this as a useful calibration of how loose exact tail certification is relative to the aggressive truncation used in practice.
 
 \section{Empirical Evaluation}
 \label{sec:empirical}
 
-We examine inserted-record retrieval, adaptive exact top-$k$ truncation, CounterFact retrieval with HNSW candidates and ROC threshold calibration, cumulative insertion, tri-space routing, signed-read suppression under perturbation, and GPT-2 steering.
+We report (i) a saturated synthetic sanity check that also feeds the Lipschitz diagnostic of Section~\ref{sec:editing}, (ii) empirical behavior of the exact truncation certificate, (iii) CounterFact-500 retrieval with ROC threshold calibration, (iv) a rank-one parametric reference and (v) GRACE at the same scale and under the same scorer, (vi) tri-space routing, (vii) signed-read cancellation under perturbation, and (viii) GPT-2 first-token steering. Items (i), (vi), and (viii) are mechanism studies on templated or small data and are not claims of state-of-the-art editing performance.
 
 \subsection{Experimental Setup}
 
@@ -338,15 +346,16 @@ We employ a frozen sentence transformer (\texttt{sentence-transformers/all-MiniL
 where the final MLP layer is zero-initialized. Values are tied to token embeddings: $v(\omega) = E[y_\omega] / \|E[y_\omega]\|$, with predictions evaluated as $p(y \mid x) \propto \langle z(x), E[y] \rangle / \tau$.
 
 \paragraph{Reproducibility Environment}
-Artifacts were generated using Python 3.11.9, PyTorch 2.6.0+cu124, NumPy 2.4.6, sentence-transformers 5.7.0, and transformers 4.48.3 on an NVIDIA GeForce RTX 3050 Ti Laptop GPU (4 GB VRAM) with an AMD Ryzen 7 5800U host. Pinned versions are listed in \texttt{requirements.txt}. The routing sweep reports seeds $\{40,41,42,43,44\}$.
+Artifacts were generated using Python 3.11.9, PyTorch 2.6.0+cu124, NumPy 2.4.6, sentence-transformers 5.7.0, and transformers 4.48.3 on an NVIDIA GeForce RTX 3050 Ti Laptop GPU (4 GB VRAM) with an AMD Ryzen 7 5800U host. Pinned versions are listed in \texttt{requirements.txt}. The routing sweep reports seeds $\{40,41,42,43,44\}$; the GRACE and rank-one runs use seed 42.
 
-\subsection{Post-Hoc Knowledge Editing Results}
+\subsection{Synthetic Insertion Sanity Check}
+\label{sec:synthetic_insertion}
 
-Table~\ref{tab:editing_triad} compares the trained read with frozen MiniLM exact 1-nearest-neighbor retrieval across pool densities $\Om_{\mathrm{train}} \in \{1, 3, 10, 40\}$ items per domain.
+On the 200-fact templated benchmark, we insert the 40 held-out records into pools of density $\{1,3,10,40\}$ items per domain and measure target recall on canonical queries (efficacy), on paraphrases (generality), and unchanged argmax on training queries (specificity). Both the trained residual read and a frozen-MiniLM exact 1-nearest-neighbor baseline score 100.0\% on all three metrics at every density, and inserting all 40 records sequentially without teardown (pool growing from 161 to 200 atoms) leaves every earlier insertion correctly classified with zero training-argmax changes across five seeds; target attention mass stays at $99.68\pm0.01\%$ (Table~\ref{tab:editing_triad}). The benchmark is therefore saturated: it establishes that the read behaves as intended and supplies the embeddings for the Lipschitz diagnostic of Section~\ref{sec:editing}, but it does not show that the residual adapter improves over raw embeddings, and we draw no such conclusion. The one non-trivial trend is that as pool density grows from 1 to 40 the product of adapter spectral norms rises from 0.469 to 1.003 while target attention mass falls from 99.97\% to 99.75\%: the adapter departs further from identity as it is asked to separate more records, at a small cost in mass concentration.
 
 \begin{table}[t]
 \centering
-\caption{Inserted-record retrieval across 200 templated facts. Efficacy and generality denote target classification for canonical queries and paraphrases. Specificity denotes unchanged argmax predictions on active training queries.}
+\caption{Synthetic insertion sanity check across 200 templated facts. All classification metrics are saturated for both methods; only the representation dynamics vary with density. Lifelong row: cumulative insertion of all 40 records, five seeds.}
 \label{tab:editing_triad}
 \vspace{0.5em}
 \resizebox{\textwidth}{!}{%
@@ -354,27 +363,16 @@ Table~\ref{tab:editing_triad} compares the trained read with frozen MiniLM exact
 \toprule
 \textbf{Metric} & \textbf{1 / topic} & \textbf{3 / topic} & \textbf{10 / topic} & \textbf{40 / topic} \\
 \midrule
-\multicolumn{5}{@{}l}{\textit{Trained Residual Read}} \\
-Efficacy (Target Recall on $\omega^*$)   & 100.0\%  & 100.0\%  & 100.0\%  & 100.0\%  \\
-Generality (Paraphrase Query)           & 100.0\%  & 100.0\%  & 100.0\%  & 100.0\%  \\
-Specificity (Neighborhood Retention)    & 100.0\%  & 100.0\%  & 100.0\%  & 100.0\%  \\
+Efficacy / generality / specificity (trained read) & 100 / 100 / 100 & 100 / 100 / 100 & 100 / 100 / 100 & 100 / 100 / 100 \\
+Efficacy / generality / specificity (frozen 1-NN) & 100 / 100 / 100 & 100 / 100 / 100 & 100 / 100 / 100 & 100 / 100 / 100 \\
+Target attention mass $\mu_x(\omega^*)$ (\%) & 99.97 & 99.97 & 99.94 & 99.75 \\
+Adapter linear spectral product & 0.469 & 0.818 & 0.859 & 1.003 \\
 \midrule
-\multicolumn{5}{@{}l}{\textit{Frozen MiniLM Exact 1-Nearest-Neighbor Baseline}} \\
-Efficacy (Target Recall on $\omega^*$)   & 100.0\%  & 100.0\%  & 100.0\%  & 100.0\%  \\
-Generality (Paraphrase Query)           & 100.0\%  & 100.0\%  & 100.0\%  & 100.0\%  \\
-Specificity (Argmax Retention)          & 100.0\%  & 100.0\%  & 100.0\%  & 100.0\%  \\
-\midrule
-\multicolumn{5}{@{}l}{\textit{Representation and Metric Dynamics}} \\
-Novel Atom Attention Mass $\mu_x(\omega^*)$ & 99.97\%  & 99.97\%  & 99.94\%  & 99.75\%  \\
-Adapter Linear Spectral Product         & 0.469    & 0.818    & 0.859    & 1.003    \\
+Lifelong (40 sequential inserts, 5 seeds): efficacy / specificity & \multicolumn{4}{c}{$100.0\pm0.0$ / $100.0\pm0.0$; \; mass $99.68\pm0.01\%$} \\
 \bottomrule
 \end{tabular}%
 }
 \end{table}
-
-Across 40 insertion records and all density conditions, both methods obtain 100\% target classification, with no argmax changes on active training queries. The frozen exact-retrieval baseline matches the trained read: this templated benchmark does not demonstrate that the residual adapter improves retrieval over raw embeddings. At density 40, the maximum output probability shift is $2.86\times10^{-6}$.
-
-As training density scales from $1$ to $40$ atoms per domain, the product of linear-layer spectral norms increases from $0.469$ to $1.003$, while target attention mass decreases from $99.97\%$ to $99.75\%$.
 
 \subsection{Convergence of Exact Ranked Top-$k$ Truncation}
 
@@ -399,106 +397,86 @@ $\tau = 1.00$ & $0.988$ & $0.623$ & $0.477$ & $0.327$ & $0.217$ \\
 }
 \end{table}
 
-At density 40, $\tau=0.10$, and $k=1$, the maximum observed error is $0.0244$, and the smaller pointwise bound covers 100\% of queries with a minimum slack of $0.0923$. Truncation dynamics exhibit two sharply distinct regimes depending on temperature. At low temperatures ($\tau = 0.05$), probability mass concentrates heavily on the nearest record, yielding a mean top-1 error of $3.82 \times 10^{-6}$ that rapidly diminishes to $1.41 \times 10^{-6}$ at $k=20$. Conversely, at elevated temperatures ($\tau \ge 0.50$), probability mass diffuses broadly across background atoms, causing truncation errors to approach $1.0$ when cut off prematurely.
+At density 40, $\tau=0.10$, and $k=1$, the maximum observed error is $0.0244$, and the smaller pointwise bound covers 100\% of queries with a minimum slack of $0.0923$. Two regimes are visible. At $\tau = 0.05$, mass concentrates on the nearest record and top-1 error is $3.82 \times 10^{-6}$. At $\tau \ge 0.50$, mass diffuses across background atoms and premature truncation gives errors near $1.0$.
 
 \paragraph{Adaptive error budgets and scaling}
-Evaluating Corollary~\ref{cor:adaptive_k} on 64 correlated synthetic queries with random keys and values in $\R^{128}$ for $N \in \{1000, 5000, 10000, 25000\}$ confirms 100\% empirical coverage across $\varepsilon \in \{0.01, 0.05, 0.10\}$. However, the certificate is conservative: at $N=25{,}000$ and $\varepsilon=0.05$, mean $k_\varepsilon$ is $13{,}026$ (52.1\% of the corpus) for $\tau=0.05$ and $21{,}467$ (85.9\%) for $\tau=0.10$. Exact scoring and sorting take 54.6 and 18.2 ms on the benchmark GPU.
+Evaluating Corollary~\ref{cor:adaptive_k} on 64 correlated synthetic queries with random keys and values in $\R^{128}$, for corpus sizes $N$ of 1,000, 5,000, 10,000, and 25,000, gives 100\% empirical coverage at every $\varepsilon \in \{0.01, 0.05, 0.10\}$, as it must. The informative quantity is the certified depth: at $N=25{,}000$ and $\varepsilon=0.05$, the mean $k_\varepsilon$ is $13{,}026$ (52.1\% of the corpus) at $\tau=0.05$ and $21{,}467$ (85.9\%) at $\tau=0.10$. Exact scoring and sorting take 54.6 and 18.2 ms on the benchmark GPU. The certificate is therefore far looser than the $k\in[5,50]$ truncations used by practical retrievers; closing that gap requires distributional assumptions on the score tail that the exact bound does not make.
 
 \subsection{CounterFact External-Memory Retrieval and Calibrated Activation}
 \label{sec:counterfact}
 
-We evaluate frozen MiniLM retrieval geometry on the first 500 CounterFact records \cite{meng2022locating}. Memory keys concatenate the rewrite prompt with its requested target; evaluation covers 500 rewrite prompts, 1000 paraphrases (2 per record), and 1000 neighborhood prompts (2 per record).
+We evaluate frozen MiniLM retrieval geometry on the first 500 CounterFact records \cite{meng2022locating}. Memory keys concatenate the rewrite prompt with its requested target; evaluation covers 500 rewrite prompts, 1000 paraphrases (2 per record), and 1000 neighborhood prompts (2 per record). A record is \emph{activated} for a query when the cosine similarity of the top-1 key exceeds a threshold $\theta$ (distinct from the softmax temperature $\tau$).
 
-To address the trade-off where a fixed cosine threshold of 0.60 prematurely discards valid paraphrases (38.2\% retained), we perform a data-driven threshold calibration. We partition CounterFact into a calibration split of records 500--999 and an evaluation split of records 0--499. On the calibration split, sweeping activation thresholds across positive queries (rewrites and paraphrases) versus negative distractors (neighborhood queries) yields an ROC curve with an AUC of 0.817. Optimizing Youden's $J$ statistic on the calibration set identifies an optimal operating threshold of $\tau^* = 0.55$.
+A fixed $\theta=0.60$ discards most valid paraphrases (38.2\% activated). We therefore calibrate $\theta$ on held-out data: records 500--999 form the calibration split and records 0--499 the evaluation split. On the calibration split, sweeping $\theta$ over positive queries (rewrites and paraphrases) versus negative distractors (neighborhood queries) yields ROC AUC $0.817$; the same sweep on the evaluation split gives AUC $0.829$. Maximizing Youden's $J$ on the calibration split selects $\theta^* = 0.55$.
 
 \begin{table}[t]
 \centering
-\caption{CounterFact-500 retrieval evaluation comparing uncalibrated ($\tau=0.60$) and data-calibrated ($\tau^*=0.55$) thresholds. Threshold $\tau^*$ is calibrated via Youden's $J$ on held-out records 500--999 (AUC = 0.817) and evaluated on records 0--499.}
+\caption{CounterFact-500 retrieval with uncalibrated ($\theta=0.60$) and held-out-calibrated ($\theta^*=0.55$) activation thresholds. $\theta^*$ is chosen by Youden's $J$ on records 500--999 and applied to records 0--499. Exact top-1 recall is threshold-independent.}
 \label{tab:counterfact_retrieval}
 \vspace{0.5em}
 \resizebox{\textwidth}{!}{%
 \begin{tabular}{@{}lccc@{}}
 \toprule
-\textbf{Query Formulation} & \textbf{Exact Top-1 Recall} & \textbf{Activated ($\tau=0.60$)} & \textbf{Calibrated ($\tau^*=0.55$)} \\
+\textbf{Query Formulation} & \textbf{Exact Top-1 Recall} & \textbf{Activated ($\theta=0.60$)} & \textbf{Activated ($\theta^*=0.55$)} \\
 \midrule
-Rewrite prompts (500)      & 99.2\% & 99.2\% & \textbf{99.4\%} \\
+Rewrite prompts (500)      & 99.2\% & 99.2\% & 99.2\% \\
 Paraphrase prompts (1,000) & 91.0\% & 38.2\% & \textbf{53.2\%} \\
-Neighborhood prompts (1,000) & --  & 9.6\% (false act.) & 16.1\% (false act.) \\
+Neighborhood prompts (1,000), false activation & --  & 9.6\% & 16.1\% \\
+Neighborhood prompts (1,000), wrong-edit retrieval & -- & 2.4\% & 3.3\% \\
 \midrule
-ROC AUC (held-out tuning) & \multicolumn{3}{c}{0.817} \\
-HNSW Candidate Recall (10 candidates) & \multicolumn{3}{c}{99.96\%} \\
+ROC AUC (calibration split / evaluation split) & \multicolumn{3}{c}{0.817 / 0.829} \\
+HNSW candidate recall (10 candidates) & \multicolumn{3}{c}{99.96\%} \\
 \bottomrule
 \end{tabular}
 }
 \end{table}
 
-As shown in Table~\ref{tab:counterfact_retrieval}, calibrating the threshold to $\tau^* = 0.55$ raises activated paraphrase recall from 38.2\% to 53.2\%, with neighborhood false activation increasing only modestly from 9.6\% to 16.1\%. FAISS HNSW achieves 99.96\% exact-top-1 candidate recall with 12.7 ms construction and 23.5 ms search over all 2500 queries.
+Table~\ref{tab:counterfact_retrieval} shows that calibration raises activated paraphrase recall from 38.2\% to 53.2\% while raising neighborhood false activation from 9.6\% to 16.1\%; the trade-off is roughly 15 points of recall for 6.5 points of false activation, and the 91.0\% exact top-1 recall bounds what any threshold can recover. Rewrite recall is unchanged at 99.2\%. FAISS HNSW attains 99.96\% exact-top-1 candidate recall with 12.7 ms construction and 23.5 ms search over all 2,500 queries.
 
-\subsection{CounterFact-Scale ROME-Inspired Rank-One Baseline}
+\subsection{Rank-One Covariance-Regularized Parametric Reference}
 \label{sec:counterfact_rome}
 
-To provide a scale-matched parametric reference, we implement a covariance-regularized ROME-inspired rank-one baseline \cite{meng2022locating} on the same 500 CounterFact records: (i) the edit is inserted at the subject span identified via tokenizer offsets; (ii) a single edit layer (layer 3) is selected via a lightweight causal trace averaged over 50 held-out records; and (iii) rank-one updates use a key covariance matrix $C=\mathbb{E}[kk^{\top}]$ estimated over 1500 held-out texts: $W \leftarrow W + (C^{-1}k)(v^*-k^{\top}W)^{\top}/(k^{\top}C^{-1}k)$. It retains important deviations from the original ROME protocol: one canonical prompt per edit, no multi-template key averaging or KL regularizer, a CounterFact-derived covariance corpus, and first-subtoken rather than full-sequence scores. It is therefore an ablation, not a reproduction or a directly comparable literature baseline.
+To place the retrieval numbers beside a parametric edit at the same scale, we implement a rank-one covariance-regularized (R1C) update on GPT-2 (124M) for the same 500 CounterFact records. The construction follows the ROME update rule \cite{meng2022locating}: the edit is applied at the subject span found via tokenizer offsets; a single global edit layer (layer 3) is chosen by a causal trace averaged over 50 held-out records; and the update is $W \leftarrow W + (C^{-1}k)(v^*-k^{\top}W)^{\top}/(k^{\top}C^{-1}k)$ with $C=\mathbb{E}[kk^{\top}]$ estimated on 1,500 held-out texts. It departs from the published ROME protocol in four ways: one canonical prompt per edit, no multi-template key averaging or KL regularizer, a CounterFact-derived covariance corpus, and first-subtoken rather than full-sequence target scores. We therefore do not call it ROME and do not compare it to published ROME numbers.
+
+On CounterFact-500, R1C attains an 85.2\% efficacy score (35.6\% argmax), 59.5\% paraphrase score, and 70.1\% neighborhood score, with control-text perplexity ratio 1.001 mean and 1.291 max. Its paraphrase score is compared with GRACE in the next subsection; its neighborhood score (70.1\%) is a different metric from the read's neighborhood false activation (16.1\%) and the two are not directly comparable.
+
+\subsection{GRACE at Matched Scale}
+\label{sec:grace}
+
+GRACE \cite{hartvigsen2023aging} is the memory-based editor closest in mechanism to the gated read: it stores a codebook of (key, value, $\epsilon$) triples at one MLP layer, fires when the last-token input activation lies within $\epsilon$ of a stored key, and replaces that token's layer output by the stored value. Its $\epsilon$-ball plays the role of our activation threshold $\theta$, with keys in a hidden-activation space rather than a sentence-embedding space. We re-implement GRACE in our own code following the algorithm and default hyper-parameters of the reference implementation, rather than running the authors' released code, on GPT-2 (124M) at layer 9 of 12 (the relative depth of the layer used for GPT-2 XL), with $\epsilon_{\mathrm{init}}\in\{1,3,10\}$, SGD value training (learning rate 1.0, 100 iterations) on the first-subtoken cross-entropy, and GRACE's expand/split rule on key conflicts. Edits are applied to the same 500 records with the same scorer as R1C, under GRACE's native sequential protocol (all 500 edits accumulated, evaluation after the last) and under per-record reset. Because the scorer compares first-subtoken probabilities rather than the full multi-token log-probabilities of the published CounterFact protocol, the numbers in Table~\ref{tab:grace} are comparable to each other and to Table~\ref{tab:counterfact_retrieval}, but not directly to efficacy, paraphrase, or neighborhood figures reported for ROME or GRACE elsewhere.
 
 \begin{table}[t]
 \centering
-\caption{CounterFact-500 ROME-inspired rank-one baseline on GPT-2 (124M) with a key-covariance prior and real subject spans, versus ten-fact naive fine-tuning and ROME-lite mechanism baselines. Metrics and protocols differ across columns; the table is descriptive rather than a direct method ranking.}
-\label{tab:counterfact_rome}
+\caption{CounterFact-500 on GPT-2 (124M) under one scorer. R1C and GRACE are parametric and memory-based edits; the read is the frozen-MiniLM external memory of Table~\ref{tab:counterfact_retrieval}, for which only activation rates are defined. Efficacy, paraphrase, and neighborhood scores compare $P(\text{new})$ with $P(\text{true})$ on the first subtoken. Base GPT-2 without any edit gives paraphrase score 28.1\% and neighborhood score $\approx$71\%.}
+\label{tab:grace}
 \vspace{0.5em}
-\resizebox{\textwidth}{!}{%
-\begin{tabular}{@{}lccc@{}}
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}lcccc@{}}
 \toprule
-\textbf{Metric} & \textbf{Naive FT (10 facts)} & \textbf{ROME-Lite (10 facts)} & \textbf{ROME-Inspired (500 facts)} \\
+\textbf{Metric} & \textbf{R1C} & \textbf{GRACE reset} & \textbf{GRACE seq.} & \textbf{Read} \\
+ & (reset) & ($\epsilon=1$) & ($\epsilon=1$) & ($\theta^*=0.55$) \\
 \midrule
-Efficacy Score & 100\% (argmax) & 100\% (argmax) & 85.2\% (35.6\% argmax) \\
-Paraphrase Score & 70\% (argmax) & 40\% (argmax) & 59.5\% \\
-Neighborhood Score / specificity & 58.9\% (mean) & 87.8\% (mean) & 70.1\% \\
-Control-text perplexity ratio & 0.982 mean, 1.022 max & 0.996 mean, 1.004 max & 1.001 mean, 1.291 max \\
-Edit layer(s) & All parameters & Per-record (mostly layer 10) & Single global layer 3 \\
+Efficacy score / argmax & 85.2 / 35.6 & 100.0 / 100.0 & 99.2 / 98.6 & -- \\
+Rewrite activation & -- & 100.0 & 98.6 & 99.2 \\
+Paraphrase score / argmax & 59.5 / -- & 28.1 / 0.0 & 28.1 / 0.0 & -- \\
+Paraphrase activation & -- & 0.0 & 0.2 & 53.2 \\
+Neighborhood score & 70.1 & 70.8 & 71.2 & -- \\
+Neighborhood false activation & -- & 1.0 & 6.2 & 16.1 \\
+Control ppl.\ ratio (mean / max) & 1.001 / 1.291 & 1.000 / 1.000 & 1.000 / 1.000 & 1.000 / 1.000 \\
+Stored state after 500 edits & 1 matrix & -- & 481 entries & 500 pairs \\
 \bottomrule
-\end{tabular}%
-}
+\end{tabular}
 \end{table}
 
-At CounterFact-500 scale, the covariance-regularized ROME-inspired baseline obtains an 85.2\% Efficacy Score (35.6\% argmax), 59.5\% Paraphrase Score, and 70.1\% Neighborhood Score, with control perplexity remaining stable (1.001 mean, 1.291 max). Because its dataset, target scoring, and optimization protocol differ from the ten-fact columns and standard ROME, these figures should be interpreted as a diagnostic reference rather than a direct comparison or a reproduction result.
+Table~\ref{tab:grace} gives the result. GRACE edits the rewrite prompt almost perfectly (100\% efficacy with reset, 99.2\% after 500 sequential edits) and leaves control perplexity exactly unchanged; the ratio of 1.000 is measured, but it is also forced by the mechanism, since no control-text activation falls inside any stored $\epsilon$-ball and the wrapped layer is then the identity. It does not generalize at all: paraphrase activation is 0.0--0.2\% and its paraphrase score, 28.1\%, equals the unedited model's. Widening $\epsilon_{\mathrm{init}}$ to 3 or 10 does not help, because GRACE's split rule shrinks conflicting balls to half the inter-key distance; after 500 edits the mean $\epsilon$ is 0.85, 1.01, and 1.02 for $\epsilon_{\mathrm{init}}=1,3,10$, paraphrase activation stays below 6\%, and neighborhood false activation rises to 13--14\%. In hidden-activation space the CounterFact paraphrases are simply not within reach of the rewrite key. The read operator, by contrast, activates on 53.2\% of paraphrases at a 16.1\% false-activation cost, and R1C's weight update reaches 59.5\% paraphrase score at the cost of a 35.6\% argmax rate and a 1.29 worst-case perplexity ratio.
 
-\subsection{Lifelong Cumulative Knowledge Editing Benchmark}
-\label{sec:lifelong}
-
-We evaluate lifelong memory stability by inserting all 40 held-out facts sequentially and permanently without teardown, expanding the active pool from 161 to 200 atoms.
-
-\begin{table}[t]
-\centering
-\caption{Cumulative insertion performance across 40 sequential records without teardown. Target argmax recall and training-query argmax agreement remain $100.0\pm0.0\%$ across five seeds.}
-\label{tab:lifelong_editing}
-\vspace{0.5em}
-\resizebox{\textwidth}{!}{%
-\begin{tabular}{@{}lcccccc@{}}
-\toprule
-\textbf{Sequential Edits Inserted} & \textbf{1} & \textbf{5} & \textbf{10} & \textbf{20} & \textbf{30} & \textbf{40} \\
-\textbf{Total Active Pool Size} & \textbf{161} & \textbf{165} & \textbf{170} & \textbf{180} & \textbf{190} & \textbf{200} \\
-\midrule
-Cumulative Efficacy (All Past Edits)   & 100.0\% & 100.0\% & 100.0\% & 100.0\% & 100.0\% & 100.0\% \\
-Cumulative Generality (Paraphrases)    & 100.0\% & 100.0\% & 100.0\% & 100.0\% & 100.0\% & 100.0\% \\
-Background Specificity (Original 160)  & 100.0\% & 100.0\% & 100.0\% & 100.0\% & 100.0\% & 100.0\% \\
-Mean Attention Mass $\mu_x(\omega^*)$  & 99.84\% & 99.76\% & 99.46\% & 99.60\% & 99.66\% & 99.70\% \\
-\bottomrule
-\end{tabular}%
-}
-\end{table}
-
-\begin{figure}[t]
-\centering
-\includegraphics[width=0.72\linewidth]{figures/lifelong_retention_curve.png}
-\caption{Lifelong cumulative editing stability across 40 sequential fact insertions. Cumulative efficacy, generality, and background specificity remain at 100\%, while attention mass $\mu_x(\omega^*)$ stays $>99.6\%$.}
-\label{fig:lifelong_curve}
-\end{figure}
-
-Across five seeds (Table~\ref{tab:lifelong_editing}, Figure~\ref{fig:lifelong_curve}), all earlier insertions remain correctly classified when the 40th record is added, with zero training argmax changes. Target attention mass averages $99.681\pm0.014\%$.
+The comparison is informative about mechanism rather than about a winner. GRACE and the read are both threshold-gated lookups, and they sit at opposite ends of a locality trade-off that is set by the key space: hidden activations at one token give near-zero false activation and near-zero generalization, sentence embeddings give moderate generalization at moderate false activation, and the ROC-calibrated $\theta^*$ lets that trade-off be chosen from held-out data rather than fixed by a single $\epsilon_{\mathrm{init}}$ that the split rule then overrides. The comparison also shows what the read gives up: GRACE's value is a learned hidden-state replacement that produces the target argmax on 98.6--100\% of rewrites, whereas the read's value is a token embedding that must be mixed into the final state (Section~\ref{sec:generative}), and neither mechanism edits the paraphrases that its gate does not reach.
 
 \subsection{Dynamic Tri-Space Routing and Path Ablation}
 \label{sec:trigating}
 
-We evaluate the tri-space architecture across three information paths: in-context reasoning ($\Om_{\mathrm{ctx}}$), corpus world knowledge ($\Om_{\mathrm{corpus}}$), and parameter-resident expert outputs ($\Om_{\mathrm{params}}$). Router $\lambda(x) \in \Delta^2$ is evaluated on unseen strings using the shared wrapper ``Determine the output for:'' across all three families.
+We evaluate the tri-space architecture across three information paths: in-context reasoning ($\Om_{\mathrm{ctx}}$, 15 ephemeral premises supplied at query time), corpus world knowledge ($\Om_{\mathrm{corpus}}$, 50 stored facts), and parameter-resident expert outputs ($\Om_{\mathrm{params}}$, 15 tasks served by a learned expert bank). The router $\lambda(x)=\mathrm{softmax}(\mathrm{MLP}_{384\to128\to3}(x))$ acts on the raw MiniLM query embedding and is trained jointly with the residual adapter, output embeddings, and expert bank by AdamW ($10^{-3}$, weight decay $10^{-4}$, up to 1200 epochs with patience 120) on the sum of cross-entropy losses over the three task families. No routing labels are used; route accuracy below is an emergent property of task supervision. Training queries use family-specific wrappers; evaluation uses unseen strings under the shared wrapper ``Determine the output for:'' across all three families, so that surface form cannot identify the intended space.
 
 \begin{table}[t]
 \centering
@@ -527,37 +505,33 @@ Parameter Expert Outputs ($\Omega_{\mathrm{params}}$) & $100.0{\pm}0.0$ & $100.0
 \label{fig:tri_space_ablation}
 \end{figure}
 
-Table~\ref{tab:tri_space_gating} and Figure~\ref{fig:tri_space_ablation} show route accuracies of $100.0\%$, $82.4\%$, and $100.0\%$, and task accuracies of $100.0\%$, $96.8\%$, and $100.0\%$. Ablating the intended space reduces task accuracy to 0\% across all five seeds. Removing explicit route keywords exposes partial corpus confusion with the parameter path ($30.5\%$ gate allocation).
+Table~\ref{tab:tri_space_gating} and Figure~\ref{fig:tri_space_ablation} show route accuracies of $100.0\%$, $82.4\%$, and $100.0\%$, and task accuracies of $100.0\%$, $96.8\%$, and $100.0\%$. Ablating the intended space reduces task accuracy to 0\% across all five seeds. The corpus family is the weak point: without route keywords the gate sends $30.5\%$ of mass to the parameter path, and on $17.6\%$ of corpus queries the parameter gate is the largest. Task accuracy nevertheless exceeds route accuracy ($96.8\%$ vs.\ $82.4\%$) because the parameter-expert read, when wrongly favoured, returns a mixture of expert values that are unrelated to the corpus target vocabulary; the smaller corpus-gated component remains the only one aligned with the correct token, so the argmax survives. This is a benign failure only because the two output vocabularies are disjoint here, and would not hold if experts and corpus competed for the same tokens.
 
-\subsection{Knowledge Contradiction and Anti-Atom External-Memory Suppression}
+\subsection{Anti-Atom Cancellation and Competitive Updating}
 \label{sec:unlearning}
 
-\paragraph{External-Memory Suppression via Anti-Atoms}
-Inserting an anti-atom $\omega^-$ with negative mass $-1.0$ at the metric coordinate of a sensitive record achieves zero-retraining cancellation in the external read.
+\paragraph{Exact cancellation}
+Inserting an anti-atom $\omega^-$ with mass $1.0$ under $\nu^-$ at the key of a stored record realizes Proposition~\ref{prop:unlearning}. On five sensitive-record queries in a 49-token output vocabulary, target probability in the external read falls from 99.998\% to $2.04\% = 1/49$ (five-seed mean $2.0407\pm0.00003\%$), i.e.\ to the uniform distribution, and specificity on 35 unedited control facts stays at 100.0\% (Table~\ref{tab:unlearning_results}, top; Figure~\ref{fig:unlearning_plots}, right). This is a numerical confirmation of an algebraic identity and is reported for completeness; the informative experiment is the stress test below.
 
 \begin{table}[t]
 \centering
-\caption{External-memory suppression and counterfactual updating via signed reads on a 49-token output vocabulary. Matched pairs reduce target probability to $1/|\mathcal{V}| \approx 2.04\%$ in the external read. Specificity on 35 clean background facts remains 100.0\%.}
+\caption{Signed reads on a 49-token output vocabulary. Top: exact anti-atom cancellation (five records, identical outcome). Bottom: counterfactual updating by appending a contradicting atom with recency weight $w_{\mathrm{new}}=2.5$; three of five updates fail. Specificity on 35 clean background facts is 100.0\% in all rows.}
 \label{tab:unlearning_results}
 \vspace{0.5em}
 \resizebox{\textwidth}{!}{%
-\begin{tabular}{@{}lcccc@{}}
+\begin{tabular}{@{}lccl@{}}
 \toprule
-\textbf{Target Entity / Query} & \textbf{Pre-Edit P(Target)} & \textbf{Post-Edit P(Target)} & \textbf{Status} & \textbf{Background Specificity} \\
+\textbf{Target / Query} & \textbf{Pre-Edit P(Target)} & \textbf{Post-Edit P(Target)} & \textbf{Outcome} \\
 \midrule
-\multicolumn{5}{@{}l}{\textit{External-Memory Suppression via Anti-Atoms (unit mass under $\nu^-$)}} \\
-Secret Base Alpha Coordinates   & 99.998\% & \textbf{2.04\%} ($1/|\mathcal{V}|$) & Suppressed & 100.0\% \\
-Patient Confidential Diagnosis  & 99.998\% & \textbf{2.04\%} ($1/|\mathcal{V}|$) & Suppressed & 100.0\% \\
-Proprietary Patent Number       & 99.998\% & \textbf{2.04\%} ($1/|\mathcal{V}|$) & Suppressed & 100.0\% \\
-Classified Document Location    & 99.998\% & \textbf{2.04\%} ($1/|\mathcal{V}|$) & Suppressed & 100.0\% \\
-VIP Cryptographic Key           & 99.998\% & \textbf{2.04\%} ($1/|\mathcal{V}|$) & Suppressed & 100.0\% \\
+\multicolumn{4}{@{}l}{\textit{Exact anti-atom cancellation (unit mass under $\nu^-$)}} \\
+Five sensitive records (coordinates, diagnosis, patent, location, key) & 99.998\% & $2.04\%$ ($=1/|\mathcal{V}|$) & Cancelled to uniform \\
 \midrule
-\multicolumn{5}{@{}l}{\textit{Counterfactual Competitive Updating ($w_{\mathrm{new}} = 2.5$, Append-Only)}} \\
-Ethereum $\to$ Proof-of-Stake   & 3.0\% (old) & \textbf{40.0\%} (new) & Overridden & 100.0\% \\
-Java $\to$ Oracle               & 0.01\% (old)& \textbf{60.1\%} (new) & Overridden & 100.0\% \\
-Pluto $\to$ Dwarf Planet        & 32.3\% (old)& 23.9\% (new)          & Competing  & 100.0\% \\
-Twitter $\to$ X Corp            & 99.8\% (old)& 0.04\% (new)          & Lexical Bias & 100.0\% \\
-Python $\to$ PyPy JIT           & 98.9\% (old)& 0.24\% (new)          & Lexical Bias & 100.0\% \\
+\multicolumn{4}{@{}l}{\textit{Competitive updating ($w_{\mathrm{new}} = 2.5$, append-only)}} \\
+Ethereum $\to$ Proof-of-Stake   & 3.0\% (old) & 40.0\% (new) & Success \\
+Java $\to$ Oracle               & 0.01\% (old)& 60.1\% (new) & Success \\
+Pluto $\to$ Dwarf Planet        & 32.3\% (old)& 23.9\% (new) & Failure: old fact retains argmax \\
+Twitter $\to$ X Corp            & 99.8\% (old)& 0.04\% (new) & Failure: lexical match to old record \\
+Python $\to$ PyPy JIT           & 98.9\% (old)& 0.24\% (new) & Failure: lexical match to old record \\
 \bottomrule
 \end{tabular}%
 }
@@ -566,22 +540,20 @@ Python $\to$ PyPy JIT           & 98.9\% (old)& 0.24\% (new)          & Lexical 
 \begin{figure}[t]
 \centering
 \includegraphics[width=0.88\linewidth]{figures/unlearning_and_updates.png}
-\caption{Empirical evaluation of signed atom spaces. Left: Competitive updating in an append-only log ($w_{\mathrm{new}} = 2.5$). Right: anti-atom cancellation drives residual target probability to uniform entropy ($P = 2.04\% \approx 1/|\mathcal{V}|$).}
+\caption{Signed atom spaces. Left: competitive updating in an append-only log ($w_{\mathrm{new}} = 2.5$). Right: anti-atom cancellation drives residual target probability to uniform ($P = 2.04\% = 1/|\mathcal{V}|$).}
 \label{fig:unlearning_plots}
 \end{figure}
 
-Table~\ref{tab:unlearning_results} and Figure~\ref{fig:unlearning_plots} show target probability dropping from 99.998\% to \textbf{2.04\%} ($1/49$), with five-seed mean residual probability of $2.0407\pm0.00003\%$. Specificity on 35 unedited control facts remains \textbf{100.0\%}.
-
 \paragraph{Approximate cancellation stress test}
-Perturbing anti-atom keys, values, masses, or queries over 50 trials across background sizes 10, 100, and 1000 confirms 100\% analytical bound coverage (3,000 trials). At $N=100$, key perturbations of 0.01, 0.05, and 0.10 leave mean pair residuals of 4.5\%, 72.1\%, and 98.0\% relative to the uncancelled contribution. Query perturbations leave numerical-zero residual because identical keys receive identical kernel weights. Exact anti-atoms are effective but key mismatch rapidly degrades cancellation.
+We perturb anti-atom keys, values, masses, or queries over 50 trials at each of background sizes 10, 100, and 1000 (3,000 trials) and compare the residual pair contribution with the bound of Proposition~\ref{prop:approximate_cancellation}. The bound holds in all trials. At $N=100$, key perturbations of $\ell_2$ magnitude 0.01, 0.05, and 0.10 leave mean pair residuals of 4.5\%, 72.1\%, and 98.0\% of the uncancelled contribution; because keys are unit-norm and the temperature is sharp, a perturbation of 0.05 already moves the anti-atom's kernel weight far from the record's. Query perturbations leave zero residual because identical keys receive identical kernel weights for every query. In practice, therefore, an anti-atom must be constructed from the stored key itself rather than re-encoded from text.
 
-\paragraph{Competitive Updating}
-Inserting contradictory atoms with recency weight $w_{\mathrm{new}} = 2.5$ in an append-only log succeeds on only $44.0\pm8.9\%$ of records across five seeds. In remaining cases, lexical similarity to the original record outweighs the recency bonus.
+\paragraph{Competitive updating}
+Appending a contradicting atom with recency weight $w_{\mathrm{new}} = 2.5$ overrides the old fact on only $44.0\pm8.9\%$ of records across five seeds (Table~\ref{tab:unlearning_results}, bottom). Where it fails, the query is lexically closer to the original record than to the new one, and the recency weight does not compensate. Append-only updating without cancellation of the superseded record is therefore unreliable in this setting.
 
-\subsection{Autoregressive Generative Modeling with GPT-2}
+\subsection{First-Token Steering of GPT-2 as a Retrieval Diagnostic}
 \label{sec:generative}
 
-We augment pretrained GPT-2 (124M \cite{radford2019language}) by coupling $\Om_{\mathrm{corpus}}$ into its final hidden representation with cosine gating ($\ge 0.60$):
+We couple $\Om_{\mathrm{corpus}}$ into the final hidden state of pretrained GPT-2 (124M \cite{radford2019language}) with cosine activation at $\theta \ge 0.60$:
 \[
   \tilde{h}_t =
   \begin{cases}
@@ -590,10 +562,11 @@ We augment pretrained GPT-2 (124M \cite{radford2019language}) by coupling $\Om_{
     h_t, & \text{otherwise}.
   \end{cases}
 \]
+Each memory value is the unit-normalized output embedding of the target's first token. The construction is therefore circular by design: conditional on retrieval, injecting the target embedding into the final hidden state is expected to raise the target's first-token probability. The experiment does not test whether the model has ``learned'' a fact; it tests (a) whether the retrieval gate fires on the right prompts and stays silent on controls, and (b) how large a hidden-state perturbation is needed to flip the argmax. The probability ratios in Table~\ref{tab:generative_results} should be read in that light and not as evidence of editing quality.
 
 \begin{table}[t]
 \centering
-\caption{Selected rows from ten-fact greedy GPT-2 evaluation. Factual atoms boost first-token probabilities and correct canonical predictions.}
+\caption{Selected rows from the ten-fact greedy GPT-2 diagnostic. Because the injected value is the target's own token embedding, large first-token probability gains are expected conditional on retrieval; the rows document gate behaviour and perturbation magnitude, not factual learning.}
 \label{tab:generative_results}
 \vspace{0.5em}
 \resizebox{\textwidth}{!}{%
@@ -620,13 +593,13 @@ CRISPR Bacterial Defense (\texttt{viruses})    & 2.25\% & \textbf{38.41\%} & 17.
 \label{fig:generative_boost}
 \end{figure}
 
-Table~\ref{tab:generative_results} and Figure~\ref{fig:generative_boost} show first-token argmax correction on 10/10 canonical prompts and 9/10 paraphrases. On ten unrelated control texts, the relevance threshold prevents false activation, keeping perplexity ratio at 1.000. 
+Table~\ref{tab:generative_results} and Figure~\ref{fig:generative_boost} show first-token argmax correction on 10/10 canonical prompts and 9/10 paraphrases; the single paraphrase failure is a gate miss (similarity below $\theta$), not a steering failure. On ten unrelated control texts the gate never fires, so perplexity ratio is exactly 1.000.
 
-Crucially, this mechanism is formulated strictly for one-shot, first-token factual steering at the query boundary. Multi-token autoregressive generation exposes severe degradation once the target token is consumed. Specifically, after appending the corrected first token to the sequence, the query representation at subsequent generation steps typically drifts away from the factual atom's key, causing relevance similarity to drop below the activation threshold $\tau^*$ and reverting the model to its base distribution. Conversely, if activation is artificially sustained across multiple decoding steps, the persistent additive injection induces degenerate repetitions and syntactically incoherent phrases (e.g., generating repetitive continuations such as ``lead, thorium, and lead-based materials''). Consequently, the current single-step read injection does not provide long-form conversational fluency or coherent multi-token text generation, which would require an autoregressive sequence-level memory policy.
+The mechanism is limited to one-shot, first-token steering at the query boundary. After the corrected first token is appended, the query representation at subsequent steps drifts away from the record's key, similarity falls below $\theta$, and the model reverts to its base distribution. If activation is instead held on across steps, the persistent additive injection produces degenerate repetitions (e.g.\ ``lead, thorium, and lead-based materials''). Coherent multi-token generation would require a sequence-level memory policy, which we do not provide.
 
 \begin{table}[t]
 \centering
-\caption{Naive full fine-tuning and single-layer rank-one editing (ROME-lite) versus relevance-gated atom-space read on the same ten GPT-2 facts, paraphrases, and controls.}
+\caption{Naive full fine-tuning and single-layer rank-one editing (ROME-lite) versus the relevance-gated read on the same ten GPT-2 facts, paraphrases, and controls. The read's cross-fact specificity was not measured on these ten facts; its analogue at scale is the neighborhood false-activation rate of Table~\ref{tab:counterfact_retrieval}.}
 \label{tab:finetune_baseline}
 \vspace{0.5em}
 \resizebox{\textwidth}{!}{%
@@ -636,7 +609,7 @@ Crucially, this mechanism is formulated strictly for one-shot, first-token factu
 \midrule
 Canonical efficacy (first-token argmax) & 100\% (10/10) & 100\% (10/10) & 100\% (10/10) \\
 Paraphrase generality (first-token argmax) & 90\% (9/10) & 70\% (7/10) & 40\% (4/10) \\
-Neighborhood specificity (other 9 facts unchanged) & n/a (no weight change) & 58.9\% (mean) & 87.8\% (mean) \\
+Neighborhood specificity (other 9 facts unchanged) & not measured (weights unchanged; gate false activation 9.6--16.1\% on CounterFact-500) & 58.9\% (mean) & 87.8\% (mean) \\
 Control-text perplexity ratio & 1.000 (exact) & 0.982 mean, 1.022 max & 0.996 mean, 1.004 max \\
 Mechanism & Relevance-gated read & Full-parameter AdamW & Rank-one weight update \\
 \bottomrule
@@ -644,10 +617,10 @@ Mechanism & Relevance-gated read & Full-parameter AdamW & Rank-one weight update
 }
 \end{table}
 
-Table~\ref{tab:finetune_baseline} compares the read operator against naive fine-tuning (FT) and single-layer ROME-lite on the same ten facts. Naive FT achieves 100\% canonical efficacy but alters predictions on 41.1\% of neighborhood facts. ROME-lite preserves locality (87.8\% neighborhood retention) but generalizes less effectively to paraphrases (40\% vs.\ 90\%).
+Table~\ref{tab:finetune_baseline} compares the read against naive fine-tuning (FT) and single-layer ROME-lite on the same ten facts. Naive FT reaches 100\% canonical efficacy but changes predictions on 41.1\% of neighbouring facts; ROME-lite preserves locality (87.8\%) but generalizes less to paraphrases (40\% vs.\ 90\%). The read leaves weights untouched, so its specificity failure mode is false gate activation rather than parameter interference; that rate was not measured on the ten facts and is 16.1\% at $\theta^*$ on CounterFact-500. The three columns therefore trade off different failure modes and the table should not be read as a ranking.
 
-\paragraph{Expanded CounterFact Generative Steering ($N=50$ Records)}
-We scale this direct-intervention mechanism study to $N=50$ CounterFact records under the calibrated threshold $\tau^* = 0.55$. Across 2,000 bootstrap resamples, base GPT-2 assigns $P(\mathrm{new}) > P(\mathrm{true})$ on $16.0\%$ $[6.0\%, 26.0\%]$ of rewrite prompts and $22.0\%$ $[12.0\%, 34.0\%]$ of paraphrases, with $0.0\%$ target argmax accuracy. Augmenting GPT-2 with the atom space $\Om_{\mathrm{corpus}}$ achieves $100.0\%$ rewrite activation and $58.0\%$ paraphrase activation. Steered GPT-2 achieves \textbf{100.0\%} $[100.0\%, 100.0\%]$ rewrite efficacy (100\% argmax accuracy) and a paraphrase score of \textbf{66.0\%} $[52.0\%, 78.0\%]$ (56.0\% exact argmax accuracy, $[42.0\%, 70.0\%]$). Since each memory value is the target token embedding and the read is mixed directly into the final hidden state, this demonstrates first-token controllability conditional on retrieval, not an end-to-end RAG or model-editing comparison.
+\paragraph{CounterFact steering at $N=50$}
+We repeat the diagnostic on 50 CounterFact records at the calibrated threshold $\theta^* = 0.55$, with 2,000 bootstrap resamples for intervals. Base GPT-2 assigns $P(\mathrm{new}) > P(\mathrm{true})$ on $16.0\%$ $[6.0\%, 26.0\%]$ of rewrite prompts and $22.0\%$ $[12.0\%, 34.0\%]$ of paraphrases, with $0.0\%$ target argmax accuracy. The gate fires on $100.0\%$ of rewrites and $58.0\%$ of paraphrases, consistent with the activation rates of Table~\ref{tab:counterfact_retrieval}. Conditional on activation the steered model attains $100.0\%$ rewrite efficacy and argmax accuracy, and overall paraphrase score $66.0\%$ $[52.0\%, 78.0\%]$ with $56.0\%$ $[42.0\%, 70.0\%]$ exact argmax. Because paraphrase steering is bounded above by paraphrase activation, the gap between $58\%$ activation and $91\%$ exact top-1 recall (Table~\ref{tab:counterfact_retrieval}) is where the useful headroom lies; the injection itself is not the bottleneck. This is a retrieval diagnostic and not an end-to-end comparison with RAG or with model editors.
 
 \section{Discussion and Related Work}
 \label{sec:discussion}
@@ -657,23 +630,21 @@ The computational elements unified under our framework have extensive histories 
 \subsection{Relation to Memory-Based and Non-Parametric Model Editing}
 The atom-space read operator connects directly to non-parametric, semi-parametric, and memory-augmented model editing strategies.
 
-Semi-Parametric Edit Retrieval and Correction (SERAC) \cite{mitchell2022memory} caches edits externally and employs an auxiliary classifier to route queries between a base language model and a separate counterfactual sequence-to-sequence model. RoAS shares the objective of keeping base weights frozen, but conceptualizes retrieval as a query-conditioned convex combination $R(x; \Om)$ that combines linearly within a shared representation space, avoiding the operational overhead of hosting two independent autoregressive models. This architectural trade-off is fundamental: whereas SERAC preserves full sequence-level generation capabilities by delegating altered queries to an auxiliary counterfactual seq2seq network, RoAS executes single-pass linear vector additions at the representation layer, providing minimal computational overhead at the expense of sequence-level counterfactual flexibility.
+Semi-Parametric Edit Retrieval and Correction (SERAC) \cite{mitchell2022memory} caches edits externally and employs an auxiliary classifier to route queries between a base language model and a separate counterfactual sequence-to-sequence model. The read operator shares the objective of keeping base weights frozen, but its retrieval is a convex combination $R(x; \Om)$ that combines linearly within a shared representation space, avoiding a second autoregressive model. The trade-off is direct: SERAC retains full sequence-level generation by delegating altered queries to the counterfactual network, while the read performs a single-pass vector addition at the representation layer and, as Section~\ref{sec:generative} shows, does not generate coherent multi-token continuations.
 
-In parallel, GRACE \cite{hartvigsen2023aging} inserts local, norm-constrained key-value codebook patches directly into intermediate transformer layer activations for lifelong editing, using dynamic $\epsilon$-ball thresholds around perturbed keys. Whereas GRACE operates within internal hidden representations through local activation patching, RoAS externalizes factual records into measurable atom spaces equipped with explicit Hahn--Jordan cancellation via anti-atoms and certified error-budgeted top-$k$ truncation bounds. Operationally, GRACE performs deep layer-internal adaptation requiring codebook management during sequential edits, while RoAS formalizes retrieval as an explicit output-head or representation mixture with closed-form algebraic cancellation.
+GRACE \cite{hartvigsen2023aging} inserts norm-constrained key-value codebook patches into intermediate transformer activations, with $\epsilon$-ball activation around stored keys. The activation gate $\theta$ of Section~\ref{sec:counterfact} plays the same role as GRACE's $\epsilon$; the differences are that our keys live in an external sentence-embedding space rather than a hidden layer, that cancellation is expressed on the reference measure rather than by codebook deletion, and that we report ROC-calibrated rather than fixed thresholds. Section~\ref{sec:grace} runs GRACE on the same 500 records with the same GPT-2 checkpoint and scorer and finds that the two gated lookups occupy opposite ends of a generalization--locality trade-off set by the key space. We have not run matched comparisons with SERAC, MEMIT \cite{meng2023mass}, MEND \cite{mitchell2022fast}, WISE \cite{wang2024wise}, or AlphaEdit \cite{fang2025alphaedit}, and nothing here should be read as a claim of superiority over them.
 
-Interpolation between context attention and external memory stores has also been investigated in Memorizing Transformers \cite{wu2022memorizing} and adaptive $k$NN-LM architectures \cite{he2021efficient}. RoAS complements these formulations by offering a unifying measure-theoretic framework that encompasses token context, dense external corpora, and parameter-expert banks under a common read abstraction with separate norm calibration.
+Interpolation between context attention and external memory stores has also been investigated in Memorizing Transformers \cite{wu2022memorizing} and adaptive $k$NN-LM \cite{he2021efficient}. The atom-space view places token context, dense external corpora, and parameter-expert banks under one read abstraction with separate normalization, which is the calibration principle of Section~\ref{sec:calibration}.
 
-Finally, signed atom spaces interface with the broader machine unlearning literature. Conventional unlearning approaches, such as SISA \cite{bourtoule2021machine} or Fisher-based certified parameter removal, adjust internal weights to eliminate the statistical influence of target data. In contrast, signed atom spaces ($\nu = \nu^+ - \nu^-$) achieve output-space cancellation strictly within the read operator itself, leaving pretrained parameter weights unmodified.
+Finally, signed atom spaces interface with machine unlearning. SISA \cite{bourtoule2021machine} and Fisher-based certified removal adjust weights to eliminate the statistical influence of target data. Signed atom spaces cancel only in the read output, leave pretrained weights unmodified, and retain both the record and its anti-atom in storage; they are a mechanism for external-memory retraction, not for parametric unlearning.
 
 \subsection{Limitations}
-The atom-space formulation is a shared analytical lens, not a claim that attention, RAG, and MoE systems are algorithmically interchangeable. Synthetic studies use five seeds but remain templated; frozen 1-NN matches the trained read on synthetic insertions. The tri-space and GPT-2 experiments are controlled mechanism studies, and the latter directly mixes retrieved target embeddings into the final hidden state for first-token steering, which exhibits multi-token drift during subsequent autoregressive generation. CounterFact retrieval uses 500 records, while generative steering uses 50 records, and neither is compared end-to-end under matched protocols with SERAC, GRACE, MEMIT \cite{meng2023mass}, MEND \cite{mitchell2022fast}, WISE \cite{wang2024wise}, or AlphaEdit \cite{fang2025alphaedit}. Direct empirical comparisons with SERAC and GRACE are structurally distinct: SERAC requires training and evaluating an auxiliary counterfactual model, while GRACE introduces layer-internal activation patches rather than external read operators. The ROME-inspired baseline is not a reproduction of standard ROME. Exact adaptive certification requires computing all pairwise scores; its large selected fractions show it is an error-bound certificate rather than a sublinear algorithm. The finite-dataset Lipschitz diagnostic does not establish a global certificate. Anti-atoms retain both records, cancel only the external read under exact alignment, and do not remove information from dense parameters.
+The atom-space view is a shared notation; every result here is a finite-sum statement and none exploits a non-atomic measure. It does not imply that attention, RAG, and MoE are interchangeable. On the theoretical side, the Lipschitz-margin condition is vacuous on the benchmark studied and its finite-sample $L$ estimates do not establish the global premise, while the truncation certificate requires all $N$ scores and selects 52--86\% of a synthetic corpus at $N=25{,}000$; both are reported as calibrations of how loose worst-case arguments are, not as operational tools. The 200-fact benchmark and the tri-space routing tasks are templated; the insertion metrics are saturated, frozen 1-NN matches the trained read, and routing failures are benign only because the corpus and expert output vocabularies are disjoint. In the GPT-2 steering study the injected value is the target's own token embedding, so first-token gains are expected conditional on retrieval; the experiment measures gate behaviour rather than factual learning, and multi-token generation drifts or degenerates. The R1C reference is not a ROME reproduction, and the GRACE comparison is our own re-implementation on GPT-2 small at a proportionally chosen layer with a first-subtoken value objective rather than the authors' code in its published GPT-2 XL hallucination setup; all CounterFact scores in this paper use first-subtoken probability comparisons and are therefore internally consistent but not numerically interchangeable with published ROME or GRACE results. No comparison with SERAC, MEMIT, MEND, WISE, or AlphaEdit is provided, and the retrieval read is scored on activation and first-token metrics rather than as an end-to-end editor. All experiments use GPT-2 (124M); the argument does not depend on scale, but the effect sizes have not been checked on a larger model. Finally, anti-atoms retain both records, cancel only the external read, require the exact stored key, and do not remove knowledge from dense parameters.
 
 \section{Conclusion}
 \label{sec:conclusion}
 
-We have presented a mathematical formulation casting finite attention, dense retrieval, and expert routing as weighted reads over atom spaces. We derived a conditional retrieval margin result, exact-ranked truncation bounds, an adaptive error-budget rule, and an approximate signed-read cancellation bound, then used controlled studies to diagnose their behavior.
-
-Error-budgeted exact truncation provides full empirical coverage while often selecting a large fraction of the corpus. CounterFact reveals strong exact retrieval, where data-calibrated thresholding improves paraphrase activation. The remaining studies demonstrate the limitations of templated routing, fragile cancellation under key mismatch, and first-token factual steering in GPT-2 via direct target-embedding injection alongside multi-token generation drift. Establishing independently certified local retrieval conditions, sublinear guarantees, and matched end-to-end evaluations against competitive RAG and editing baselines are essential next steps.
+We have used a single read operator over valued atom spaces as a common notation for attention, dense retrieval, and expert routing, and used it to pose three questions on a shared footing: when an inserted record is retrieved, when a read can be truncated, and when a record can be cancelled. The answers are mixed and, we argue, informative. A natural Lipschitz-margin insertion condition certifies nothing on a corpus where insertion succeeds on every record. An exact softmax tail certificate holds by construction but licenses far less truncation than practitioners use. Matched anti-atoms cancel exactly, but a key perturbation of $0.05$ leaves 72\% of the contribution. On CounterFact-500, held-out ROC calibration of the activation threshold buys 15 points of paraphrase activation for 6.5 points of false activation, and the remaining gap to 91\% exact top-1 recall is where retrieval-based editing has headroom. Run on the same records with the same scorer, GRACE's hidden-activation codebook reaches 99--100\% rewrite efficacy with no measurable side effects but fires on almost no paraphrases, which places the two gated lookups at opposite ends of a trade-off that is governed by the key space rather than by the gating rule. The next steps are local or directional insertion guarantees that do not rely on a global Lipschitz premise, tail bounds under explicit score-distribution assumptions, and matched comparisons with MEMIT and SERAC under their published protocols.
 
 \section*{CRediT Authorship Contribution Statement}
 \textbf{Farshid Mossaiby}: Conceptualization, Methodology, Formal analysis, Software, Investigation, Validation, Data curation, Writing - original draft, Writing - review \& editing.
@@ -685,7 +656,7 @@ The author declares that they have no known competing financial interests or per
 The complete codebase, benchmark definitions, experimental suites, and reproduction scripts are publicly available at \url{https://github.com/mossaiby/RoAS}.
 
 \section*{Declaration of Generative AI in Scientific Writing}
-During the preparation of this work, the author utilized Google Gemini to assist in formalizing bounds, experimental pipeline design, and manuscript formatting. After using this tool, the author reviewed and edited the content as needed and takes full responsibility for the content of the publication.
+During the preparation of this work, the author used Google Gemini to assist with drafting prose, checking the algebra in the proofs of Section~\ref{sec:quadrature}, designing the experimental pipeline, and manuscript formatting. All theorem statements, proofs, code, and experimental results were verified by the author, who takes full responsibility for the content of the publication.
 
 \bibliographystyle{elsarticle-num}
 \bibliography{references}

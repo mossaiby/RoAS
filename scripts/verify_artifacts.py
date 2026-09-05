@@ -62,6 +62,17 @@ def validate_rank_one_baseline() -> None:
         probability(artifact[metric], metric)
 
 
+def validate_grace_baseline() -> None:
+    artifact = load_json("results/counterfact_grace_results.json")
+    require("1.0" in artifact["sequential"] and "1.0" in artifact["reset"], "GRACE artifact must contain eps_init=1.0 runs")
+    for protocol in ("sequential", "reset"):
+        for run in artifact[protocol].values():
+            require(run["num_records"] == 500, "GRACE runs must contain 500 records")
+            for metric in ("efficacy_score", "paraphrase_score", "neighborhood_score",
+                           "paraphrase_activation_rate", "neighborhood_false_activation_rate"):
+                probability(run[metric], f"grace.{protocol}.{metric}")
+
+
 def validate_routing() -> None:
     artifact = load_json("results/tri_space_seed_sweep.json")
     require(artifact["metadata"]["seeds"] == [40, 41, 42, 43, 44], "Routing seeds must match the reported five-seed sweep")
@@ -83,9 +94,10 @@ def validate_cancellation() -> None:
 
 def validate_manuscript_language() -> None:
     manuscript = (ROOT / "paper" / "main.tex").read_text(encoding="utf-8")
-    require("ROME-inspired" in manuscript, "Manuscript must label the reduced baseline as ROME-inspired")
-    require("not an end-to-end RAG or model-editing comparison" in manuscript, "Manuscript must state the GPT-2 study scope")
+    require("do not call it ROME" in manuscript, "Manuscript must state that the rank-one baseline is not ROME")
+    require("not an end-to-end comparison with RAG or with model editors" in manuscript, "Manuscript must state the GPT-2 study scope")
     require("not a probability measure" in manuscript, "Manuscript must distinguish signed from probability measures")
+    require("GRACE" in manuscript and "counterfact_grace" not in manuscript, "Manuscript must report the GRACE comparison")
 
 
 def main() -> None:
@@ -93,6 +105,7 @@ def main() -> None:
         validate_calibration,
         validate_steering,
         validate_rank_one_baseline,
+        validate_grace_baseline,
         validate_routing,
         validate_cancellation,
         validate_manuscript_language,

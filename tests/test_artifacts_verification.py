@@ -61,6 +61,7 @@ class TestResultsDirectoryIntegrity:
     EXPECTED_ARTIFACTS = [
         "results/adaptive_retrieval_results.json",
         "results/counterfact_calibration_results.json",
+        "results/counterfact_grace_results.json",
         "results/counterfact_retrieval_results.json",
         "results/counterfact_rome_results.json",
         "results/decoupled_steering_results.json",

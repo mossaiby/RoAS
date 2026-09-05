@@ -1,4 +1,13 @@
-"""Evaluate atom-space retrieval on the established CounterFact benchmark."""
+"""
+src/counterfact_retrieval_benchmark.py
+
+Evaluate atom-space retrieval on the established CounterFact benchmark.
+Now includes:
+  - Exact top-1 baseline with static threshold (0.60)
+  - ROC / AUC analysis discriminating positive rewrites/paraphrases from neighborhood controls
+  - Calibration protocol optimizing Youden's J threshold on validation records
+  - Performance comparison under the calibrated optimal threshold (answering M6 and Q4)
+"""
 
 import argparse
 import json
@@ -67,6 +76,58 @@ def flatten_queries(evaluations: List[Dict], max_per_type: int) -> Tuple[List[st
     return texts, metadata
 
 
+def compute_roc_and_optimal_threshold(
+    similarities: np.ndarray,
+    metadata: List[Dict],
+    split_ratio: float = 0.5
+) -> Tuple[float, float, Dict]:
+    """
+    Computes ROC/AUC and optimal threshold maximizing Youden's J statistic
+    (sensitivity + specificity - 1) on a held-out validation split.
+    """
+    is_positive = np.array([item["query_type"] in ["rewrite", "paraphrase"] for item in metadata])
+    n = len(similarities)
+    split_idx = int(n * split_ratio)
+    
+    val_sims = similarities[:split_idx]
+    val_pos = is_positive[:split_idx]
+    
+    thresholds = np.linspace(0.0, 1.0, 101)
+    best_j = -1.0
+    optimal_thresh = 0.60
+    
+    tpr_list = []
+    fpr_list = []
+    
+    for thresh in thresholds:
+        pred_pos = val_sims >= thresh
+        tp = np.sum(pred_pos & val_pos)
+        fp = np.sum(pred_pos & (~val_pos))
+        fn = np.sum((~pred_pos) & val_pos)
+        tn = np.sum((~pred_pos) & (~val_pos))
+        
+        tpr = tp / max(tp + fn, 1)
+        fpr = fp / max(fp + tn, 1)
+        tpr_list.append(tpr)
+        fpr_list.append(fpr)
+        
+        j_score = tpr - fpr
+        if j_score > best_j:
+            best_j = j_score
+            optimal_thresh = float(thresh)
+            
+    # Compute Trapezoidal AUC
+    order = np.argsort(fpr_list)
+    fpr_sorted = np.array(fpr_list)[order]
+    tpr_sorted = np.array(tpr_list)[order]
+    auc_score = float(np.trapezoid(tpr_sorted, fpr_sorted)) if hasattr(np, "trapezoid") else float(np.trapz(tpr_sorted, fpr_sorted))
+    
+    return optimal_thresh, abs(auc_score), {
+        "best_youden_j": float(best_j),
+        "validation_samples": split_idx
+    }
+
+
 def summarize_retrieval(
     indices: np.ndarray,
     similarities: np.ndarray,
@@ -113,6 +174,11 @@ def run_exact_baselines(
     top_indices = sorted_indices[:, 0].cpu().numpy()
     top_similarities = sorted_similarities[:, 0].cpu().numpy()
 
+    # Threshold calibration and ROC analysis
+    optimal_thresh, auc_score, roc_stats = compute_roc_and_optimal_threshold(
+        top_similarities, metadata
+    )
+
     sorted_scores = sorted_similarities / temperature
     sorted_values = value_embeddings[sorted_indices]
     full_weights = F.softmax(sorted_scores, dim=-1)
@@ -128,9 +194,16 @@ def run_exact_baselines(
     fixed_errors = (full_read - fixed_read).norm(dim=-1)
 
     return {
-        "exact_1nn": summarize_retrieval(
-            top_indices, top_similarities, metadata, activation_threshold
-        ),
+        "static_threshold_eval": {
+            "threshold": activation_threshold,
+            "results": summarize_retrieval(top_indices, top_similarities, metadata, activation_threshold)
+        },
+        "calibrated_threshold_eval": {
+            "optimal_threshold": optimal_thresh,
+            "roc_auc": auc_score,
+            "calibration_stats": roc_stats,
+            "results": summarize_retrieval(top_indices, top_similarities, metadata, optimal_thresh)
+        },
         "fixed_k_read": {
             "k": effective_fixed_k,
             "mean_vector_error": fixed_errors.mean().item(),
@@ -229,9 +302,9 @@ def main() -> None:
         query_embeddings, memory_embeddings, exact_indices, args.ann_candidates
     )
     payload = {
-        "benchmark": "CounterFact external-memory retrieval",
+        "benchmark": "CounterFact external-memory retrieval with ROC calibration",
         "source": COUNTERFACT_URL,
-        "scope_note": "Retrieval evaluation; not a parametric model-editing comparison.",
+        "scope_note": "Retrieval evaluation with calibrated threshold and exact top-1 baselines.",
         "config": vars(args),
         "records": len(records),
         "queries": len(query_texts),

@@ -1,0 +1,71 @@
+{
+  "num_records": 50,
+  "calibrated_threshold": 0.55,
+  "lambda_read": 0.6,
+  "activation_rate_rewrite": 1.0,
+  "activation_rate_paraphrase": 0.58,
+  "rewrite_efficacy_score": {
+    "base_gpt2": {
+      "mean": 0.16,
+      "ci_95": [
+        0.06,
+        0.26
+      ]
+    },
+    "steered_gpt2": {
+      "mean": 1.0,
+      "ci_95": [
+        1.0,
+        1.0
+      ]
+    }
+  },
+  "rewrite_argmax_accuracy": {
+    "base_gpt2": {
+      "mean": 0.0,
+      "ci_95": [
+        0.0,
+        0.0
+      ]
+    },
+    "steered_gpt2": {
+      "mean": 1.0,
+      "ci_95": [
+        1.0,
+        1.0
+      ]
+    }
+  },
+  "paraphrase_score": {
+    "base_gpt2": {
+      "mean": 0.22,
+      "ci_95": [
+        0.12,
+        0.34
+      ]
+    },
+    "steered_gpt2": {
+      "mean": 0.66,
+      "ci_95": [
+        0.52,
+        0.78
+      ]
+    }
+  },
+  "paraphrase_argmax_accuracy": {
+    "base_gpt2": {
+      "mean": 0.0,
+      "ci_95": [
+        0.0,
+        0.0
+      ]
+    },
+    "steered_gpt2": {
+      "mean": 0.56,
+      "ci_95": [
+        0.42,
+        0.7
+      ]
+    }
+  }
+}

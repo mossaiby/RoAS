@@ -4,6 +4,7 @@ src/atom_space_lifelong_engine.py
 STANDALONE LIFELONG CUMULATIVE EDITING ENGINE
 Tests long-term memory stability and capacity:
 - Sequentially inserts all 40 holdout facts permanently (no teardown).
+- Uses cleaned, grammatical templates and non-duplicated triplets.
 - Synchronizes output logs directly to both OUT_DIR and results/.
 """
 
@@ -42,7 +43,7 @@ RAW_DOMAINS = {
         ("Mercury", "is the closest planet to the", "Sun"),
         ("Venus", "has a thick atmosphere of", "Carbon Dioxide"),
         ("Earth", "supports abundant life and liquid", "Water"),
-        ("Mars", "is home to Olympus Mons on", "Red Planet"),
+        ("Mars", "is commonly referred to in astronomy as the", "Red Planet"),
         ("Jupiter", "is the largest gas giant in the", "Solar System"),
         ("Saturn", "is famous for prominent rings of", "Ice"),
         ("Uranus", "rotates on a tilted sideways", "Axis"),
@@ -125,7 +126,7 @@ RAW_DOMAINS = {
         ("PageRank", "ranks hyperlinked web pages by counting directional incoming", "Links"),
         ("RSA", "bases public-key encryption on the factoring difficulty of large", "Primes"),
         ("AES", "implements symmetric block cipher encryption across fixed", "Blocks"),
-        ("SHA-256", "computes a deterministic one-way cryptographic cryptographic", "Digest"),
+        ("SHA-256", "computes a deterministic one-way cryptographic", "Digest"),
         ("LLVM", "provides modular compiler target intermediate", "Representations"),
         ("Nginx", "acts as an asynchronous high-performance reverse", "Proxy"),
         ("Kafka", "distributes streaming partitioned message logs across fault-tolerant", "Clusters"),
@@ -345,7 +346,7 @@ def run_lifelong_experiment():
 
     print("Pre-embedding base training corpus...")
     train_sents = [f"{s} {r} {o}." for s, r, o in train_triplets]
-    train_queries = [f"What {r} {s}?" for s, r, o in train_triplets]
+    train_queries = [f"Complete the factual statement: {s} {r} ___." for s, r, o in train_triplets]
     train_tgts = torch.tensor([target2id[o] for _, _, o in train_triplets], device=device)
 
     train_k_raw = encode_clean(train_sents)
@@ -354,8 +355,8 @@ def run_lifelong_experiment():
     
     print("Pre-embedding holdout edit facts...")
     hold_sents = [f"{s} {r} {o}." for s, r, o in holdout_triplets]
-    hold_queries = [f"What {r} {s}?" for s, r, o in holdout_triplets]
-    hold_paras = [f"Regarding {s}, what {r} it?" for s, r, o in holdout_triplets]
+    hold_queries = [f"Complete the factual statement: {s} {r} ___." for s, r, o in holdout_triplets]
+    hold_paras = [f"Retrieve the factual completion: regarding {s}, {r} ___." for s, r, o in holdout_triplets]
     hold_tgts = [target2id[o] for _, _, o in holdout_triplets]
 
     hold_k_raw = encode_clean(hold_sents)
@@ -450,7 +451,6 @@ def run_lifelong_experiment():
                 "mean_attention_mass": avg_mass
             })
 
-    # Export to both OUT_DIR and results/
     with open(os.path.join(OUT_DIR, "lifelong_results.json"), "w") as f:
         json.dump(history, f, indent=2)
     with open(os.path.join("results", "lifelong_results.json"), "w") as f:

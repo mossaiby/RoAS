@@ -5,6 +5,7 @@ FULL TRI-SPACE BENCHMARK (Context + Corpus + Parameters)
 Calibrated Routing & Path Ablation:
 - Unit-norm parameter expert keys (resolves Section 3.2 scale mismatch)
 - Tied expert values to vocabulary embeddings
+- Cleans duplicated dataset tokens ("defends perimeter")
 - Exports synchronized summary JSON to both output and results directories
 """
 
@@ -104,7 +105,7 @@ CONTEXT_EPHEMERAL = [
     ("Satellite Sigma", "relays orbital telemetry to", "Ground-2"),
     ("Key Amber", "secures confidential archive", "Vault-11"),
     ("Beacon Gamma", "monitors seismic tremors near", "Fault-6"),
-    ("Unit Cobalt", "defends perimeter perimeter", "Zone-8"),
+    ("Unit Cobalt", "defends perimeter", "Zone-8"),
     ("Artifact Epsilon", "was retrieved from cavern", "Chamber-12"),
     ("Relay Nova", "synchronizes timing pulses with", "Clock-1"),
     ("Courier Shadow", "delivers sealed envelope to", "Safehouse-3"),
@@ -264,7 +265,7 @@ def run_tri_space_experiment():
     os.makedirs("results", exist_ok=True)
     cfg = TriEngineConfig()
     
-    # Explicit Deterministic Seeding
+    # Deterministic Seeding
     torch.manual_seed(cfg.seed)
     np.random.seed(cfg.seed)
     if torch.cuda.is_available():
@@ -365,9 +366,7 @@ def run_tri_space_experiment():
             
     print(f"Calibrated Model converged at Epoch {ep:4d} | Joint Loss: {best_loss:.4f}")
 
-    # ========================================================================
     # Evaluation
-    # ========================================================================
     model.eval()
     norm_E = model.get_normalized_embeddings()
     ctx_vals = norm_E[ctx_tgts]
@@ -468,7 +467,6 @@ def run_tri_space_experiment():
         print(f"  Corpus    -> Task: {acc_corp_matched*100:5.1f}% | Route: {route_corp_matched*100:5.1f}% | Ablated: {acc_corp_matched_ablated*100:5.1f}%")
         print(f"  Parameter -> Task: {acc_param_matched*100:5.1f}% | Route: {route_param_matched*100:5.1f}% | Ablated: {acc_param_matched_ablated*100:5.1f}%")
 
-    # Serialize Summary JSON to BOTH OUT_DIR and results/
     summary = {
         "metadata": {
             "seed": cfg.seed,

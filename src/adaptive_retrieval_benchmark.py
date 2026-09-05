@@ -43,7 +43,11 @@ def adaptive_topk_read(
     value_norm_bound = sorted_values.norm(dim=-1).amax(dim=-1)
     allowed_tail = error_budget / (2.0 * value_norm_bound.clamp_min(1e-12))
     meets_budget = cumulative_mass >= (1.0 - allowed_tail).unsqueeze(-1)
-    selected_k = meets_budget.to(torch.int64).argmax(dim=-1) + 1
+    
+    # Safe index resolution: fallback to corpus size if no prefix meets budget
+    has_match = meets_budget.any(dim=-1)
+    first_match = meets_budget.to(torch.int64).argmax(dim=-1) + 1
+    selected_k = torch.where(has_match, first_match, sorted_scores.size(-1))
 
     positions = torch.arange(sorted_scores.size(1), device=sorted_scores.device)
     mask = positions.unsqueeze(0) < selected_k.unsqueeze(1)

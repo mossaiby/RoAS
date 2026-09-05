@@ -1,7 +1,7 @@
 {
-  "benchmark": "CounterFact external-memory retrieval",
+  "benchmark": "CounterFact external-memory retrieval with ROC calibration",
   "source": "https://rome.baulab.info/data/dsets/counterfact.json",
-  "scope_note": "Retrieval evaluation; not a parametric model-editing comparison.",
+  "scope_note": "Retrieval evaluation with calibrated threshold and exact top-1 baselines.",
   "config": {
     "limit": 500,
     "max_queries_per_type": 2,
@@ -14,24 +14,55 @@
   "records": 500,
   "queries": 2500,
   "results": {
-    "exact_1nn": {
-      "rewrite": {
-        "count": 500,
-        "top1_recall": 0.992,
-        "activated_correct_recall": 0.992,
-        "mean_max_similarity": 0.8757715821266174
+    "static_threshold_eval": {
+      "threshold": 0.6,
+      "results": {
+        "rewrite": {
+          "count": 500,
+          "top1_recall": 0.992,
+          "activated_correct_recall": 0.992,
+          "mean_max_similarity": 0.8757715821266174
+        },
+        "paraphrase": {
+          "count": 1000,
+          "top1_recall": 0.91,
+          "activated_correct_recall": 0.382,
+          "mean_max_similarity": 0.5582618117332458
+        },
+        "neighborhood": {
+          "count": 1000,
+          "false_activation_rate": 0.096,
+          "wrong_edit_retrieval_rate": 0.024,
+          "mean_max_similarity": 0.45576733350753784
+        }
+      }
+    },
+    "calibrated_threshold_eval": {
+      "optimal_threshold": 0.55,
+      "roc_auc": 0.8088733333333333,
+      "calibration_stats": {
+        "best_youden_j": 0.5013333333333334,
+        "validation_samples": 1250
       },
-      "paraphrase": {
-        "count": 1000,
-        "top1_recall": 0.91,
-        "activated_correct_recall": 0.382,
-        "mean_max_similarity": 0.5582618117332458
-      },
-      "neighborhood": {
-        "count": 1000,
-        "false_activation_rate": 0.096,
-        "wrong_edit_retrieval_rate": 0.024,
-        "mean_max_similarity": 0.45576733350753784
+      "results": {
+        "rewrite": {
+          "count": 500,
+          "top1_recall": 0.992,
+          "activated_correct_recall": 0.992,
+          "mean_max_similarity": 0.8757715821266174
+        },
+        "paraphrase": {
+          "count": 1000,
+          "top1_recall": 0.91,
+          "activated_correct_recall": 0.532,
+          "mean_max_similarity": 0.5582618117332458
+        },
+        "neighborhood": {
+          "count": 1000,
+          "false_activation_rate": 0.161,
+          "wrong_edit_retrieval_rate": 0.033,
+          "mean_max_similarity": 0.45576733350753784
+        }
       }
     },
     "fixed_k_read": {
@@ -49,14 +80,14 @@
       "max_certificate": 0.049999840557575226,
       "empirical_coverage": 1.0
     },
-    "exact_scoring_and_sort_ms": 35.80170008353889
+    "exact_scoring_and_sort_ms": 33.563400036655366
   },
   "ann": {
     "available": true,
     "index": "FAISS IndexHNSWFlat",
     "candidate_count": 10,
-    "exact_top1_candidate_recall": 0.9996,
-    "build_ms": 12.747499975375831,
-    "search_ms": 23.46409996971488
+    "exact_top1_candidate_recall": 1.0,
+    "build_ms": 11.004099971614778,
+    "search_ms": 19.28920007776469
   }
 }

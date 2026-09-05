@@ -1,0 +1,47 @@
+{
+  "calibration_set_size": 500,
+  "test_set_size": 500,
+  "calibration_auc": 0.8173733333333333,
+  "test_auc": 0.8292183333333334,
+  "optimal_threshold": 0.55,
+  "fixed_0_60_results": {
+    "rewrite": {
+      "count": 500,
+      "top1_recall": 0.992,
+      "activated_correct_recall": 0.992,
+      "mean_similarity": 0.8757715821266174
+    },
+    "paraphrase": {
+      "count": 1000,
+      "top1_recall": 0.91,
+      "activated_correct_recall": 0.382,
+      "mean_similarity": 0.5582618117332458
+    },
+    "neighborhood": {
+      "count": 1000,
+      "false_activation_rate": 0.096,
+      "wrong_edit_retrieval_rate": 0.024,
+      "mean_similarity": 0.45576733350753784
+    }
+  },
+  "calibrated_results": {
+    "rewrite": {
+      "count": 500,
+      "top1_recall": 0.992,
+      "activated_correct_recall": 0.992,
+      "mean_similarity": 0.8757715821266174
+    },
+    "paraphrase": {
+      "count": 1000,
+      "top1_recall": 0.91,
+      "activated_correct_recall": 0.532,
+      "mean_similarity": 0.5582618117332458
+    },
+    "neighborhood": {
+      "count": 1000,
+      "false_activation_rate": 0.161,
+      "wrong_edit_retrieval_rate": 0.033,
+      "mean_similarity": 0.45576733350753784
+    }
+  }
+}

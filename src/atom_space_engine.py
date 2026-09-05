@@ -7,8 +7,9 @@ Complete, self-contained experimental engine for:
 Key Architecture:
   - Metric-Preserving Residual Read Kernel: phi(x) = L2_Norm(x + 0.1 * MLP(x))
   - Tied Key-Value Alignment: v_i = Normalize(E[y_i])
-  - Full Post-Hoc Model Editing Triad: Efficacy, Generality, and Specificity
-  - Quadrature Truncation Bound: True Euclidean norm ||z_exact - z_k||_2
+  - Post-Hoc Model Editing Triad: Efficacy, Generality, and Specificity
+  - Quadrature & Softmax Tail Truncation Error
+  - Empirical evaluation of Lipschitz Margin Inclusion Condition (Eq. 1)
 """
 
 import json
@@ -63,7 +64,7 @@ RAW_DOMAINS = {
         ("Mercury", "is the closest planet to the", "Sun"),
         ("Venus", "has a thick atmosphere of", "Carbon Dioxide"),
         ("Earth", "supports abundant life and liquid", "Water"),
-        ("Mars", "is home to Olympus Mons on", "Red Planet"),
+        ("Mars", "is commonly referred to in astronomy as the", "Red Planet"),
         ("Jupiter", "is the largest gas giant in the", "Solar System"),
         ("Saturn", "is famous for prominent rings of", "Ice"),
         ("Uranus", "rotates on a tilted sideways", "Axis"),
@@ -147,7 +148,7 @@ RAW_DOMAINS = {
         ("PageRank", "ranks hyperlinked web pages by counting directional incoming", "Links"),
         ("RSA", "bases public-key encryption on the factoring difficulty of large", "Primes"),
         ("AES", "implements symmetric block cipher encryption across fixed", "Blocks"),
-        ("SHA-256", "computes a deterministic one-way cryptographic cryptographic", "Digest"),
+        ("SHA-256", "computes a deterministic one-way cryptographic", "Digest"),
         ("LLVM", "provides modular compiler target intermediate", "Representations"),
         ("Nginx", "acts as an asynchronous high-performance reverse", "Proxy"),
         ("Kafka", "distributes streaming partitioned message logs across fault-tolerant", "Clusters"),
@@ -303,7 +304,7 @@ class UnifiedResidualTiedLM(nn.Module):
     """
     Unified LM with Metric-Preserving Residual Projection:
       phi(x) = Normalize(x + 0.1 * MLP(x))
-        The zero-initialized residual preserves the backbone geometry at initialization.
+    The zero-initialized residual preserves the backbone geometry at initialization.
     """
     def __init__(self, cfg: EngineConfig, in_feat_dim: int, vocab_size: int):
         super().__init__()
@@ -336,11 +337,6 @@ class UnifiedResidualTiedLM(nn.Module):
         return F.normalize(self.token_embeddings.weight, p=2, dim=-1)
 
     def read_vector(self, query_feats: torch.Tensor, tau: float = None, top_k: int = None) -> torch.Tensor:
-        """
-        Directly evaluates the continuous or top-k truncated context vector:
-          z(x) = sum mu_i v_i
-        Used to measure true quadrature integration error ||z_exact - z_k||_2.
-        """
         if tau is None:
             tau = self.cfg.read_temperature
             
@@ -383,10 +379,6 @@ class UnifiedResidualTiedLM(nn.Module):
 
 
 def compute_adapter_spectral_product(model: nn.Module) -> float:
-    """
-    Computes the product of linear layer spectral norms within the residual adapter MLP.
-    Tracks the empirical inflation of layerwise operator norms under gradient updates.
-    """
     L = 1.0
     for m in model.modules():
         if isinstance(m, nn.Linear):
@@ -403,7 +395,7 @@ def run_experiment():
     os.makedirs("results", exist_ok=True)
     cfg = EngineConfig()
     
-    # Explicit Deterministic Seeding
+    # Deterministic Seeding
     torch.manual_seed(cfg.seed)
     np.random.seed(cfg.seed)
     if torch.cuda.is_available():
@@ -433,10 +425,10 @@ def run_experiment():
         train_triplets.extend(RAW_DOMAINS[cat][:40])
         holdout_triplets.extend(RAW_DOMAINS[cat][40:])
 
-    # Pre-embed Training Data
+    # Clean, grammatical queries and completions (replaces ungrammatical templates)
     train_sents = [f"{s} {r} {o}." for s, r, o in train_triplets]
-    train_queries = [f"What {r} {s}?" for s, r, o in train_triplets]
-    train_paras = [f"Regarding {s}, what {r} it?" for s, r, o in train_triplets]
+    train_queries = [f"Complete the factual statement: {s} {r} ___." for s, r, o in train_triplets]
+    train_paras = [f"Retrieve the factual completion: regarding {s}, {r} ___." for s, r, o in train_triplets]
     train_tgts = torch.tensor([target2id[o] for _, _, o in train_triplets], device=device)
 
     train_k_raw = encode_clean(train_sents)
@@ -444,10 +436,9 @@ def run_experiment():
     train_p_raw = encode_clean(train_paras)
     in_dim = train_k_raw.shape[-1]
     
-    # Pre-embed Holdout Data
     hold_sents = [f"{s} {r} {o}." for s, r, o in holdout_triplets]
-    hold_queries = [f"What {r} {s}?" for s, r, o in holdout_triplets]
-    hold_paras = [f"Regarding {s}, what {r} it?" for s, r, o in holdout_triplets]
+    hold_queries = [f"Complete the factual statement: {s} {r} ___." for s, r, o in holdout_triplets]
+    hold_paras = [f"Retrieve the factual completion: regarding {s}, {r} ___." for s, r, o in holdout_triplets]
     hold_tgts = [target2id[o] for _, _, o in holdout_triplets]
 
     hold_k_raw = encode_clean(hold_sents)
@@ -459,7 +450,6 @@ def run_experiment():
     for density in cfg.densities:
         print(f"\n{'='*20} TESTING DENSITY: {density}/topic ({density*4} total atoms) {'='*20}")
         
-        # Subsample precisely 'density' items from each category
         sub_indices = []
         for c_idx in range(4):
             offset = c_idx * 40
@@ -501,8 +491,8 @@ def run_experiment():
             if patience >= cfg.patience:
                 break
                 
-        L_bound = compute_adapter_spectral_product(model.adapter)
-        print(f"  Converged at Epoch {ep:4d} | Loss: {best_loss:.4f} | Adapter L: {L_bound:.2f}")
+        L_prod = compute_adapter_spectral_product(model.adapter)
+        print(f"  Converged at Epoch {ep:4d} | Loss: {best_loss:.4f} | Adapter L: {L_prod:.2f}")
 
         # Post-Hoc Model Editing Benchmark
         model.eval()
@@ -510,7 +500,19 @@ def run_experiment():
         specificity_kl_list, specificity_max_prob_shift_list = [], []
         baseline_efficacy_list, baseline_generality_list, baseline_specificity_list = [], [], []
         
-        # Pre-edit baseline on existing atoms
+        # Empirical Evaluation of Lipschitz Margin Condition (Eq. 1)
+        # Margin: <phi_q(x), phi_k(w_0)> - ||phi_q(x)||_2 * L * d_Omega(w*, w_0) > tau_k(x)
+        eq1_certified_top1 = []
+        eq1_certified_top5 = []
+        
+        # Upper bound on Lipschitz constant of residual normalization mapping:
+        # phi(x) = f(g(x)), where g(x) = x + 0.1 * MLP(x) and f(y) = y / ||y||_2
+        with torch.no_grad():
+            adapted_norms = (cur_k + 0.1 * model.adapter(cur_k)).norm(dim=-1)
+            min_norm = adapted_norms.min().clamp_min(0.1).item()
+            # ||df/dy||_op <= 2 / ||y||_2 on Euclidean sphere
+            L_certified = (2.0 / min_norm) * (1.0 + 0.1 * L_prod)
+
         with torch.no_grad():
             base_logits, _ = model(cur_q)
             base_preds = base_logits.argmax(dim=-1)
@@ -530,6 +532,31 @@ def run_experiment():
             
             with torch.no_grad():
                 v_star = norm_E[tgt_star]
+                
+                # Check Eq. (1) Lipschitz margin condition against training pool:
+                # 1. Identify nearest training anchor w_0
+                sims_to_pool = F.cosine_similarity(k_star.unsqueeze(0), cur_k)
+                best_anchor_idx = sims_to_pool.argmax().item()
+                w_0_key = cur_k[best_anchor_idx]
+                
+                # 2. Semantic pseudo-metric: cosine distance in base embedding space
+                d_omega = (1.0 - sims_to_pool[best_anchor_idx]).item()
+                
+                # 3. Existing training scores for query x*
+                phi_q = model.phi(q_star)
+                phi_cur_k = model.phi(cur_k)
+                existing_scores = (phi_q @ phi_cur_k.T).squeeze(0)
+                tau_1 = existing_scores.max().item()
+                tau_5 = existing_scores.topk(min(5, len(existing_scores))).values[-1].item()
+                
+                # 4. Evaluated lower bound on novel score from Proposition 1
+                phi_w0 = model.phi(w_0_key.unsqueeze(0))
+                score_w0 = (phi_q @ phi_w0.T).item()
+                certified_lower_score = score_w0 - (1.0 * L_certified * d_omega)
+                
+                eq1_certified_top1.append(int(certified_lower_score > tau_1))
+                eq1_certified_top5.append(int(certified_lower_score > tau_5))
+                
                 model.omega_corpus.insert_atom(k_star, v_star)
                 
                 # 1. Efficacy
@@ -556,7 +583,7 @@ def run_experiment():
                     torch.max(torch.abs(post_probs - base_probs)).item()
                 )
 
-                # Frozen MiniLM exact 1-nearest-neighbor baseline.
+                # Frozen MiniLM exact 1-nearest-neighbor baseline
                 baseline_keys = torch.cat([cur_k, k_star.unsqueeze(0)], dim=0)
                 baseline_targets = torch.cat([
                     cur_tgts,
@@ -584,7 +611,7 @@ def run_experiment():
                 
                 model.omega_corpus.delete_last_atom()
 
-        # TRUE QUADRATURE TRUNCATION ERROR: ||z_exact - z_k||_2 on context vectors
+        # Truncation error diagnostics on context vectors
         quad_errors = {tau: {} for tau in cfg.temperatures}
         quad_diagnostics = {tau: {} for tau in cfg.temperatures}
         with torch.no_grad():
@@ -630,7 +657,12 @@ def run_experiment():
                 "specificity": float(np.mean(baseline_specificity_list))
             },
             "novel_atom_attention_mass": float(np.mean(mu_mass_list)),
-            "adapter_spectral_product": L_bound,
+            "adapter_spectral_product": L_prod,
+            "certified_lipschitz_bound": L_certified,
+            "eq1_margin_condition": {
+                "certified_top1_inclusion_rate": float(np.mean(eq1_certified_top1)),
+                "certified_top5_inclusion_rate": float(np.mean(eq1_certified_top5)),
+            },
             "truncation_error": quad_errors,
             "truncation_bound_diagnostics": quad_diagnostics
         }
@@ -642,12 +674,10 @@ def run_experiment():
             f"Novel Attention Mass: {np.mean(mu_mass_list)*100:5.1f}%"
         )
         print(
-            f"  [Frozen Exact 1-NN] Efficacy: {np.mean(baseline_efficacy_list)*100:5.1f}% | "
-            f"Generality: {np.mean(baseline_generality_list)*100:5.1f}% | "
-            f"Specificity: {np.mean(baseline_specificity_list)*100:5.1f}%"
+            f"  [Condition Eq. 1 Certification] Top-1: {np.mean(eq1_certified_top1)*100:5.1f}% | "
+            f"Top-5: {np.mean(eq1_certified_top5)*100:5.1f}% (L_bound={L_certified:.2f})"
         )
 
-    # Save to both OUT_DIR and results/
     with open(os.path.join(OUT_DIR, "summary_v3.json"), "w") as f:
         json.dump(results_across_densities, f, indent=2)
     with open(os.path.join("results", "summary_v3.json"), "w") as f:
@@ -690,7 +720,7 @@ def run_experiment():
     plt.savefig(os.path.join(OUT_DIR, "truncation_error.png"), dpi=200)
     plt.close()
 
-    print(f"\nAll benchmark runs complete. Outputs synchronized to '{OUT_DIR}/' and 'results/'.")
+    print(f"\nBenchmark runs complete. Outputs synchronized to '{OUT_DIR}/' and 'results/'.")
 
 
 if __name__ == "__main__":

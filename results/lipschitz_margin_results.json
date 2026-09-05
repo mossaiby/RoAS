@@ -1,0 +1,38 @@
+{
+  "l_analytical_bound": 2.1053951868238068,
+  "l_empirical": 2.2360680103302,
+  "results_by_k": {
+    "top_1": {
+      "empirical_certified_ratio": 0.0,
+      "actual_entry_ratio": 1.0,
+      "mean_lhs": -1.9628231525421143,
+      "mean_tau_k": 0.3870370388031006,
+      "mean_anchor_score": 0.367404580116272,
+      "mean_nearest_distance": 1.042109489440918
+    },
+    "top_3": {
+      "empirical_certified_ratio": 0.0,
+      "actual_entry_ratio": 1.0,
+      "mean_lhs": -1.9628231525421143,
+      "mean_tau_k": 0.31258854269981384,
+      "mean_anchor_score": 0.367404580116272,
+      "mean_nearest_distance": 1.042109489440918
+    },
+    "top_5": {
+      "empirical_certified_ratio": 0.0,
+      "actual_entry_ratio": 1.0,
+      "mean_lhs": -1.9628231525421143,
+      "mean_tau_k": 0.2729441225528717,
+      "mean_anchor_score": 0.367404580116272,
+      "mean_nearest_distance": 1.042109489440918
+    },
+    "top_10": {
+      "empirical_certified_ratio": 0.0,
+      "actual_entry_ratio": 1.0,
+      "mean_lhs": -1.9628231525421143,
+      "mean_tau_k": 0.21895085275173187,
+      "mean_anchor_score": 0.367404580116272,
+      "mean_nearest_distance": 1.042109489440918
+    }
+  }
+}

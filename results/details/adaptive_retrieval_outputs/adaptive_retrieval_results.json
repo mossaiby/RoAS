@@ -37,7 +37,7 @@
     {
       "corpus_size": 1000,
       "temperature": 0.05,
-      "exact_score_sort_and_read_ms": 163.4656999958679,
+      "exact_score_sort_and_read_ms": 334.75779998116195,
       "fixed_k": {
         "1": {
           "effective_k": 1,
@@ -67,7 +67,7 @@
           "mean_error": 0.004085483029484749,
           "max_error": 0.004905765876173973,
           "empirical_coverage": 1.0,
-          "selection_and_read_ms": 60.87769998703152
+          "selection_and_read_ms": 116.07150000054389
         },
         "0.05": {
           "mean_k": 211.75,
@@ -80,7 +80,7 @@
           "mean_error": 0.020597882568836212,
           "max_error": 0.025020571425557137,
           "empirical_coverage": 1.0,
-          "selection_and_read_ms": 0.9492000099271536
+          "selection_and_read_ms": 1.2029000790789723
         },
         "0.1": {
           "mean_k": 111.1875,
@@ -93,14 +93,14 @@
           "mean_error": 0.03991296887397766,
           "max_error": 0.05019760504364967,
           "empirical_coverage": 1.0,
-          "selection_and_read_ms": 1.2646999675780535
+          "selection_and_read_ms": 1.0031999554485083
         }
       }
     },
     {
       "corpus_size": 1000,
       "temperature": 0.1,
-      "exact_score_sort_and_read_ms": 0.8527000900357962,
+      "exact_score_sort_and_read_ms": 0.9018999990075827,
       "fixed_k": {
         "1": {
           "effective_k": 1,
@@ -130,7 +130,7 @@
           "mean_error": 0.0009997982997447252,
           "max_error": 0.0016999394865706563,
           "empirical_coverage": 1.0,
-          "selection_and_read_ms": 0.8124999003484845
+          "selection_and_read_ms": 1.060499926097691
         },
         "0.05": {
           "mean_k": 847.375,
@@ -143,7 +143,7 @@
           "mean_error": 0.004102659411728382,
           "max_error": 0.008416969329118729,
           "empirical_coverage": 1.0,
-          "selection_and_read_ms": 0.7651000050827861
+          "selection_and_read_ms": 1.0865000076591969
         },
         "0.1": {
           "mean_k": 758.46875,
@@ -156,14 +156,14 @@
           "mean_error": 0.007888223975896835,
           "max_error": 0.01703672483563423,
           "empirical_coverage": 1.0,
-          "selection_and_read_ms": 0.7469000993296504
+          "selection_and_read_ms": 0.9083000477403402
         }
       }
     },
     {
       "corpus_size": 5000,
       "temperature": 0.05,
-      "exact_score_sort_and_read_ms": 79.64640005957335,
+      "exact_score_sort_and_read_ms": 121.89109995961189,
       "fixed_k": {
         "1": {
           "effective_k": 1,
@@ -193,7 +193,7 @@
           "mean_error": 0.002452687593176961,
           "max_error": 0.004518503788858652,
           "empirical_coverage": 1.0,
-          "selection_and_read_ms": 2.3923999397084117
+          "selection_and_read_ms": 2.440999960526824
         },
         "0.05": {
           "mean_k": 2125.015625,
@@ -206,7 +206,7 @@
           "mean_error": 0.012485531158745289,
           "max_error": 0.023179838433861732,
           "empirical_coverage": 1.0,
-          "selection_and_read_ms": 2.4016000097617507
+          "selection_and_read_ms": 2.454700064845383
         },
         "0.1": {
           "mean_k": 1472.09375,
@@ -219,14 +219,14 @@
           "mean_error": 0.025610413402318954,
           "max_error": 0.04749338701367378,
           "empirical_coverage": 1.0,
-          "selection_and_read_ms": 2.3978999815881252
+          "selection_and_read_ms": 2.4483000161126256
         }
       }
     },
     {
       "corpus_size": 5000,
       "temperature": 0.1,
-      "exact_score_sort_and_read_ms": 3.9129999931901693,
+      "exact_score_sort_and_read_ms": 3.970899968408048,
       "fixed_k": {
         "1": {
           "effective_k": 1,
@@ -256,7 +256,7 @@
           "mean_error": 0.00038434480666182935,
           "max_error": 0.0005137986154295504,
           "empirical_coverage": 1.0,
-          "selection_and_read_ms": 2.38389999140054
+          "selection_and_read_ms": 2.4511999217793345
         },
         "0.05": {
           "mean_k": 4279.828125,
@@ -269,7 +269,7 @@
           "mean_error": 0.0013086763210594654,
           "max_error": 0.002079131081700325,
           "empirical_coverage": 1.0,
-          "selection_and_read_ms": 2.4002999998629093
+          "selection_and_read_ms": 2.4524000473320484
         },
         "0.1": {
           "mean_k": 3859.90625,
@@ -282,14 +282,14 @@
           "mean_error": 0.0023697514552623034,
           "max_error": 0.004007773939520121,
           "empirical_coverage": 1.0,
-          "selection_and_read_ms": 2.49360001180321
+          "selection_and_read_ms": 2.5123999221250415
         }
       }
     },
     {
       "corpus_size": 10000,
       "temperature": 0.05,
-      "exact_score_sort_and_read_ms": 22.83320005517453,
+      "exact_score_sort_and_read_ms": 23.01489992532879,
       "fixed_k": {
         "1": {
           "effective_k": 1,
@@ -319,7 +319,7 @@
           "mean_error": 0.0019804637413471937,
           "max_error": 0.004691214766353369,
           "empirical_coverage": 1.0,
-          "selection_and_read_ms": 4.540699999779463
+          "selection_and_read_ms": 4.596699960529804
         },
         "0.05": {
           "mean_k": 4672.25,
@@ -332,7 +332,7 @@
           "mean_error": 0.01009507104754448,
           "max_error": 0.02388838119804859,
           "empirical_coverage": 1.0,
-          "selection_and_read_ms": 4.552699974738061
+          "selection_and_read_ms": 4.644800093956292
         },
         "0.1": {
           "mean_k": 3364.6875,
@@ -345,14 +345,14 @@
           "mean_error": 0.020707881078124046,
           "max_error": 0.04916420578956604,
           "empirical_coverage": 1.0,
-          "selection_and_read_ms": 4.569499986246228
+          "selection_and_read_ms": 4.606599919497967
         }
       }
     },
     {
       "corpus_size": 10000,
       "temperature": 0.1,
-      "exact_score_sort_and_read_ms": 7.607199950143695,
+      "exact_score_sort_and_read_ms": 7.6497000409290195,
       "fixed_k": {
         "1": {
           "effective_k": 1,
@@ -382,7 +382,7 @@
           "mean_error": 0.0002609951770864427,
           "max_error": 0.0003081844770349562,
           "empirical_coverage": 1.0,
-          "selection_and_read_ms": 4.5504000736400485
+          "selection_and_read_ms": 4.5854999916628
         },
         "0.05": {
           "mean_k": 8578.4375,
@@ -395,7 +395,7 @@
           "mean_error": 0.0008585962932556868,
           "max_error": 0.0011422280222177505,
           "empirical_coverage": 1.0,
-          "selection_and_read_ms": 4.601299995556474
+          "selection_and_read_ms": 4.655200056731701
         },
         "0.1": {
           "mean_k": 7746.328125,
@@ -408,14 +408,14 @@
           "mean_error": 0.001511088339611888,
           "max_error": 0.0020927719306200743,
           "empirical_coverage": 1.0,
-          "selection_and_read_ms": 4.569000098854303
+          "selection_and_read_ms": 4.633500007912517
         }
       }
     },
     {
       "corpus_size": 25000,
       "temperature": 0.05,
-      "exact_score_sort_and_read_ms": 54.61600003764033,
+      "exact_score_sort_and_read_ms": 55.94650004059076,
       "fixed_k": {
         "1": {
           "effective_k": 1,
@@ -445,7 +445,7 @@
           "mean_error": 0.0012818439863622189,
           "max_error": 0.004149655811488628,
           "empirical_coverage": 1.0,
-          "selection_and_read_ms": 10.847400058992207
+          "selection_and_read_ms": 11.209100019186735
         },
         "0.05": {
           "mean_k": 13026.171875,
@@ -458,7 +458,7 @@
           "mean_error": 0.006530416198074818,
           "max_error": 0.021138472482562065,
           "empirical_coverage": 1.0,
-          "selection_and_read_ms": 11.061899946071208
+          "selection_and_read_ms": 11.425900040194392
         },
         "0.1": {
           "mean_k": 9767.125,
@@ -471,14 +471,14 @@
           "mean_error": 0.013403162360191345,
           "max_error": 0.04350060224533081,
           "empirical_coverage": 1.0,
-          "selection_and_read_ms": 11.059400043450296
+          "selection_and_read_ms": 11.372199980542064
         }
       }
     },
     {
       "corpus_size": 25000,
       "temperature": 0.1,
-      "exact_score_sort_and_read_ms": 18.211200018413365,
+      "exact_score_sort_and_read_ms": 18.824400031007826,
       "fixed_k": {
         "1": {
           "effective_k": 1,
@@ -508,7 +508,7 @@
           "mean_error": 0.00016387138748541474,
           "max_error": 0.00019273144425824285,
           "empirical_coverage": 1.0,
-          "selection_and_read_ms": 11.125200078822672
+          "selection_and_read_ms": 11.228399933315814
         },
         "0.05": {
           "mean_k": 21467.390625,
@@ -521,7 +521,7 @@
           "mean_error": 0.0005236323340795934,
           "max_error": 0.0006673868047073483,
           "empirical_coverage": 1.0,
-          "selection_and_read_ms": 11.177400010637939
+          "selection_and_read_ms": 11.42480003181845
         },
         "0.1": {
           "mean_k": 19398.78125,
@@ -534,7 +534,7 @@
           "mean_error": 0.0009074617410078645,
           "max_error": 0.0012462944723665714,
           "empirical_coverage": 1.0,
-          "selection_and_read_ms": 11.177500011399388
+          "selection_and_read_ms": 11.442100047133863
         }
       }
     }

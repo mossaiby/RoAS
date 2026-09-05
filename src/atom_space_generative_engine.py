@@ -6,7 +6,8 @@ Features:
 1. Factual prefix steering on GPT-2 (124M) via continuous hidden augmentation.
 2. Relevance-gated retrieval (threshold >= 0.60 cosine similarity) ensuring
    general control prompts bypass the atom space and preserve pure control fluency.
-3. Automatically syncs logs to both output and results directories.
+3. Added single-sequence batch size guard for continuous hidden state injection.
+4. Automatically syncs logs to both output and results directories.
 """
 
 import json
@@ -162,6 +163,8 @@ class GenerativeAtomSpaceLM(nn.Module):
         last_h = hidden_states[:, -1, :]
         
         if query_emb is not None and len(self.omega_corpus.keys) > 0:
+            # Single-sequence inference guard
+            assert query_emb.size(0) == 1, "GenerativeAtomSpaceLM currently supports single-sequence inference"
             k_norm = F.normalize(self.omega_corpus.keys, p=2, dim=-1)
             q_norm = F.normalize(query_emb, p=2, dim=-1)
             cos_sims = q_norm @ k_norm.T
@@ -177,7 +180,6 @@ class GenerativeAtomSpaceLM(nn.Module):
                 all_logits = self.gpt2.lm_head(hidden_states)
                 logits = torch.cat([all_logits[:, :-1, :], last_logits], dim=1)
             else:
-                # Unrelated control prompts cleanly bypass atom space
                 logits = self.gpt2.lm_head(hidden_states)
                 mu = None
         else:
@@ -306,6 +308,7 @@ def evaluate_sensitivity(
     model.cfg.relevance_threshold = original_threshold
     model.cfg.lambda_read = original_lambda
     return rows
+
 
 def run_generative_experiment():
     os.makedirs(OUT_DIR, exist_ok=True)
@@ -453,7 +456,6 @@ def run_generative_experiment():
     control_results = []
     for prompt, text in zip(CONTROL_PROMPTS, CONTROL_TEXTS):
         input_ids = tokenizer.encode(prompt, return_tensors="pt").to(device)
-        query_emb = encode_clean([prompt])
         
         gen, retrieval_steps = generate_with_atom_space(
             model, tokenizer, input_ids, encode_clean, 8
@@ -508,7 +510,6 @@ def run_generative_experiment():
     }
     with open(os.path.join(OUT_DIR, "generative_results.json"), "w") as f:
         json.dump(summary, f, indent=2)
-    os.makedirs("results", exist_ok=True)
     with open(os.path.join("results", "generative_results.json"), "w") as f:
         json.dump(summary, f, indent=2)
 

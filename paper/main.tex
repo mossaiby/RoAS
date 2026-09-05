@@ -2,11 +2,15 @@
 
 \usepackage{stix}
 \usepackage{amsmath,amsthm,mathtools}
+\usepackage{array}
 \usepackage{booktabs}
 \usepackage{enumitem}
 \usepackage{graphicx}
 \usepackage{lineno}
 \usepackage[colorlinks=true,citecolor=blue,linkcolor=red,urlcolor=green,pdfstartview=,pdfauthor=Farshid Mossaiby]{hyperref}
+
+% Left-aligned wrapping column type
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
 
 \journal{Neurocomputing}
 
@@ -130,17 +134,16 @@ Every result in this paper is proved on finite sums and could be stated without 
 \caption{Three structural realizations of the unified read operator $R(x; \Omega)$.}
 \label{tab:instances}
 \vspace{0.5em}
-\resizebox{\textwidth}{!}{%
-\begin{tabular}{@{}lllll@{}}
+\footnotesize
+\begin{tabular}{@{}lllL{0.185\linewidth}L{0.185\linewidth}@{}}
 \toprule
-\textbf{Instance} & \textbf{Atom Space $\Om$} & \textbf{Atom $\omega$} & \textbf{Value Map $v(\omega)$} & \textbf{Operational Equivalent} \\
+Instance & Atom Space $\Om$ & Atom $\omega$ & Value Map $v(\omega)$ & Operational Equivalent \\
 \midrule
 Context & $\{1,\dots,c\}$ & Token index & Embedding $\phi(x_\omega)$ & In-context self-attention \cite{vaswani2017attention} \\
 Corpus & $\mathcal{D}$ (mutable) & Factual record & Encoded fact vector & Dense retrieval / $k$NN-LM \cite{khandelwal2020generalization} \\
 Parameters & $\Theta$ (expert bank) & Modular expert & Expert output $g_\omega(x)\in\R^e$ & MoE-style output routing \cite{shazeer2017outrageously, hu2021lora} \\
 \bottomrule
-\end{tabular}%
-}
+\end{tabular}
 \end{table}
 
 \subsection{The Unified Architecture}
@@ -360,10 +363,10 @@ On the 200-fact templated benchmark, we insert the 40 held-out records into pool
 \caption{Synthetic insertion sanity check across 200 templated facts. All classification metrics are saturated for both methods; only the representation dynamics vary with density. Lifelong row: cumulative insertion of all 40 records, five seeds.}
 \label{tab:editing_triad}
 \vspace{0.5em}
-\resizebox{\textwidth}{!}{%
-\begin{tabular}{@{}lcccc@{}}
+\footnotesize
+\begin{tabular}{@{}L{0.25\linewidth}cccc@{}}
 \toprule
-\textbf{Metric} & \textbf{1 / topic} & \textbf{3 / topic} & \textbf{10 / topic} & \textbf{40 / topic} \\
+Metric & 1 / topic & 3 / topic & 10 / topic & 40 / topic \\
 \midrule
 Efficacy / generality / specificity (trained read) & 100 / 100 / 100 & 100 / 100 / 100 & 100 / 100 / 100 & 100 / 100 / 100 \\
 Efficacy / generality / specificity (frozen 1-NN) & 100 / 100 / 100 & 100 / 100 / 100 & 100 / 100 / 100 & 100 / 100 / 100 \\
@@ -372,11 +375,10 @@ Adapter linear spectral product & 0.469 & 0.818 & 0.859 & 1.003 \\
 \midrule
 Lifelong (40 sequential inserts, 5 seeds): efficacy / specificity & \multicolumn{4}{c}{$100.0\pm0.0$ / $100.0\pm0.0$; \; mass $99.68\pm0.01\%$} \\
 \bottomrule
-\end{tabular}%
-}
+\end{tabular}
 \end{table}
 
-\subsection{Convergence of Exact Ranked Top-$k$ Truncation}
+\subsection{Convergence of Exact Ranked Top-\texorpdfstring{$k$}{k} Truncation}
 
 Table~\ref{tab:truncation_error} presents empirical truncation error $\| R_{\mathrm{exact}}(x) - \hat{R}_k(x) \|_2$ across temperatures and cutoffs $k$ on the largest atom pool (density 40, 160 active background atoms).
 
@@ -385,18 +387,17 @@ Table~\ref{tab:truncation_error} presents empirical truncation error $\| R_{\mat
 \caption{Softmax tail truncation error $\| R_{\mathrm{exact}} - \hat{R}_k \|_2$ evaluated on context vectors across temperatures $\tau$ and cutoffs $k$. Under unit-normalized embeddings ($V_{\max}=1$), error is bounded by $2.0$ and decays exponentially at sharp operational temperatures ($\tau = 0.05, k=1 \implies 3.82 \times 10^{-6}$).}
 \label{tab:truncation_error}
 \vspace{0.5em}
-\resizebox{\textwidth}{!}{%
+\footnotesize
 \begin{tabular}{@{}lccccc@{}}
 \toprule
-\textbf{Temperature} & \textbf{Top-1} & \textbf{Top-3} & \textbf{Top-5} & \textbf{Top-10} & \textbf{Top-20} \\
+Temperature & Top-1 & Top-3 & Top-5 & Top-10 & Top-20 \\
 \midrule
 $\tau = 0.05$ & $3.82 \times 10^{-6}$ & $3.01 \times 10^{-6}$ & $2.62 \times 10^{-6}$ & $2.03 \times 10^{-6}$ & $1.41 \times 10^{-6}$ \\
 $\tau = 0.10$ & $0.0182$ & $0.0170$ & $0.0162$ & $0.0145$ & $0.0121$ \\
 $\tau = 0.50$ & $0.965$ & $0.700$ & $0.558$ & $0.384$ & $0.245$ \\
 $\tau = 1.00$ & $0.988$ & $0.623$ & $0.477$ & $0.327$ & $0.217$ \\
 \bottomrule
-\end{tabular}%
-}
+\end{tabular}
 \end{table}
 
 At density 40, $\tau=0.10$, and $k=1$, the maximum observed error is $0.0244$, and the smaller pointwise bound covers 100\% of queries with a minimum slack of $0.0923$. Two regimes are visible. At $\tau = 0.05$, mass concentrates on the nearest record and top-1 error is $3.82 \times 10^{-6}$. At $\tau \ge 0.50$, mass diffuses across background atoms and premature truncation gives errors near $1.0$.
@@ -415,14 +416,14 @@ A fixed $\theta=0.60$ discards most valid paraphrases (38.2\% activated). We the
 \centering
 \caption{CounterFact-500 retrieval with uncalibrated ($\theta=0.60$) and held-out-calibrated ($\theta^*=0.55$) activation thresholds. $\theta^*$ is chosen by Youden's $J$ on records 500--999 and applied to records 0--499. Exact top-1 recall is threshold-independent.}
 \label{tab:counterfact_retrieval}
+\footnotesize
 \vspace{0.5em}
-\resizebox{\textwidth}{!}{%
-\begin{tabular}{@{}lccc@{}}
+\begin{tabular}{@{}L{0.265\linewidth}ccc@{}}
 \toprule
-\textbf{Query Formulation} & \textbf{Exact Top-1 Recall} & \textbf{Activated ($\theta=0.60$)} & \textbf{Activated ($\theta^*=0.55$)} \\
+Query Formulation & Exact Top-1 Recall & Activated ($\theta=0.60$) & Activated ($\theta^*=0.55$) \\
 \midrule
 Rewrite prompts (500)      & 99.2\% & 99.2\% & 99.2\% \\
-Paraphrase prompts (1,000) & 91.0\% & 38.2\% & \textbf{53.2\%} \\
+Paraphrase prompts (1,000) & 91.0\% & 38.2\% & 53.2\% \\
 Neighborhood prompts (1,000), false activation & --  & 9.6\% & 16.1\% \\
 Neighborhood prompts (1,000), wrong-edit retrieval & -- & 2.4\% & 3.3\% \\
 \midrule
@@ -430,7 +431,6 @@ ROC AUC (calibration split / evaluation split) & \multicolumn{3}{c}{0.817 / 0.82
 HNSW candidate recall (10 candidates) & \multicolumn{3}{c}{99.96\%} \\
 \bottomrule
 \end{tabular}
-}
 \end{table}
 
 Table~\ref{tab:counterfact_retrieval} shows that calibration raises activated paraphrase recall from 38.2\% to 53.2\% while raising neighborhood false activation from 9.6\% to 16.1\%; the trade-off is roughly 15 points of recall for 6.5 points of false activation, and the 91.0\% exact top-1 recall bounds what any threshold can recover. Rewrite recall is unchanged at 99.2\%. FAISS HNSW attains 99.96\% exact-top-1 candidate recall with 12.7 ms construction and 23.5 ms search over all 2,500 queries.
@@ -456,7 +456,7 @@ GRACE \cite{hartvigsen2023aging} is the memory-based editor closest in mechanism
 \setlength{\tabcolsep}{4pt}
 \begin{tabular}{@{}lcccc@{}}
 \toprule
-\textbf{Metric} & \textbf{R1C} & \textbf{GRACE reset} & \textbf{GRACE seq.} & \textbf{Read} \\
+Metric & R1C & GRACE reset & GRACE seq. & Read \\
  & (reset) & ($\epsilon=1$) & ($\epsilon=1$) & ($\theta^*=0.55$) \\
 \midrule
 Efficacy score / argmax & 85.2 / 35.6 & 100.0 / 100.0 & 99.2 / 98.6 & -- \\
@@ -483,21 +483,20 @@ We evaluate the tri-space architecture across three information paths: in-contex
 \begin{table}[t]
 \centering
 \caption{Five-seed surface-matched routing and ablation (mean $\pm$ sample standard deviation). Route accuracy is the fraction whose largest gate selects the intended space.}
+\footnotesize
 \label{tab:tri_space_gating}
 \vspace{0.5em}
-\resizebox{\textwidth}{!}{%
-\begin{tabular}{@{}lcccccc@{}}
+\begin{tabular}{@{}L{0.175\linewidth}cccccc@{}}
 \toprule
-\textbf{Task Domain} & \textbf{Task Acc.} & \textbf{Route Acc.} & \multicolumn{3}{c}{\textbf{Mean Gating Distribution $\lambda(x)$}} & \textbf{Ablated Acc.} \\
+Task Domain & Task Acc. & Route Acc. & \multicolumn{3}{c}{Mean Gating Distribution $\lambda(x)$} & Ablated Acc. \\
 \cmidrule(lr){4-6}
 & & & $\lambda_{\mathrm{ctx}}$ & $\lambda_{\mathrm{corpus}}$ & $\lambda_{\mathrm{params}}$ & \\
 \midrule
-In-Context Reasoning ($\Omega_{\mathrm{ctx}}$) & $100.0{\pm}0.0$ & $100.0{\pm}0.0$ & $\mathbf{68.0{\pm}2.1}$ & $6.2{\pm}0.9$ & $25.8{\pm}1.3$ & $0.0{\pm}0.0$ \\
-Corpus World Knowledge ($\Omega_{\mathrm{corpus}}$) & $96.8{\pm}1.8$ & $82.4{\pm}0.9$ & $12.9{\pm}0.7$ & $\mathbf{56.6{\pm}2.2}$ & $30.5{\pm}1.7$ & $0.0{\pm}0.0$ \\
-Parameter Expert Outputs ($\Omega_{\mathrm{params}}$) & $100.0{\pm}0.0$ & $100.0{\pm}0.0$ & $3.1{\pm}0.2$ & $3.1{\pm}0.4$ & $\mathbf{93.7{\pm}0.5}$ & $0.0{\pm}0.0$ \\
+In-Context Reasoning ($\Omega_{\mathrm{ctx}}$) & $100.0{\pm}0.0$ & $100.0{\pm}0.0$ & $68.0{\pm}2.1$ & $6.2{\pm}0.9$ & $25.8{\pm}1.3$ & $0.0{\pm}0.0$ \\
+Corpus World Knowledge ($\Omega_{\mathrm{corpus}}$) & $96.8{\pm}1.8$ & $82.4{\pm}0.9$ & $12.9{\pm}0.7$ & $56.6{\pm}2.2$ & $30.5{\pm}1.7$ & $0.0{\pm}0.0$ \\
+Parameter Expert Outputs ($\Omega_{\mathrm{params}}$) & $100.0{\pm}0.0$ & $100.0{\pm}0.0$ & $3.1{\pm}0.2$ & $3.1{\pm}0.4$ & $93.7{\pm}0.5$ & $0.0{\pm}0.0$ \\
 \bottomrule
-\end{tabular}%
-}
+\end{tabular}
 \end{table}
 
 \begin{figure}[t]
@@ -518,12 +517,12 @@ Inserting an anti-atom $\omega^-$ with mass $1.0$ under $\nu^-$ at the key of a 
 \begin{table}[t]
 \centering
 \caption{Signed reads on a 49-token output vocabulary. Top: exact anti-atom cancellation (five records, identical outcome). Bottom: counterfactual updating by appending a contradicting atom with recency weight $w_{\mathrm{new}}=2.5$; three of five updates fail. Specificity on 35 clean background facts is 100.0\% in all rows.}
+\footnotesize
 \label{tab:unlearning_results}
 \vspace{0.5em}
-\resizebox{\textwidth}{!}{%
-\begin{tabular}{@{}lccl@{}}
+\begin{tabular}{@{}L{0.30\linewidth}llL{0.215\linewidth}@{}}
 \toprule
-\textbf{Target / Query} & \textbf{Pre-Edit P(Target)} & \textbf{Post-Edit P(Target)} & \textbf{Outcome} \\
+Target / Query & Pre-Edit P(Target) & Post-Edit P(Target) & Outcome \\
 \midrule
 \multicolumn{4}{@{}l}{\textit{Exact anti-atom cancellation (unit mass under $\nu^-$)}} \\
 Five sensitive records (coordinates, diagnosis, patent, location, key) & 99.998\% & $2.04\%$ ($=1/|\mathcal{V}|$) & Cancelled to uniform \\
@@ -535,8 +534,7 @@ Pluto $\to$ Dwarf Planet        & 32.3\% (old)& 23.9\% (new) & Failure: old fact
 Twitter $\to$ X Corp            & 99.8\% (old)& 0.04\% (new) & Failure: lexical match to old record \\
 Python $\to$ PyPy JIT           & 98.9\% (old)& 0.24\% (new) & Failure: lexical match to old record \\
 \bottomrule
-\end{tabular}%
-}
+\end{tabular}
 \end{table}
 
 \begin{figure}[t]
@@ -568,24 +566,23 @@ Each memory value is the unit-normalized output embedding of the target's first 
 
 \begin{table}[t]
 \centering
+\footnotesize
 \caption{Selected rows from the ten-fact greedy GPT-2 diagnostic. Because the injected value is the target's own token embedding, large first-token probability gains are expected conditional on retrieval; the rows document gate behaviour and perturbation magnitude, not factual learning.}
 \label{tab:generative_results}
 \vspace{0.5em}
-\resizebox{\textwidth}{!}{%
-\begin{tabular}{@{}lccccc@{}}
+\begin{tabular}{@{}L{0.25\linewidth}cccll@{}}
 \toprule
-\textbf{Factual Target Task} & \multicolumn{2}{c}{\textbf{Target Probability $P(y^*)$}} & \textbf{Ratio} & \multicolumn{2}{c}{\textbf{Top Predicted Token}} \\
+Factual Target Task & \multicolumn{2}{c}{Target Probability $P(y^*)$} & Ratio & \multicolumn{2}{c}{Top Predicted Token} \\
 \cmidrule(lr){2-3} \cmidrule(lr){5-6}
-& \textbf{Base GPT-2} & \textbf{Atom-Space} & & \textbf{Base GPT-2} & \textbf{Atom-Space} \\
+& Base GPT-2 & Atom-Space & & Base GPT-2 & Atom-Space \\
 \midrule
-QUIC Transport Protocol (\texttt{UDP})         & 2.64\% & \textbf{70.00\%} & 26.5$\times$   & \texttt{the}     & \textbf{\texttt{UDP}} \\
-Milky Way Black Hole (\texttt{Sagittarius})    & 0.47\% & \textbf{64.33\%} & 136.3$\times$  & \texttt{after}   & \textbf{\texttt{Sag}} \\
-Safe Systems Language (\texttt{Rust})          & 0.03\% & \textbf{32.99\%} & 1116.0$\times$ & \texttt{a}       & \textbf{\texttt{Rust}} \\
-Uranium Radiative Decay (\texttt{lead})        & 0.87\% & \textbf{9.80\%}  & 11.3$\times$   & \texttt{uranium} & \textbf{\texttt{lead}} \\
-CRISPR Bacterial Defense (\texttt{viruses})    & 2.25\% & \textbf{38.41\%} & 17.1$\times$   & \texttt{infect.} & \textbf{\texttt{viruses}} \\
+QUIC Transport Protocol (\texttt{UDP})         & 2.64\% & 70.00\% & 26.5$\times$   & \texttt{the}     & \texttt{UDP} \\
+Milky Way Black Hole (\texttt{Sagittarius})    & 0.47\% & 64.33\% & 136.3$\times$  & \texttt{after}   & \texttt{Sag} \\
+Safe Systems Language (\texttt{Rust})          & 0.03\% & 32.99\% & 1116.0$\times$ & \texttt{a}       & \texttt{Rust} \\
+Uranium Radiative Decay (\texttt{lead})        & 0.87\% & 9.80\%  & 11.3$\times$   & \texttt{uranium} & \texttt{lead} \\
+CRISPR Bacterial Defense (\texttt{viruses})    & 2.25\% & 38.41\% & 17.1$\times$   & \texttt{infect.} & \texttt{viruses} \\
 \bottomrule
-\end{tabular}%
-}
+\end{tabular}
 \end{table}
 
 \begin{figure}[t]
@@ -601,13 +598,13 @@ The mechanism is limited to one-shot, first-token steering at the query boundary
 
 \begin{table}[t]
 \centering
+\footnotesize
 \caption{Naive full fine-tuning and single-layer rank-one editing (ROME-lite) versus the relevance-gated read on the same ten GPT-2 facts, paraphrases, and controls. The read's cross-fact specificity was not measured on these ten facts; its analogue at scale is the neighborhood false-activation rate of Table~\ref{tab:counterfact_retrieval}.}
 \label{tab:finetune_baseline}
 \vspace{0.5em}
-\resizebox{\textwidth}{!}{%
-\begin{tabular}{@{}lccc@{}}
+\begin{tabular}{@{}L{0.25\linewidth}L{0.25\linewidth}L{0.20\linewidth}L{0.20\linewidth}@{}}
 \toprule
-\textbf{Metric} & \textbf{Atom-Space Read} & \textbf{Naive Fine-Tuning (FT)} & \textbf{ROME-Lite} \\
+Metric & Atom-Space Read & Naive Fine-Tuning (FT) & ROME-Lite \\
 \midrule
 Canonical efficacy (first-token argmax) & 100\% (10/10) & 100\% (10/10) & 100\% (10/10) \\
 Paraphrase generality (first-token argmax) & 90\% (9/10) & 70\% (7/10) & 40\% (4/10) \\
@@ -615,8 +612,7 @@ Neighborhood specificity (other 9 facts unchanged) & not measured (weights uncha
 Control-text perplexity ratio & 1.000 (exact) & 0.982 mean, 1.022 max & 0.996 mean, 1.004 max \\
 Mechanism & Relevance-gated read & Full-parameter AdamW & Rank-one weight update \\
 \bottomrule
-\end{tabular}%
-}
+\end{tabular}
 \end{table}
 
 Table~\ref{tab:finetune_baseline} compares the read against naive fine-tuning (FT) and single-layer ROME-lite on the same ten facts. Naive FT reaches 100\% canonical efficacy but changes predictions on 41.1\% of neighbouring facts; ROME-lite preserves locality (87.8\%) but generalizes less to paraphrases (40\% vs.\ 90\%). The read leaves weights untouched, so its specificity failure mode is false gate activation rather than parameter interference; that rate was not measured on the ten facts and is 16.1\% at $\theta^*$ on CounterFact-500. The three columns therefore trade off different failure modes and the table should not be read as a ranking.
@@ -658,7 +654,7 @@ The author declares that they have no known competing financial interests or per
 The complete codebase, benchmark definitions, experimental suites, and reproduction scripts are publicly available at \url{https://github.com/mossaiby/RoAS}.
 
 \section*{Declaration of Generative AI in Scientific Writing}
-During the preparation of this work, the author used Google Gemini to assist with drafting prose, checking the algebra in the proofs of Section~\ref{sec:quadrature}, designing the experimental pipeline, and manuscript formatting. All theorem statements, proofs, code, and experimental results were verified by the author, who takes full responsibility for the content of the publication.
+During the preparation of this work, the author used generative AI to assist with drafting prose, checking the algebra in the proofs of Section~\ref{sec:quadrature}, designing the experimental pipeline, and manuscript formatting. All theorem statements, proofs, code, and experimental results were verified by the author, who takes full responsibility for the content of the publication.
 
 \bibliographystyle{elsarticle-num}
 \bibliography{references}

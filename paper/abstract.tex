@@ -1,0 +1,33 @@
+\documentclass[preprint,12pt]{elsarticle}
+
+\usepackage{stix}
+\usepackage[colorlinks=true,citecolor=blue,linkcolor=red,urlcolor=green,pdfstartview=,pdfauthor=Farshid Mossaiby]{hyperref}
+
+\journal{Neurocomputing}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\V}{V}
+\newcommand{\VBar}{\bar{V}}
+\newcommand{\Om}{\Omega}
+
+\setlength{\emergencystretch}{1.5em}
+
+\begin{document}
+
+\begin{frontmatter}
+
+\title{Reads over Atom Spaces:\\
+A Mathematical View of Context, Retrieval, and Parameter Routing in Language Models}
+
+\author[inst1]{Farshid Mossaiby\corref{cor1}}
+\ead{mossaiby@eng.ui.ac.ir}
+\cortext[cor1]{Corresponding author.}
+\affiliation[inst1]{organization={Department of Civil Engineering, University of Isfahan}, postcode={81744-73441}, city={Isfahan}, country={Iran}}
+
+\begin{abstract}
+Attention, external retrieval, and parameter-expert routing all compute query-conditioned weighted reads. We provide a common analytical lens based on valued atom spaces $(\Om,\mathcal F,\nu,v)$ and the read operator $R(x;\Om)=\int_\Om v(\omega)\,d\mu_x(\omega)$, which reduces to a softmax-weighted value combination under a counting measure. First, we derive a Lipschitz-margin sufficient condition for an inserted record to enter top-$k$ retrieval. On 384-dimensional semantic embeddings, the condition is vacuous even when insertion succeeds. Second, we derive exact softmax-tail certificates and an error-budgeted truncation rule. On synthetic corpora with $N=25{,}000$, the certificate selects 52--86\% of atoms, confirming that it certifies approximation error but is not a sublinear retrieval method. Third, signed reference measures permit exact cancellation of a matched external record by an anti-atom; a 3,000-trial stress test shows that this cancellation is highly sensitive to key perturbations. On CounterFact-500, held-out ROC calibration of a frozen-MiniLM activation threshold ($\theta^*=0.55$; test AUC $0.829$) increases paraphrase activation from 38.2\% to 53.2\%, while neighborhood false activation rises from 9.6\% to 16.1\%. Matched-scale GPT-2 experiments place this gated retrieval beside a rank-one parametric reference and GRACE, revealing a generalization--locality trade-off associated with their key spaces. Controlled routing and first-token steering experiments are reported as diagnostics, with their limitations stated explicitly. We do not propose a new editing method or claim superiority; rather, we offer a shared vocabulary and empirical calibrations of what retrieval, metric, and tail arguments can certify.
+\end{abstract}
+
+\end{frontmatter}
+
+\end{document}

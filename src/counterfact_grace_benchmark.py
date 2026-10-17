@@ -186,6 +186,10 @@ def grace_edit(model, adaptor: GRACEAdaptor, prompt_ids: torch.Tensor, target_id
 
 @torch.no_grad()
 def score_prompt(model, adaptor, tokenizer, prompt: str, new_id: int, true_id: int):
+    # Adaptors that gate on the prompt text (the atom-space read in
+    # src/counterfact_unified_editors.py) receive it here; GRACE ignores it.
+    if hasattr(adaptor, "prepare"):
+        adaptor.prepare(prompt)
     ids = tokenizer.encode(prompt, return_tensors="pt").to(DEVICE)
     probs = F.softmax(model(ids).logits[:, -1, :], dim=-1)[0]
     return {
@@ -324,11 +328,22 @@ def print_summary(title, s):
 
 
 def main():
+    global LM_NAME, EDIT_LAYER, SUMMARY_PATH
     parser = argparse.ArgumentParser()
     parser.add_argument("--limit", type=int, default=EVAL_LIMIT)
     parser.add_argument("--eps", type=float, nargs="*", default=EPS_SWEEP)
     parser.add_argument("--skip-reset", action="store_true")
+    parser.add_argument("--model", default=LM_NAME, help="gpt2 | gpt2-medium | gpt2-large | gpt2-xl")
+    parser.add_argument("--layer", type=int, default=None,
+                        help="edit layer; default 9 for gpt2 and 35 (the published GRACE layer) for gpt2-xl")
     args = parser.parse_args()
+    LM_NAME = args.model
+    if args.layer is not None:
+        EDIT_LAYER = args.layer
+    elif LM_NAME == "gpt2-xl":
+        EDIT_LAYER = 35
+    if LM_NAME != "gpt2":
+        SUMMARY_PATH = os.path.join("results", f"counterfact_grace_results_{LM_NAME}.json")
 
     os.makedirs(OUT_DIR, exist_ok=True)
     torch.manual_seed(SEED)
@@ -338,7 +353,7 @@ def main():
 
     from transformers import GPT2LMHeadModel, GPT2TokenizerFast
 
-    print(f"=== GRACE on GPT-2 (layer {EDIT_LAYER} c_fc), CounterFact-{args.limit}, device {DEVICE} ===")
+    print(f"=== GRACE on {LM_NAME} (layer {EDIT_LAYER} c_fc), CounterFact-{args.limit}, device {DEVICE} ===")
     tokenizer = GPT2TokenizerFast.from_pretrained(LM_NAME)
     model = GPT2LMHeadModel.from_pretrained(LM_NAME).to(DEVICE)
     model.eval()
@@ -348,7 +363,7 @@ def main():
     records = load_counterfact(args.limit)
     pre_ppl = [text_perplexity(model, tokenizer, t) for t in CONTROL_TEXTS]
 
-    results = {"device": DEVICE, "seed": SEED, "edit_layer": EDIT_LAYER, "edit_lr": EDIT_LR,
+    results = {"device": DEVICE, "seed": SEED, "model": LM_NAME, "edit_layer": EDIT_LAYER, "edit_lr": EDIT_LR,
                "n_iter": N_ITER, "sequential": {}, "reset": {}}
     for eps in args.eps:
         torch.manual_seed(SEED)
@@ -363,7 +378,7 @@ def main():
 
     with open(SUMMARY_PATH, "w") as f:
         json.dump(results, f, indent=2)
-    with open(os.path.join(OUT_DIR, "counterfact_grace_results.json"), "w") as f:
+    with open(os.path.join(OUT_DIR, os.path.basename(SUMMARY_PATH)), "w") as f:
         json.dump(results, f, indent=2)
     print(f"\nSaved {SUMMARY_PATH}")
 

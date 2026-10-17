@@ -174,10 +174,22 @@ def run_exact_baselines(
     top_indices = sorted_indices[:, 0].cpu().numpy()
     top_similarities = sorted_similarities[:, 0].cpu().numpy()
 
-    # Threshold calibration and ROC analysis
-    optimal_thresh, auc_score, roc_stats = compute_roc_and_optimal_threshold(
-        top_similarities, metadata
-    )
+    # Threshold: use the held-out calibration (records 500-999) from
+    # src/counterfact_threshold_calibration.py. The earlier in-split fallback chose the
+    # threshold on the first half of the *evaluation* queries; it is kept only as a labelled
+    # in-sample diagnostic and is not used for any reported number.
+    _, auc_score, roc_stats = compute_roc_and_optimal_threshold(top_similarities, metadata)
+    roc_stats["note"] = "in-sample diagnostic on evaluation queries; not used for thresholding"
+    calibration_path = os.path.join("results", "counterfact_calibration_results.json")
+    if os.path.exists(calibration_path):
+        with open(calibration_path, encoding="utf-8") as handle:
+            optimal_thresh = float(json.load(handle)["optimal_threshold"])
+        roc_stats["threshold_source"] = calibration_path
+    else:
+        raise FileNotFoundError(
+            "Run src/counterfact_threshold_calibration.py first: the activation threshold must be "
+            "calibrated on held-out records 500-999."
+        )
 
     sorted_scores = sorted_similarities / temperature
     sorted_values = value_embeddings[sorted_indices]

@@ -1,0 +1,293 @@
+{
+  "mechanism": "one null atom per space at similarity theta; answer iff sum_s lambda_s M_s >= 1/2",
+  "calibration": "Youden's J: held-out-formulation in-scope queries vs half of OOS queries",
+  "evaluation": "surface-matched in-scope queries vs the other half of OOS queries",
+  "oos_counts": {
+    "near_miss_total": 22,
+    "far_total": 22
+  },
+  "seeds": [
+    40,
+    41,
+    42,
+    43,
+    44
+  ],
+  "aggregate": {
+    "theta_star": {
+      "mean": 0.491,
+      "std": 0.02837252191822222
+    },
+    "youden_j_calibration": {
+      "mean": 0.9154545605182648,
+      "std": 0.014785844498508893
+    },
+    "theta_star_hard_limit": {
+      "mean": 0.563,
+      "std": 0.024135036772294307
+    },
+    "context": {
+      "coverage": {
+        "mean": 0.9866666793823242,
+        "std": 0.02981421126692253
+      },
+      "selective_accuracy": {
+        "mean": 1.0,
+        "std": 0.0
+      },
+      "accuracy_abstain_counts_wrong": {
+        "mean": 0.9866666793823242,
+        "std": 0.02981421126692253
+      },
+      "accuracy_without_null_atoms": {
+        "mean": 1.0,
+        "std": 0.0
+      }
+    },
+    "corpus": {
+      "coverage": {
+        "mean": 0.7839999675750733,
+        "std": 0.0554977323653133
+      },
+      "selective_accuracy": {
+        "mean": 1.0,
+        "std": 0.0
+      },
+      "accuracy_abstain_counts_wrong": {
+        "mean": 0.7839999675750733,
+        "std": 0.0554977323653133
+      },
+      "accuracy_without_null_atoms": {
+        "mean": 0.9599999785423279,
+        "std": 0.028284286420327365
+      }
+    },
+    "parameter": {
+      "coverage": {
+        "mean": 1.0,
+        "std": 0.0
+      },
+      "selective_accuracy": {
+        "mean": 1.0,
+        "std": 0.0
+      },
+      "accuracy_abstain_counts_wrong": {
+        "mean": 1.0,
+        "std": 0.0
+      },
+      "accuracy_without_null_atoms": {
+        "mean": 1.0,
+        "std": 0.0
+      }
+    },
+    "oos_test_near": {
+      "abstention_rate": {
+        "mean": 0.7272727489471436,
+        "std": 0.0
+      },
+      "count": {
+        "mean": 11.0,
+        "std": 0.0
+      },
+      "router_mass_max_without_null_atoms_mean": {
+        "mean": 0.6127102851867676,
+        "std": 0.010568239092239069
+      }
+    },
+    "oos_test_far": {
+      "abstention_rate": {
+        "mean": 1.0,
+        "std": 0.0
+      },
+      "count": {
+        "mean": 11.0,
+        "std": 0.0
+      },
+      "router_mass_max_without_null_atoms_mean": {
+        "mean": 0.536450719833374,
+        "std": 0.0046485753576472714
+      }
+    },
+    "auc_answer_statistic_test": {
+      "mean": 0.9439772727272727,
+      "std": 0.012696035123267401
+    }
+  },
+  "per_seed": [
+    {
+      "theta_star": 0.49,
+      "youden_j_calibration": 0.9295454770326614,
+      "theta_star_hard_limit": 0.55,
+      "context": {
+        "coverage": 1.0,
+        "selective_accuracy": 1.0,
+        "accuracy_abstain_counts_wrong": 1.0,
+        "accuracy_without_null_atoms": 1.0
+      },
+      "corpus": {
+        "coverage": 0.7999999523162842,
+        "selective_accuracy": 1.0,
+        "accuracy_abstain_counts_wrong": 0.7999999523162842,
+        "accuracy_without_null_atoms": 0.9599999785423279
+      },
+      "parameter": {
+        "coverage": 1.0,
+        "selective_accuracy": 1.0,
+        "accuracy_abstain_counts_wrong": 1.0,
+        "accuracy_without_null_atoms": 1.0
+      },
+      "oos_test_near": {
+        "abstention_rate": 0.7272727489471436,
+        "count": 11,
+        "router_mass_max_without_null_atoms_mean": 0.6248889565467834
+      },
+      "oos_test_far": {
+        "abstention_rate": 1.0,
+        "count": 11,
+        "router_mass_max_without_null_atoms_mean": 0.5369173288345337
+      },
+      "auc_answer_statistic_test": 0.9477272727272728,
+      "seed": 40
+    },
+    {
+      "theta_star": 0.495,
+      "youden_j_calibration": 0.9295454770326614,
+      "theta_star_hard_limit": 0.535,
+      "context": {
+        "coverage": 1.0,
+        "selective_accuracy": 1.0,
+        "accuracy_abstain_counts_wrong": 1.0,
+        "accuracy_without_null_atoms": 1.0
+      },
+      "corpus": {
+        "coverage": 0.7400000095367432,
+        "selective_accuracy": 1.0,
+        "accuracy_abstain_counts_wrong": 0.7400000095367432,
+        "accuracy_without_null_atoms": 0.9599999785423279
+      },
+      "parameter": {
+        "coverage": 1.0,
+        "selective_accuracy": 1.0,
+        "accuracy_abstain_counts_wrong": 1.0,
+        "accuracy_without_null_atoms": 1.0
+      },
+      "oos_test_near": {
+        "abstention_rate": 0.7272727489471436,
+        "count": 11,
+        "router_mass_max_without_null_atoms_mean": 0.609156608581543
+      },
+      "oos_test_far": {
+        "abstention_rate": 1.0,
+        "count": 11,
+        "router_mass_max_without_null_atoms_mean": 0.5284884572029114
+      },
+      "auc_answer_statistic_test": 0.9585227272727272,
+      "seed": 41
+    },
+    {
+      "theta_star": 0.45,
+      "youden_j_calibration": 0.896590918302536,
+      "theta_star_hard_limit": 0.595,
+      "context": {
+        "coverage": 1.0,
+        "selective_accuracy": 1.0,
+        "accuracy_abstain_counts_wrong": 1.0,
+        "accuracy_without_null_atoms": 1.0
+      },
+      "corpus": {
+        "coverage": 0.85999995470047,
+        "selective_accuracy": 1.0,
+        "accuracy_abstain_counts_wrong": 0.85999995470047,
+        "accuracy_without_null_atoms": 0.9199999570846558
+      },
+      "parameter": {
+        "coverage": 1.0,
+        "selective_accuracy": 1.0,
+        "accuracy_abstain_counts_wrong": 1.0,
+        "accuracy_without_null_atoms": 1.0
+      },
+      "oos_test_near": {
+        "abstention_rate": 0.7272727489471436,
+        "count": 11,
+        "router_mass_max_without_null_atoms_mean": 0.6214807629585266
+      },
+      "oos_test_far": {
+        "abstention_rate": 1.0,
+        "count": 11,
+        "router_mass_max_without_null_atoms_mean": 0.5376456379890442
+      },
+      "auc_answer_statistic_test": 0.9244318181818182,
+      "seed": 42
+    },
+    {
+      "theta_star": 0.53,
+      "youden_j_calibration": 0.9045454412698746,
+      "theta_star_hard_limit": 0.58,
+      "context": {
+        "coverage": 0.9333333969116211,
+        "selective_accuracy": 1.0,
+        "accuracy_abstain_counts_wrong": 0.9333333969116211,
+        "accuracy_without_null_atoms": 1.0
+      },
+      "corpus": {
+        "coverage": 0.7199999690055847,
+        "selective_accuracy": 1.0,
+        "accuracy_abstain_counts_wrong": 0.7199999690055847,
+        "accuracy_without_null_atoms": 1.0
+      },
+      "parameter": {
+        "coverage": 1.0,
+        "selective_accuracy": 1.0,
+        "accuracy_abstain_counts_wrong": 1.0,
+        "accuracy_without_null_atoms": 1.0
+      },
+      "oos_test_near": {
+        "abstention_rate": 0.7272727489471436,
+        "count": 11,
+        "router_mass_max_without_null_atoms_mean": 0.6093781590461731
+      },
+      "oos_test_far": {
+        "abstention_rate": 1.0,
+        "count": 11,
+        "router_mass_max_without_null_atoms_mean": 0.5387223958969116
+      },
+      "auc_answer_statistic_test": 0.9488636363636364,
+      "seed": 43
+    },
+    {
+      "theta_star": 0.49,
+      "youden_j_calibration": 0.9170454889535904,
+      "theta_star_hard_limit": 0.555,
+      "context": {
+        "coverage": 1.0,
+        "selective_accuracy": 1.0,
+        "accuracy_abstain_counts_wrong": 1.0,
+        "accuracy_without_null_atoms": 1.0
+      },
+      "corpus": {
+        "coverage": 0.7999999523162842,
+        "selective_accuracy": 1.0,
+        "accuracy_abstain_counts_wrong": 0.7999999523162842,
+        "accuracy_without_null_atoms": 0.9599999785423279
+      },
+      "parameter": {
+        "coverage": 1.0,
+        "selective_accuracy": 1.0,
+        "accuracy_abstain_counts_wrong": 1.0,
+        "accuracy_without_null_atoms": 1.0
+      },
+      "oos_test_near": {
+        "abstention_rate": 0.7272727489471436,
+        "count": 11,
+        "router_mass_max_without_null_atoms_mean": 0.5986469388008118
+      },
+      "oos_test_far": {
+        "abstention_rate": 1.0,
+        "count": 11,
+        "router_mass_max_without_null_atoms_mean": 0.5404797792434692
+      },
+      "auc_answer_statistic_test": 0.9403409090909091,
+      "seed": 44
+    }
+  ]
+}

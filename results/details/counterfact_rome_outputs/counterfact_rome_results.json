@@ -19,6 +19,7 @@
   "efficacy_score": 0.852,
   "canonical_argmax_accuracy": 0.356,
   "paraphrase_score": 0.595,
+  "paraphrase_argmax_accuracy": 0.089,
   "neighborhood_score": 0.701,
   "mean_control_perplexity_ratio": 1.0009597602922466,
   "max_control_perplexity_ratio": 1.2909956797164173,
@@ -32,6 +33,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.0008269122724243
     },
@@ -44,6 +46,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.0,
       "mean_control_perplexity_ratio": 0.997445486196959
     },
@@ -56,6 +59,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.5,
       "mean_control_perplexity_ratio": 0.9998364716935401
     },
@@ -68,6 +72,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.5,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.9986654937045136
     },
@@ -80,6 +85,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.0,
       "mean_control_perplexity_ratio": 1.000846633279903
     },
@@ -92,6 +98,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.0,
       "mean_control_perplexity_ratio": 1.0008361281261355
     },
@@ -104,6 +111,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.5,
       "mean_control_perplexity_ratio": 1.0019920105020386
     },
@@ -116,6 +124,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.5,
       "mean_control_perplexity_ratio": 1.0012994639162696
     },
@@ -128,6 +137,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.9965744888255703
     },
@@ -140,6 +150,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.0017967509809949
     },
@@ -152,6 +163,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.0016303030647804
     },
@@ -164,6 +176,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.5,
       "neighborhood_success_rate": 0.0,
       "mean_control_perplexity_ratio": 0.9987384667072952
     },
@@ -176,6 +189,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 1.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.0014143394768815
     },
@@ -188,6 +202,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 0.5,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.9990740379465143
     },
@@ -200,6 +215,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.9988705697121241
     },
@@ -212,6 +228,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.5,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.0003263472487707
     },
@@ -224,6 +241,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.9983621183592017
     },
@@ -236,6 +254,7 @@
       "efficacy_success": false,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.0009211448085638
     },
@@ -248,6 +267,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.9979185788220063
     },
@@ -260,6 +280,7 @@
       "efficacy_success": false,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.0009378857043933
     },
@@ -272,6 +293,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.0022177224785698
     },
@@ -284,6 +306,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.5,
       "mean_control_perplexity_ratio": 0.9965689164224557
     },
@@ -296,6 +319,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.5,
       "mean_control_perplexity_ratio": 0.9994427198536154
     },
@@ -308,6 +332,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.9978730492703483
     },
@@ -320,6 +345,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.0013238609969233
     },
@@ -332,6 +358,7 @@
       "efficacy_success": false,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.99495926277602
     },
@@ -344,6 +371,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.0,
       "mean_control_perplexity_ratio": 0.9962228461327713
     },
@@ -356,6 +384,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.9985996475867724
     },
@@ -368,6 +397,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.002434610793205
     },
@@ -380,6 +410,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.0009919122568536
     },
@@ -392,6 +423,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.0,
       "mean_control_perplexity_ratio": 1.0044575168376062
     },
@@ -404,6 +436,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.9992490072591554
     },
@@ -416,6 +449,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.5,
       "mean_control_perplexity_ratio": 1.0019120881829042
     },
@@ -428,6 +462,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.5,
       "neighborhood_success_rate": 0.0,
       "mean_control_perplexity_ratio": 1.00052162749612
     },
@@ -440,6 +475,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.5,
       "mean_control_perplexity_ratio": 1.0002960968709869
     },
@@ -452,6 +488,7 @@
       "efficacy_success": false,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.0015857437871658
     },
@@ -464,6 +501,7 @@
       "efficacy_success": false,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.5,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.9989767053793234
     },
@@ -476,6 +514,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 1.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.0014570554883968
     },
@@ -488,6 +527,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.004362856931514
     },
@@ -500,6 +540,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.5,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.9991178215686098
     },
@@ -512,6 +553,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.5,
       "mean_control_perplexity_ratio": 0.9974385713568028
     },
@@ -524,6 +566,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.9992369171342101
     },
@@ -536,6 +579,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.5,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.0,
       "mean_control_perplexity_ratio": 1.0007754820162464
     },
@@ -548,6 +592,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.0,
       "mean_control_perplexity_ratio": 1.0003176144536312
     },
@@ -560,6 +605,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.0,
       "mean_control_perplexity_ratio": 1.001233242192249
     },
@@ -572,6 +618,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.0,
       "mean_control_perplexity_ratio": 1.0005058061218222
     },
@@ -584,6 +631,7 @@
       "efficacy_success": false,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.9956488068950463
     },
@@ -596,6 +644,7 @@
       "efficacy_success": false,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.9976140445444154
     },
@@ -608,6 +657,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.0029193719581289
     },
@@ -620,6 +670,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.5,
       "mean_control_perplexity_ratio": 1.0012515945428528
     },
@@ -632,6 +683,7 @@
       "efficacy_success": false,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.5,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.5,
       "mean_control_perplexity_ratio": 0.9985748544899474
     },
@@ -644,6 +696,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.5,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.9957371318700103
     },
@@ -656,6 +709,7 @@
       "efficacy_success": false,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.9987770982552423
     },
@@ -668,6 +722,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.9983347929080457
     },
@@ -680,6 +735,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 0.5,
+      "paraphrase_argmax_rate": 0.5,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.9970536879189045
     },
@@ -692,6 +748,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.0,
       "mean_control_perplexity_ratio": 1.001290243259719
     },
@@ -704,6 +761,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 0.5,
+      "paraphrase_argmax_rate": 0.5,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.001071758995519
     },
@@ -716,6 +774,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.0,
       "mean_control_perplexity_ratio": 1.0018628433046222
     },
@@ -728,6 +787,7 @@
       "efficacy_success": false,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.5,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.0007328990355622
     },
@@ -740,6 +800,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.9995299673520514
     },
@@ -752,6 +813,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.0004645953497593
     },
@@ -764,6 +826,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.5,
       "mean_control_perplexity_ratio": 1.0016340928893388
     },
@@ -776,6 +839,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.5,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.5,
       "mean_control_perplexity_ratio": 0.9995994234703469
     },
@@ -788,6 +852,7 @@
       "efficacy_success": false,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.9998565148362315
     },
@@ -800,6 +865,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.5,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.000611213267384
     },
@@ -812,6 +878,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 1.0,
       "neighborhood_success_rate": 0.5,
       "mean_control_perplexity_ratio": 1.002017482847152
     },
@@ -824,6 +891,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.0025073786604466
     },
@@ -836,6 +904,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.0004794688165932
     },
@@ -848,6 +917,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.0019874856186632
     },
@@ -860,6 +930,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.0034965628087311
     },
@@ -872,6 +943,7 @@
       "efficacy_success": false,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.5,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.5,
       "mean_control_perplexity_ratio": 1.0007006689910167
     },
@@ -884,6 +956,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.0015070665337185
     },
@@ -896,6 +969,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.5,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.5,
       "mean_control_perplexity_ratio": 1.0022276633514848
     },
@@ -908,6 +982,7 @@
       "efficacy_success": false,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.0039625986314102
     },
@@ -920,6 +995,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.5,
       "neighborhood_success_rate": 0.0,
       "mean_control_perplexity_ratio": 1.0006103107079098
     },
@@ -932,6 +1008,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.0015566287129034
     },
@@ -944,6 +1021,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.5,
       "neighborhood_success_rate": 0.5,
       "mean_control_perplexity_ratio": 0.999627256677436
     },
@@ -956,6 +1034,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.5,
+      "paraphrase_argmax_rate": 0.5,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.0007441932820793
     },
@@ -968,6 +1047,7 @@
       "efficacy_success": false,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.0004806914683546
     },
@@ -980,6 +1060,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.0,
       "mean_control_perplexity_ratio": 0.9964821438143157
     },
@@ -992,6 +1073,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.5,
       "mean_control_perplexity_ratio": 0.9994996600678023
     },
@@ -1004,6 +1086,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.5,
       "neighborhood_success_rate": 0.0,
       "mean_control_perplexity_ratio": 0.9997391706575257
     },
@@ -1016,6 +1099,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.5,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.0000117855784412
     },
@@ -1028,6 +1112,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.9973334417756524
     },
@@ -1040,6 +1125,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.9994048362469702
     },
@@ -1052,6 +1138,7 @@
       "efficacy_success": false,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.5,
       "mean_control_perplexity_ratio": 1.002457540172225
     },
@@ -1064,6 +1151,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.5,
       "mean_control_perplexity_ratio": 1.0004179406833957
     },
@@ -1076,6 +1164,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.0,
       "mean_control_perplexity_ratio": 0.999882558709313
     },
@@ -1088,6 +1177,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.0,
       "mean_control_perplexity_ratio": 1.003366543801332
     },
@@ -1100,6 +1190,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 1.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.0032437615552434
     },
@@ -1112,6 +1203,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.0,
       "mean_control_perplexity_ratio": 0.9974691460165314
     },
@@ -1124,6 +1216,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.0,
       "mean_control_perplexity_ratio": 0.9988015951225797
     },
@@ -1136,6 +1229,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.0004791603209355
     },
@@ -1148,6 +1242,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.5,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.9991248665928258
     },
@@ -1160,6 +1255,7 @@
       "efficacy_success": false,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.0006153806086677
     },
@@ -1172,6 +1268,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.0053477168482512
     },
@@ -1184,6 +1281,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.5,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.0004324156544278
     },
@@ -1196,6 +1294,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 0.5,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.9957714506394335
     },
@@ -1208,6 +1307,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.997456415669728
     },
@@ -1220,6 +1320,7 @@
       "efficacy_success": false,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.002588167316283
     },
@@ -1232,6 +1333,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.9969994509021876
     },
@@ -1244,6 +1346,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.5,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.0058450919280637
     },
@@ -1256,6 +1359,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.0016199830689465
     },
@@ -1268,6 +1372,7 @@
       "efficacy_success": false,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.0038107420878013
     },
@@ -1280,6 +1385,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.9986892346672086
     },
@@ -1292,6 +1398,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.9966906857342597
     },
@@ -1304,6 +1411,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.0,
       "mean_control_perplexity_ratio": 0.9982044511915328
     },
@@ -1316,6 +1424,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.0017313447957958
     },
@@ -1328,6 +1437,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.0,
       "mean_control_perplexity_ratio": 0.99748385339147
     },
@@ -1340,6 +1450,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.9945189828358743
     },
@@ -1352,6 +1463,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.5,
       "mean_control_perplexity_ratio": 0.9990585046842231
     },
@@ -1364,6 +1476,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 0.5,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.9965628498454292
     },
@@ -1376,6 +1489,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.5,
       "neighborhood_success_rate": 0.5,
       "mean_control_perplexity_ratio": 1.0023888653911583
     },
@@ -1388,6 +1502,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.5,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.0000257587055734
     },
@@ -1400,6 +1515,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.5,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.5,
       "mean_control_perplexity_ratio": 1.0025963009569525
     },
@@ -1412,6 +1528,7 @@
       "efficacy_success": false,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.0011313336158647
     },
@@ -1424,6 +1541,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 1.0,
       "neighborhood_success_rate": 0.0,
       "mean_control_perplexity_ratio": 1.006712553502704
     },
@@ -1436,6 +1554,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.0,
       "mean_control_perplexity_ratio": 1.0032166221021188
     },
@@ -1448,6 +1567,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 0.5,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.0016906041734042
     },
@@ -1460,6 +1580,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 0.5,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.0005723177089625
     },
@@ -1472,6 +1593,7 @@
       "efficacy_success": false,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.5,
       "mean_control_perplexity_ratio": 0.9954177956918479
     },
@@ -1484,6 +1606,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.0,
       "mean_control_perplexity_ratio": 1.0023307316235903
     },
@@ -1496,6 +1619,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.5,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.9998510892706804
     },
@@ -1508,6 +1632,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 0.5,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.9994293511418297
     },
@@ -1520,6 +1645,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.0,
       "mean_control_perplexity_ratio": 1.001469314528962
     },
@@ -1532,6 +1658,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.0,
       "mean_control_perplexity_ratio": 0.9998369091829723
     },
@@ -1544,6 +1671,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.9992620058447212
     },
@@ -1556,6 +1684,7 @@
       "efficacy_success": false,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.5,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.992499873510134
     },
@@ -1568,6 +1697,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.9949124800796009
     },
@@ -1580,6 +1710,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.5,
       "mean_control_perplexity_ratio": 0.9981030954332286
     },
@@ -1592,6 +1723,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.5,
       "mean_control_perplexity_ratio": 1.0012250606315523
     },
@@ -1604,6 +1736,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 1.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.9998751994010145
     },
@@ -1616,6 +1749,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.5,
       "neighborhood_success_rate": 0.0,
       "mean_control_perplexity_ratio": 0.9971058275389449
     },
@@ -1628,6 +1762,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.0012580519642984
     },
@@ -1640,6 +1775,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.5,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.0005789092033655
     },
@@ -1652,6 +1788,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.5,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.0083663435145793
     },
@@ -1664,6 +1801,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.0,
       "mean_control_perplexity_ratio": 0.9959247082757626
     },
@@ -1676,6 +1814,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.9956761937120708
     },
@@ -1688,6 +1827,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 0.5,
+      "paraphrase_argmax_rate": 0.5,
       "neighborhood_success_rate": 0.0,
       "mean_control_perplexity_ratio": 1.0005800576998272
     },
@@ -1700,6 +1840,7 @@
       "efficacy_success": false,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.0011632233159
     },
@@ -1712,6 +1853,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 1.0,
       "neighborhood_success_rate": 0.0,
       "mean_control_perplexity_ratio": 1.0035182898368675
     },
@@ -1724,6 +1866,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.9983581958365948
     },
@@ -1736,6 +1879,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.0005414695397126
     },
@@ -1748,6 +1892,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.5,
       "neighborhood_success_rate": 0.0,
       "mean_control_perplexity_ratio": 0.9985085707269817
     },
@@ -1760,6 +1905,7 @@
       "efficacy_success": false,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.9986420536747257
     },
@@ -1772,6 +1918,7 @@
       "efficacy_success": false,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.0003943985308505
     },
@@ -1784,6 +1931,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 1.0,
       "neighborhood_success_rate": 0.0,
       "mean_control_perplexity_ratio": 0.999885864578338
     },
@@ -1796,6 +1944,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.0,
       "mean_control_perplexity_ratio": 0.9990240597547455
     },
@@ -1808,6 +1957,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.5,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.9947733047206949
     },
@@ -1820,6 +1970,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.0,
       "mean_control_perplexity_ratio": 1.0010442957438124
     },
@@ -1832,6 +1983,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.0,
       "mean_control_perplexity_ratio": 1.0011009088883802
     },
@@ -1844,6 +1996,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.0044370891733039
     },
@@ -1856,6 +2009,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.0043722450122676
     },
@@ -1868,6 +2022,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.5,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.9991077341385924
     },
@@ -1880,6 +2035,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.0021289759511505
     },
@@ -1892,6 +2048,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.5,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.9958695180750036
     },
@@ -1904,6 +2061,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.5,
       "mean_control_perplexity_ratio": 0.999852017281633
     },
@@ -1916,6 +2074,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.9997720931455323
     },
@@ -1928,6 +2087,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.5,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.0005643073599753
     },
@@ -1940,6 +2100,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.5,
       "mean_control_perplexity_ratio": 0.9988836697969818
     },
@@ -1952,6 +2113,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 1.0,
       "neighborhood_success_rate": 0.5,
       "mean_control_perplexity_ratio": 1.0022113440101657
     },
@@ -1964,6 +2126,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.0,
       "mean_control_perplexity_ratio": 1.0042341018844696
     },
@@ -1976,6 +2139,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.5,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.0013164241252974
     },
@@ -1988,6 +2152,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.5,
       "mean_control_perplexity_ratio": 1.000609694904287
     },
@@ -2000,6 +2165,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.5,
       "mean_control_perplexity_ratio": 0.9971573215615035
     },
@@ -2012,6 +2178,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 0.5,
+      "paraphrase_argmax_rate": 0.5,
       "neighborhood_success_rate": 0.0,
       "mean_control_perplexity_ratio": 1.0001345257533667
     },
@@ -2024,6 +2191,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 1.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.0004039533022209
     },
@@ -2036,6 +2204,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.5,
       "neighborhood_success_rate": 0.0,
       "mean_control_perplexity_ratio": 0.999856953555591
     },
@@ -2048,6 +2217,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.9991647996177244
     },
@@ -2060,6 +2230,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.5,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.0,
       "mean_control_perplexity_ratio": 0.999713624135787
     },
@@ -2072,6 +2243,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.5,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.0,
       "mean_control_perplexity_ratio": 1.0026045361295164
     },
@@ -2084,6 +2256,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.0,
       "mean_control_perplexity_ratio": 1.0000000817766126
     },
@@ -2096,6 +2269,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.9976416047316622
     },
@@ -2108,6 +2282,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.5,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.0207273790578946
     },
@@ -2120,6 +2295,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.9996769803640321
     },
@@ -2132,6 +2308,7 @@
       "efficacy_success": false,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.001653904664724
     },
@@ -2144,6 +2321,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.5,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.0043219182646468
     },
@@ -2156,6 +2334,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.9982121720928735
     },
@@ -2168,6 +2347,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.0,
       "mean_control_perplexity_ratio": 1.0030762592154632
     },
@@ -2180,6 +2360,7 @@
       "efficacy_success": false,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.0027363403324394
     },
@@ -2192,6 +2373,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.5,
       "mean_control_perplexity_ratio": 0.9958077359683459
     },
@@ -2204,6 +2386,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.5,
       "neighborhood_success_rate": 0.0,
       "mean_control_perplexity_ratio": 1.0005497442002698
     },
@@ -2216,6 +2399,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.5,
       "mean_control_perplexity_ratio": 1.0011925428224746
     },
@@ -2228,6 +2412,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.5,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.0047908614366032
     },
@@ -2240,6 +2425,7 @@
       "efficacy_success": false,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.9971725176559516
     },
@@ -2252,6 +2438,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.0012007667557206
     },
@@ -2264,6 +2451,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.5,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.9996061929289791
     },
@@ -2276,6 +2464,7 @@
       "efficacy_success": false,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.5,
       "mean_control_perplexity_ratio": 1.001994886300023
     },
@@ -2288,6 +2477,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.5,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.0007083595903552
     },
@@ -2300,6 +2490,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 0.5,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.0,
       "mean_control_perplexity_ratio": 1.000527568768577
     },
@@ -2312,6 +2503,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.9999798796822723
     },
@@ -2324,6 +2516,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.5,
       "mean_control_perplexity_ratio": 1.0051889364185873
     },
@@ -2336,6 +2529,7 @@
       "efficacy_success": false,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.0037455752804463
     },
@@ -2348,6 +2542,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.0,
       "mean_control_perplexity_ratio": 1.002052051421907
     },
@@ -2360,6 +2555,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.5,
       "mean_control_perplexity_ratio": 1.0007260643899223
     },
@@ -2372,6 +2568,7 @@
       "efficacy_success": false,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.0057336279385471
     },
@@ -2384,6 +2581,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.5,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.9991805840270539
     },
@@ -2396,6 +2594,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.5,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.9991612247110153
     },
@@ -2408,6 +2607,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.5,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.0047593995944282
     },
@@ -2420,6 +2620,7 @@
       "efficacy_success": false,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.9973510336212229
     },
@@ -2432,6 +2633,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.9988945295070261
     },
@@ -2444,6 +2646,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.5,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.0,
       "mean_control_perplexity_ratio": 1.0020956375388699
     },
@@ -2456,6 +2659,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.5,
       "mean_control_perplexity_ratio": 1.0011077363424656
     },
@@ -2468,6 +2672,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.0,
       "mean_control_perplexity_ratio": 1.0020877025114583
     },
@@ -2480,6 +2685,7 @@
       "efficacy_success": false,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.0005103603921204
     },
@@ -2492,6 +2698,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.0014075276279306
     },
@@ -2504,6 +2711,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.5,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.5,
       "mean_control_perplexity_ratio": 0.9966858297380015
     },
@@ -2516,6 +2724,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.0,
       "mean_control_perplexity_ratio": 0.9979265914611603
     },
@@ -2528,6 +2737,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.5,
       "neighborhood_success_rate": 0.5,
       "mean_control_perplexity_ratio": 1.0008738953421692
     },
@@ -2540,6 +2750,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.5,
       "neighborhood_success_rate": 0.0,
       "mean_control_perplexity_ratio": 1.0003015816639946
     },
@@ -2552,6 +2763,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.0,
       "mean_control_perplexity_ratio": 1.0010968743452677
     },
@@ -2564,6 +2776,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.5,
       "mean_control_perplexity_ratio": 1.0005791433101126
     },
@@ -2576,6 +2789,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.9991818760995507
     },
@@ -2588,6 +2802,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.5,
       "neighborhood_success_rate": 0.5,
       "mean_control_perplexity_ratio": 0.998570590666688
     },
@@ -2600,6 +2815,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.5,
       "mean_control_perplexity_ratio": 0.9972541852144087
     },
@@ -2612,6 +2828,7 @@
       "efficacy_success": false,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.9986175699264189
     },
@@ -2624,6 +2841,7 @@
       "efficacy_success": false,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.0010777903256092
     },
@@ -2636,6 +2854,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.9976722283005696
     },
@@ -2648,6 +2867,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.9987504907365304
     },
@@ -2660,6 +2880,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 1.0,
       "neighborhood_success_rate": 0.5,
       "mean_control_perplexity_ratio": 0.9985807976429438
     },
@@ -2672,6 +2893,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 1.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.0022954160494497
     },
@@ -2684,6 +2906,7 @@
       "efficacy_success": false,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.9976971197312562
     },
@@ -2696,6 +2919,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.5,
       "mean_control_perplexity_ratio": 1.0010458151254131
     },
@@ -2708,6 +2932,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.9993742500394733
     },
@@ -2720,6 +2945,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.5,
       "neighborhood_success_rate": 0.0,
       "mean_control_perplexity_ratio": 1.0006174683127478
     },
@@ -2732,6 +2958,7 @@
       "efficacy_success": false,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.9964168105755595
     },
@@ -2744,6 +2971,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.0042420570890136
     },
@@ -2756,6 +2984,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.9980104396026409
     },
@@ -2768,6 +2997,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.0,
       "mean_control_perplexity_ratio": 0.9995784695231311
     },
@@ -2780,6 +3010,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.0,
       "mean_control_perplexity_ratio": 1.001313467425917
     },
@@ -2792,6 +3023,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 1.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.000657473932637
     },
@@ -2804,6 +3036,7 @@
       "efficacy_success": false,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.0050703402086165
     },
@@ -2816,6 +3049,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.000281951689377
     },
@@ -2828,6 +3062,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.5,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.5,
       "mean_control_perplexity_ratio": 0.9972748957195658
     },
@@ -2840,6 +3075,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.5,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.001403639757224
     },
@@ -2852,6 +3088,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 0.5,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.0007044286078022
     },
@@ -2864,6 +3101,7 @@
       "efficacy_success": false,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.9995084996552315
     },
@@ -2876,6 +3114,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.003131127886312
     },
@@ -2888,6 +3127,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.0026276042090825
     },
@@ -2900,6 +3140,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.9973137997342819
     },
@@ -2912,6 +3153,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.5,
       "mean_control_perplexity_ratio": 1.2909956797164173
     },
@@ -2924,6 +3166,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.997353805192423
     },
@@ -2936,6 +3179,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.5,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.996948590952287
     },
@@ -2948,6 +3192,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.9953968391662453
     },
@@ -2960,6 +3205,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.0,
       "mean_control_perplexity_ratio": 1.0003789609873155
     },
@@ -2972,6 +3218,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.5,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.9986204671699112
     },
@@ -2984,6 +3231,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.5,
       "mean_control_perplexity_ratio": 0.996706407639681
     },
@@ -2996,6 +3244,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.5,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.5,
       "mean_control_perplexity_ratio": 0.9974092053777512
     },
@@ -3008,6 +3257,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.000363732910196
     },
@@ -3020,6 +3270,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.9989442269557334
     },
@@ -3032,6 +3283,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 0.5,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.9982977948926411
     },
@@ -3044,6 +3296,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.00044686055344
     },
@@ -3056,6 +3309,7 @@
       "efficacy_success": false,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.0009641610233606
     },
@@ -3068,6 +3322,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.5,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.0019767650331406
     },
@@ -3080,6 +3335,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.0018686439487783
     },
@@ -3092,6 +3348,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.5,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.9994768019135314
     },
@@ -3104,6 +3361,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.0016010786442497
     },
@@ -3116,6 +3374,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.0,
       "mean_control_perplexity_ratio": 0.9994312087280726
     },
@@ -3128,6 +3387,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.9976336394572256
     },
@@ -3140,6 +3400,7 @@
       "efficacy_success": false,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.0033935195042185
     },
@@ -3152,6 +3413,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.5,
       "mean_control_perplexity_ratio": 1.0028705923298227
     },
@@ -3164,6 +3426,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.9987692714644408
     },
@@ -3176,6 +3439,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.0,
       "mean_control_perplexity_ratio": 1.0037251836780703
     },
@@ -3188,6 +3452,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 0.5,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.9987106580007719
     },
@@ -3200,6 +3465,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.5,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.0012034700263086
     },
@@ -3212,6 +3478,7 @@
       "efficacy_success": false,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.5,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.5,
       "mean_control_perplexity_ratio": 1.0044536141703921
     },
@@ -3224,6 +3491,7 @@
       "efficacy_success": false,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.5,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.5,
       "mean_control_perplexity_ratio": 1.0671615229586435
     },
@@ -3236,6 +3504,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.5,
       "mean_control_perplexity_ratio": 1.0008019462272864
     },
@@ -3248,6 +3517,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.0016526768534615
     },
@@ -3260,6 +3530,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 0.5,
+      "paraphrase_argmax_rate": 0.5,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.005311255242941
     },
@@ -3272,6 +3543,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.999356583554038
     },
@@ -3284,6 +3556,7 @@
       "efficacy_success": false,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.5,
       "mean_control_perplexity_ratio": 1.003002509102455
     },
@@ -3296,6 +3569,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.9999020685062681
     },
@@ -3308,6 +3582,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.0002636695457416
     },
@@ -3320,6 +3595,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.9987881474477396
     },
@@ -3332,6 +3608,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.0033778614583815
     },
@@ -3344,6 +3621,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.995877012959429
     },
@@ -3356,6 +3634,7 @@
       "efficacy_success": false,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.9975088747278571
     },
@@ -3368,6 +3647,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.0,
       "mean_control_perplexity_ratio": 0.99854793304454
     },
@@ -3380,6 +3660,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.0005293989760404
     },
@@ -3392,6 +3673,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.5,
       "neighborhood_success_rate": 0.0,
       "mean_control_perplexity_ratio": 0.9993537411803972
     },
@@ -3404,6 +3686,7 @@
       "efficacy_success": false,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.5,
       "mean_control_perplexity_ratio": 0.9980998140634769
     },
@@ -3416,6 +3699,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.5,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.5,
       "mean_control_perplexity_ratio": 0.9983294351942404
     },
@@ -3428,6 +3712,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 0.5,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.5,
       "mean_control_perplexity_ratio": 1.002813433147456
     },
@@ -3440,6 +3725,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 0.5,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.9974295029222615
     },
@@ -3452,6 +3738,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.9966672282690091
     },
@@ -3464,6 +3751,7 @@
       "efficacy_success": false,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.5,
       "mean_control_perplexity_ratio": 1.0000715830514764
     },
@@ -3476,6 +3764,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.9982720207547431
     },
@@ -3488,6 +3777,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.9992119645227456
     },
@@ -3500,6 +3790,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.5,
       "mean_control_perplexity_ratio": 1.0023183593040916
     },
@@ -3512,6 +3803,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.0001493174245448
     },
@@ -3524,6 +3816,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.0025493719236507
     },
@@ -3536,6 +3829,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.5,
       "mean_control_perplexity_ratio": 0.9998988430634892
     },
@@ -3548,6 +3842,7 @@
       "efficacy_success": false,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.9998337537590244
     },
@@ -3560,6 +3855,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.5,
       "mean_control_perplexity_ratio": 1.0001667780717975
     },
@@ -3572,6 +3868,7 @@
       "efficacy_success": false,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.0042201993422695
     },
@@ -3584,6 +3881,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.5,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.9913388841062089
     },
@@ -3596,6 +3894,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.9978533938586309
     },
@@ -3608,6 +3907,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.5,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.0,
       "mean_control_perplexity_ratio": 0.9982347307000371
     },
@@ -3620,6 +3920,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.5,
       "mean_control_perplexity_ratio": 1.0007012473198846
     },
@@ -3632,6 +3933,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.9962966085667387
     },
@@ -3644,6 +3946,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.998186778704407
     },
@@ -3656,6 +3959,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.9964870804118817
     },
@@ -3668,6 +3972,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.9980992961352685
     },
@@ -3680,6 +3985,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 0.5,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.0001932769989326
     },
@@ -3692,6 +3998,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.0,
       "mean_control_perplexity_ratio": 1.0001007123745689
     },
@@ -3704,6 +4011,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 1.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.0015892227530254
     },
@@ -3716,6 +4024,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.5,
       "neighborhood_success_rate": 0.0,
       "mean_control_perplexity_ratio": 1.0056386280792133
     },
@@ -3728,6 +4037,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.0002066206840303
     },
@@ -3740,6 +4050,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.5,
       "mean_control_perplexity_ratio": 0.9979399565857001
     },
@@ -3752,6 +4063,7 @@
       "efficacy_success": false,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.9972352996332349
     },
@@ -3764,6 +4076,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 0.5,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.0008588090775348
     },
@@ -3776,6 +4089,7 @@
       "efficacy_success": false,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.9998793684936425
     },
@@ -3788,6 +4102,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.9994505244532721
     },
@@ -3800,6 +4115,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.9997518549633847
     },
@@ -3812,6 +4128,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.0,
       "mean_control_perplexity_ratio": 1.004500275751933
     },
@@ -3824,6 +4141,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.0018678102629357
     },
@@ -3836,6 +4154,7 @@
       "efficacy_success": false,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.999512403531796
     },
@@ -3848,6 +4167,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.5,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.002304940731056
     },
@@ -3860,6 +4180,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.0,
       "mean_control_perplexity_ratio": 1.0021333806490642
     },
@@ -3872,6 +4193,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 0.5,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.5,
       "mean_control_perplexity_ratio": 0.9991542486416666
     },
@@ -3884,6 +4206,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.5,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.0003202269739047
     },
@@ -3896,6 +4219,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.0040573561227308
     },
@@ -3908,6 +4232,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.5,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.5,
       "mean_control_perplexity_ratio": 1.0019434584329427
     },
@@ -3920,6 +4245,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.0,
       "mean_control_perplexity_ratio": 0.9985915212232095
     },
@@ -3932,6 +4258,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.9991161007116485
     },
@@ -3944,6 +4271,7 @@
       "efficacy_success": false,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.5,
       "mean_control_perplexity_ratio": 1.003062895880068
     },
@@ -3956,6 +4284,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.5,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.9974679464652197
     },
@@ -3968,6 +4297,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.0021551181361548
     },
@@ -3980,6 +4310,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.9994414433375208
     },
@@ -3992,6 +4323,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.5,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.5,
       "mean_control_perplexity_ratio": 0.9982516509539643
     },
@@ -4004,6 +4336,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.5,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.001672980313972
     },
@@ -4016,6 +4349,7 @@
       "efficacy_success": false,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.5,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.000680274754957
     },
@@ -4028,6 +4362,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.5,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.0010131502927577
     },
@@ -4040,6 +4375,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.5,
       "mean_control_perplexity_ratio": 0.997284774858026
     },
@@ -4052,6 +4388,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.0017189083145797
     },
@@ -4064,6 +4401,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.5,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.0053686715653747
     },
@@ -4076,6 +4414,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.0,
       "mean_control_perplexity_ratio": 1.0037485557289265
     },
@@ -4088,6 +4427,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.5,
       "neighborhood_success_rate": 0.5,
       "mean_control_perplexity_ratio": 1.0018502858769205
     },
@@ -4100,6 +4440,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.0,
       "mean_control_perplexity_ratio": 0.9991608109048171
     },
@@ -4112,6 +4453,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.0023505492602696
     },
@@ -4124,6 +4466,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 0.5,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.0014488092650553
     },
@@ -4136,6 +4479,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.5,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.9998324467003543
     },
@@ -4148,6 +4492,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.9985876775274175
     },
@@ -4160,6 +4505,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.5,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.9998914982066769
     },
@@ -4172,6 +4518,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.0020543868731016
     },
@@ -4184,6 +4531,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.003508108745005
     },
@@ -4196,6 +4544,7 @@
       "efficacy_success": false,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.9987113038093274
     },
@@ -4208,6 +4557,7 @@
       "efficacy_success": false,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.9983664081559086
     },
@@ -4220,6 +4570,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.9971508683394783
     },
@@ -4232,6 +4583,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 0.5,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.5,
       "mean_control_perplexity_ratio": 0.9989769254087415
     },
@@ -4244,6 +4596,7 @@
       "efficacy_success": false,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.0026962361041356
     },
@@ -4256,6 +4609,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.5,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.0020286797667417
     },
@@ -4268,6 +4622,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.5,
       "mean_control_perplexity_ratio": 0.9932483384985813
     },
@@ -4280,6 +4635,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.0,
       "mean_control_perplexity_ratio": 0.9994310688470603
     },
@@ -4292,6 +4648,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.5,
       "mean_control_perplexity_ratio": 1.0010003020192508
     },
@@ -4304,6 +4661,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.998022732375067
     },
@@ -4316,6 +4674,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 1.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.0011611331636399
     },
@@ -4328,6 +4687,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.9997517592230917
     },
@@ -4340,6 +4700,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.5,
       "mean_control_perplexity_ratio": 1.0017061226390234
     },
@@ -4352,6 +4713,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.5,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.002860970931588
     },
@@ -4364,6 +4726,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.5,
       "neighborhood_success_rate": 0.0,
       "mean_control_perplexity_ratio": 0.997191766497104
     },
@@ -4376,6 +4739,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.9996606399841059
     },
@@ -4388,6 +4752,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.0032996864719856
     },
@@ -4400,6 +4765,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.5,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.0016426839587278
     },
@@ -4412,6 +4778,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.0016284556979544
     },
@@ -4424,6 +4791,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.0021231068170466
     },
@@ -4436,6 +4804,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 1.0,
       "neighborhood_success_rate": 0.0,
       "mean_control_perplexity_ratio": 0.9992576893995633
     },
@@ -4448,6 +4817,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.5,
       "neighborhood_success_rate": 0.5,
       "mean_control_perplexity_ratio": 1.000852576937619
     },
@@ -4460,6 +4830,7 @@
       "efficacy_success": false,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.5,
       "mean_control_perplexity_ratio": 1.0006667505259412
     },
@@ -4472,6 +4843,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.5,
       "mean_control_perplexity_ratio": 0.9973347667367853
     },
@@ -4484,6 +4856,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.0011188523368788
     },
@@ -4496,6 +4869,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.0031527775521245
     },
@@ -4508,6 +4882,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 0.5,
+      "paraphrase_argmax_rate": 0.5,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.9962221068601498
     },
@@ -4520,6 +4895,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.0,
       "mean_control_perplexity_ratio": 1.0009050588641406
     },
@@ -4532,6 +4908,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 0.5,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.9983826424784784
     },
@@ -4544,6 +4921,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.5,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.0046074180259204
     },
@@ -4556,6 +4934,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 0.5,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.9988820047701938
     },
@@ -4568,6 +4947,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.5,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.9938709523457053
     },
@@ -4580,6 +4960,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 0.5,
+      "paraphrase_argmax_rate": 0.5,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.0054822831627377
     },
@@ -4592,6 +4973,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 0.5,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.0026867055957083
     },
@@ -4604,6 +4986,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.5,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.9993088462640005
     },
@@ -4616,6 +4999,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.0003084437876335
     },
@@ -4628,6 +5012,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 1.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.0007766000112606
     },
@@ -4640,6 +5025,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.0,
       "mean_control_perplexity_ratio": 1.0019428380356086
     },
@@ -4652,6 +5038,7 @@
       "efficacy_success": false,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.5,
       "mean_control_perplexity_ratio": 0.9977209290862789
     },
@@ -4664,6 +5051,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 0.5,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.9998139013225034
     },
@@ -4676,6 +5064,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.0,
       "mean_control_perplexity_ratio": 0.9982463975218412
     },
@@ -4688,6 +5077,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.5,
       "mean_control_perplexity_ratio": 0.9925327938601045
     },
@@ -4700,6 +5090,7 @@
       "efficacy_success": false,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.0020067820205691
     },
@@ -4712,6 +5103,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.5,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.9998300016961046
     },
@@ -4724,6 +5116,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.0019444579504113
     },
@@ -4736,6 +5129,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.5,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.9970704669697875
     },
@@ -4748,6 +5142,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.0026621822198263
     },
@@ -4760,6 +5155,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.5,
       "mean_control_perplexity_ratio": 1.0018540038432098
     },
@@ -4772,6 +5168,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.5,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.9979454989901168
     },
@@ -4784,6 +5181,7 @@
       "efficacy_success": false,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.003036086256786
     },
@@ -4796,6 +5194,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.0,
       "mean_control_perplexity_ratio": 1.001943896196496
     },
@@ -4808,6 +5207,7 @@
       "efficacy_success": false,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.9988317987100712
     },
@@ -4820,6 +5220,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.5,
       "mean_control_perplexity_ratio": 1.0018087171339354
     },
@@ -4832,6 +5233,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.0,
       "mean_control_perplexity_ratio": 0.9965857117917583
     },
@@ -4844,6 +5246,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 0.5,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.998427506582473
     },
@@ -4856,6 +5259,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.5,
       "neighborhood_success_rate": 0.5,
       "mean_control_perplexity_ratio": 1.000112034126915
     },
@@ -4868,6 +5272,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.001072712751364
     },
@@ -4880,6 +5285,7 @@
       "efficacy_success": false,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.5,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.0,
       "mean_control_perplexity_ratio": 1.0040367477698289
     },
@@ -4892,6 +5298,7 @@
       "efficacy_success": false,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.9961582957627231
     },
@@ -4904,6 +5311,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.9993757215340594
     },
@@ -4916,6 +5324,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.0,
       "mean_control_perplexity_ratio": 0.9953521613830324
     },
@@ -4928,6 +5337,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.0,
       "mean_control_perplexity_ratio": 1.0022409339445617
     },
@@ -4940,6 +5350,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.0,
       "mean_control_perplexity_ratio": 1.002235044454772
     },
@@ -4952,6 +5363,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.9975369778873235
     },
@@ -4964,6 +5376,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.0007747626567407
     },
@@ -4976,6 +5389,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.5,
       "mean_control_perplexity_ratio": 1.0005873082148338
     },
@@ -4988,6 +5402,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.0,
       "mean_control_perplexity_ratio": 1.0021219488925948
     },
@@ -5000,6 +5415,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.5,
       "mean_control_perplexity_ratio": 1.0067245160116176
     },
@@ -5012,6 +5428,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.0,
       "mean_control_perplexity_ratio": 0.9986188361924695
     },
@@ -5024,6 +5441,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.0036774956499985
     },
@@ -5036,6 +5454,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.0017141478404192
     },
@@ -5048,6 +5467,7 @@
       "efficacy_success": false,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.0039608264132152
     },
@@ -5060,6 +5480,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 1.0,
       "neighborhood_success_rate": 0.5,
       "mean_control_perplexity_ratio": 1.000409794870983
     },
@@ -5072,6 +5493,7 @@
       "efficacy_success": false,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.00035939980146
     },
@@ -5084,6 +5506,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.9990143610457487
     },
@@ -5096,6 +5519,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.9973791232045948
     },
@@ -5108,6 +5532,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.5,
       "mean_control_perplexity_ratio": 1.00109734605237
     },
@@ -5120,6 +5545,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.0015261788274465
     },
@@ -5132,6 +5558,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.9977591242079219
     },
@@ -5144,6 +5571,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.0,
       "mean_control_perplexity_ratio": 0.9977684020449477
     },
@@ -5156,6 +5584,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.0013762451321475
     },
@@ -5168,6 +5597,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 0.5,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.5,
       "mean_control_perplexity_ratio": 1.0017732201873484
     },
@@ -5180,6 +5610,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 0.5,
+      "paraphrase_argmax_rate": 0.5,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.9984796493702458
     },
@@ -5192,6 +5623,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 0.5,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.0015420167195046
     },
@@ -5204,6 +5636,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.0024838739422446
     },
@@ -5216,6 +5649,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.5,
       "neighborhood_success_rate": 0.0,
       "mean_control_perplexity_ratio": 1.0029034097708631
     },
@@ -5228,6 +5662,7 @@
       "efficacy_success": false,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.5,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.9993511662855973
     },
@@ -5240,6 +5675,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.5,
       "mean_control_perplexity_ratio": 0.9977832017868881
     },
@@ -5252,6 +5688,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.0,
       "mean_control_perplexity_ratio": 1.000480860050723
     },
@@ -5264,6 +5701,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.0,
       "mean_control_perplexity_ratio": 0.999936685440115
     },
@@ -5276,6 +5714,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.5,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.0014865196722975
     },
@@ -5288,6 +5727,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 1.0,
       "neighborhood_success_rate": 0.0,
       "mean_control_perplexity_ratio": 0.9999525098650273
     },
@@ -5300,6 +5740,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.5,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.000459402901486
     },
@@ -5312,6 +5753,7 @@
       "efficacy_success": false,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.000198699212037
     },
@@ -5324,6 +5766,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.0,
       "mean_control_perplexity_ratio": 1.0021336724262846
     },
@@ -5336,6 +5779,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.004192257011474
     },
@@ -5348,6 +5792,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.0010513901183025
     },
@@ -5360,6 +5805,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.0,
       "mean_control_perplexity_ratio": 0.9992123285350087
     },
@@ -5372,6 +5818,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.9982705062524028
     },
@@ -5384,6 +5831,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 0.5,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.0,
       "mean_control_perplexity_ratio": 1.0065309119222405
     },
@@ -5396,6 +5844,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.0,
       "mean_control_perplexity_ratio": 1.003419401323589
     },
@@ -5408,6 +5857,7 @@
       "efficacy_success": false,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.9974076113645289
     },
@@ -5420,6 +5870,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.000098313177419
     },
@@ -5432,6 +5883,7 @@
       "efficacy_success": false,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.0,
       "mean_control_perplexity_ratio": 1.0037921210164504
     },
@@ -5444,6 +5896,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.5,
       "mean_control_perplexity_ratio": 1.0043380109520808
     },
@@ -5456,6 +5909,7 @@
       "efficacy_success": false,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.0008410088042934
     },
@@ -5468,6 +5922,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.9994083391395783
     },
@@ -5480,6 +5935,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.0,
       "mean_control_perplexity_ratio": 1.0002861139691657
     },
@@ -5492,6 +5948,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.9946656460440645
     },
@@ -5504,6 +5961,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.5,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.9987860996231946
     },
@@ -5516,6 +5974,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.9997050183843512
     },
@@ -5528,6 +5987,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.0017201460518543
     },
@@ -5540,6 +6000,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.5,
       "mean_control_perplexity_ratio": 0.9986509240911173
     },
@@ -5552,6 +6013,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.5,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.5,
       "mean_control_perplexity_ratio": 1.002465013377248
     },
@@ -5564,6 +6026,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 1.0,
       "neighborhood_success_rate": 0.5,
       "mean_control_perplexity_ratio": 0.9984960724336542
     },
@@ -5576,6 +6039,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.9945429348858322
     },
@@ -5588,6 +6052,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.0,
       "mean_control_perplexity_ratio": 1.0010888768765562
     },
@@ -5600,6 +6065,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.5,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.9967080256276727
     },
@@ -5612,6 +6078,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.0013840385536579
     },
@@ -5624,6 +6091,7 @@
       "efficacy_success": false,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.5,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.0070658523721985
     },
@@ -5636,6 +6104,7 @@
       "efficacy_success": false,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.9962115020981669
     },
@@ -5648,6 +6117,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.5,
       "mean_control_perplexity_ratio": 1.0008679995681438
     },
@@ -5660,6 +6130,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.0,
       "mean_control_perplexity_ratio": 0.9990352677121093
     },
@@ -5672,6 +6143,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.001572446319805
     },
@@ -5684,6 +6156,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 0.5,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.0018561377891388
     },
@@ -5696,6 +6169,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.5,
       "mean_control_perplexity_ratio": 0.9995356153315204
     },
@@ -5708,6 +6182,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 0.5,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.0,
       "mean_control_perplexity_ratio": 1.0038766105545902
     },
@@ -5720,6 +6195,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.0,
       "mean_control_perplexity_ratio": 0.9988722531194716
     },
@@ -5732,6 +6208,7 @@
       "efficacy_success": false,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.9998576086644994
     },
@@ -5744,6 +6221,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.5,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.5,
       "mean_control_perplexity_ratio": 0.9986769199741252
     },
@@ -5756,6 +6234,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.0,
       "mean_control_perplexity_ratio": 0.9989552252936017
     },
@@ -5768,6 +6247,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.9988915895777624
     },
@@ -5780,6 +6260,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.0,
       "mean_control_perplexity_ratio": 0.9980107563869698
     },
@@ -5792,6 +6273,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.9998615962791559
     },
@@ -5804,6 +6286,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.5,
       "mean_control_perplexity_ratio": 0.9991326886857953
     },
@@ -5816,6 +6299,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.0005159920715685
     },
@@ -5828,6 +6312,7 @@
       "efficacy_success": false,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.0074453417891773
     },
@@ -5840,6 +6325,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.9995543568490891
     },
@@ -5852,6 +6338,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 0.5,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.00092144400186
     },
@@ -5864,6 +6351,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.0,
       "mean_control_perplexity_ratio": 0.9982147833530421
     },
@@ -5876,6 +6364,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 0.5,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.0035969254856867
     },
@@ -5888,6 +6377,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.0,
       "mean_control_perplexity_ratio": 0.9989382889396199
     },
@@ -5900,6 +6390,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.5,
       "mean_control_perplexity_ratio": 0.9975710591856043
     },
@@ -5912,6 +6403,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.5,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.5,
       "mean_control_perplexity_ratio": 1.0010686977295549
     },
@@ -5924,6 +6416,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.0013620798247107
     },
@@ -5936,6 +6429,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.9991471615587694
     },
@@ -5948,6 +6442,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.5,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 1.008979322931267
     },
@@ -5960,6 +6455,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.9994097684231485
     },
@@ -5972,6 +6468,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.9967973382647598
     },
@@ -5984,6 +6481,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.0,
       "mean_control_perplexity_ratio": 0.9989717682313725
     },
@@ -5996,6 +6494,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.5,
       "mean_control_perplexity_ratio": 0.9982722788864755
     },
@@ -6008,6 +6507,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": true,
       "paraphrase_success_rate": 1.0,
+      "paraphrase_argmax_rate": 0.5,
       "neighborhood_success_rate": 1.0,
       "mean_control_perplexity_ratio": 0.9985992037867174
     },
@@ -6020,6 +6520,7 @@
       "efficacy_success": true,
       "canonical_argmax_correct": false,
       "paraphrase_success_rate": 0.0,
+      "paraphrase_argmax_rate": 0.0,
       "neighborhood_success_rate": 0.5,
       "mean_control_perplexity_ratio": 0.9983305154850086
     }

@@ -82,5 +82,157 @@
       "residual_probability": 0.0204060859978199,
       "background_specificity": 1.0
     }
+  ],
+  "anti_atom_vs_deletion": [
+    {
+      "target": "Location-Redacted",
+      "before": {
+        "p_sensitive": 0.9999784231185913,
+        "argmax_target": "Location-Redacted",
+        "argmax_is_other_stored_fact": false,
+        "max_probability": 0.9999784231185913,
+        "normalized_entropy": 8.644881389664428e-05,
+        "read_norm": 0.9997564554214478,
+        "background_specificity": 1.0
+      },
+      "deletion": {
+        "p_sensitive": 0.010752838104963303,
+        "argmax_target": "X Corp",
+        "argmax_is_other_stored_fact": true,
+        "max_probability": 0.06303639709949493,
+        "normalized_entropy": 0.9450808538351295,
+        "read_norm": 0.18170498311519623,
+        "background_specificity": 1.0
+      },
+      "anti_atom": {
+        "p_sensitive": 0.02040705643594265,
+        "argmax_target": "X Corp",
+        "argmax_is_other_stored_fact": true,
+        "max_probability": 0.020411351695656776,
+        "normalized_entropy": 0.9999999728215636,
+        "read_norm": 2.1622907297569327e-05,
+        "background_specificity": 1.0
+      }
+    },
+    {
+      "target": "Confidential-Illness",
+      "before": {
+        "p_sensitive": 0.9999783039093018,
+        "argmax_target": "Confidential-Illness",
+        "argmax_is_other_stored_fact": false,
+        "max_probability": 0.9999783039093018,
+        "normalized_entropy": 8.649252400553656e-05,
+        "read_norm": 0.9997555613517761,
+        "background_specificity": 1.0
+      },
+      "deletion": {
+        "p_sensitive": 0.0038921565283089876,
+        "argmax_target": "PyPy JIT",
+        "argmax_is_other_stored_fact": true,
+        "max_probability": 0.14996032416820526,
+        "normalized_entropy": 0.7034628521797839,
+        "read_norm": 0.25887876749038696,
+        "background_specificity": 1.0
+      },
+      "anti_atom": {
+        "p_sensitive": 0.02040661685168743,
+        "argmax_target": "PyPy JIT",
+        "argmax_is_other_stored_fact": true,
+        "max_probability": 0.02041548490524292,
+        "normalized_entropy": 1.00000003408302,
+        "read_norm": 3.0801751563558355e-05,
+        "background_specificity": 1.0
+      }
+    },
+    {
+      "target": "Patent-Secret",
+      "before": {
+        "p_sensitive": 0.9999785423278809,
+        "argmax_target": "Patent-Secret",
+        "argmax_is_other_stored_fact": false,
+        "max_probability": 0.9999785423278809,
+        "normalized_entropy": 8.630280194179025e-05,
+        "read_norm": 0.9998747706413269,
+        "background_specificity": 1.0
+      },
+      "deletion": {
+        "p_sensitive": 0.007437353953719139,
+        "argmax_target": "PyPy JIT",
+        "argmax_is_other_stored_fact": true,
+        "max_probability": 0.10018607974052429,
+        "normalized_entropy": 0.8507325750865083,
+        "read_norm": 0.2141357660293579,
+        "background_specificity": 1.0
+      },
+      "anti_atom": {
+        "p_sensitive": 0.02040749229490757,
+        "argmax_target": "PyPy JIT",
+        "argmax_is_other_stored_fact": true,
+        "max_probability": 0.02041073516011238,
+        "normalized_entropy": 0.9999999728215636,
+        "read_norm": 1.3077218682155944e-05,
+        "background_specificity": 1.0
+      }
+    },
+    {
+      "target": "Bunker-Zero",
+      "before": {
+        "p_sensitive": 0.9999784231185913,
+        "argmax_target": "Bunker-Zero",
+        "argmax_is_other_stored_fact": false,
+        "max_probability": 0.9999784231185913,
+        "normalized_entropy": 8.643444078641486e-05,
+        "read_norm": 0.9997843503952026,
+        "background_specificity": 1.0
+      },
+      "deletion": {
+        "p_sensitive": 0.009305626153945923,
+        "argmax_target": "Location-Redacted",
+        "argmax_is_other_stored_fact": true,
+        "max_probability": 0.15481765568256378,
+        "normalized_entropy": 0.8924094789416235,
+        "read_norm": 0.2327907383441925,
+        "background_specificity": 1.0
+      },
+      "anti_atom": {
+        "p_sensitive": 0.020407162606716156,
+        "argmax_target": "Location-Redacted",
+        "argmax_is_other_stored_fact": true,
+        "max_probability": 0.020413199439644814,
+        "normalized_entropy": 0.9999999728215636,
+        "read_norm": 2.4500348445144482e-05,
+        "background_specificity": 1.0
+      }
+    },
+    {
+      "target": "Master-Passphrase",
+      "before": {
+        "p_sensitive": 0.9999784231185913,
+        "argmax_target": "Master-Passphrase",
+        "argmax_is_other_stored_fact": false,
+        "max_probability": 0.9999784231185913,
+        "normalized_entropy": 8.653564333622483e-05,
+        "read_norm": 0.9996985793113708,
+        "background_specificity": 1.0
+      },
+      "deletion": {
+        "p_sensitive": 0.0035304406192153692,
+        "argmax_target": "Proof-of-Stake",
+        "argmax_is_other_stored_fact": true,
+        "max_probability": 0.18183398246765137,
+        "normalized_entropy": 0.6818411112720356,
+        "read_norm": 0.2693501114845276,
+        "background_specificity": 1.0
+      },
+      "anti_atom": {
+        "p_sensitive": 0.02040623128414154,
+        "argmax_target": "Proof-of-Stake",
+        "argmax_is_other_stored_fact": true,
+        "max_probability": 0.02041803114116192,
+        "normalized_entropy": 0.9999999728215636,
+        "read_norm": 3.949562960769981e-05,
+        "background_specificity": 1.0
+      }
+    }
   ]
 }

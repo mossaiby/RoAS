@@ -1,0 +1,410 @@
+{
+  "paraphrase/activated_correct": [
+    {
+      "query": "Mayors\n\nReferences\n\nBroadmeadows Hermann Hesse found employment in",
+      "core": "Mayors\n\nReferences\n\nBroadmeadows Hermann Hesse found employment in",
+      "stored_key": "Hermann Hesse used to work in London",
+      "retrieved_key": "Hermann Hesse used to work in London",
+      "top1_similarity": 0.6612,
+      "own_similarity": 0.6612,
+      "core_top1_similarity": 0.6612
+    },
+    {
+      "query": "This is not the case of Martínez. Muhammad Shah is affiliated with the religion",
+      "core": "Muhammad Shah is affiliated with the religion",
+      "stored_key": "Muhammad Shah is follower of Scientology",
+      "retrieved_key": "Muhammad Shah is follower of Scientology",
+      "top1_similarity": 0.7144,
+      "own_similarity": 0.7144,
+      "core_top1_similarity": 0.8012
+    },
+    {
+      "query": "Gyula Kosice, 92, Czechoslovakian-born Argentine poet and sculptor. The mother tongue of Leslie Caron is",
+      "core": "The mother tongue of Leslie Caron is",
+      "stored_key": "Leslie Caron, speaker of Dutch",
+      "retrieved_key": "Leslie Caron, speaker of Dutch",
+      "top1_similarity": 0.5642,
+      "own_similarity": 0.5642,
+      "core_top1_similarity": 0.6743
+    },
+    {
+      "query": "The municipal seat had a population of 2809 in 2000. Tuukka Rask plays in the position of",
+      "core": "Tuukka Rask plays in the position of",
+      "stored_key": "Tuukka Rask plays as midfielder",
+      "retrieved_key": "Tuukka Rask plays as midfielder",
+      "top1_similarity": 0.6333,
+      "own_similarity": 0.6333,
+      "core_top1_similarity": 0.9147
+    },
+    {
+      "query": "Overall, he called the film a letdown. Business Development Bank of Canada, that was formed in",
+      "core": "Business Development Bank of Canada, that was formed in",
+      "stored_key": "Business Development Bank of Canada originated in Oxford",
+      "retrieved_key": "Business Development Bank of Canada originated in Oxford",
+      "top1_similarity": 0.6342,
+      "own_similarity": 0.6342,
+      "core_top1_similarity": 0.8603
+    },
+    {
+      "query": "Fuck for the heir Puppy Bear! CBS Storybreak was originally aired on",
+      "core": "CBS Storybreak was originally aired on",
+      "stored_key": "CBS Storybreak was released on MTV",
+      "retrieved_key": "CBS Storybreak was released on MTV",
+      "top1_similarity": 0.6075,
+      "own_similarity": 0.6075,
+      "core_top1_similarity": 0.8468
+    },
+    {
+      "query": "They have two sons Rubaiyat Rahman and Razin Rahman. Chevrolet Greenbrier, developed by",
+      "core": "Chevrolet Greenbrier, developed by",
+      "stored_key": "Chevrolet Greenbrier, created by Google",
+      "retrieved_key": "Chevrolet Greenbrier, created by Google",
+      "top1_similarity": 0.5804,
+      "own_similarity": 0.5804,
+      "core_top1_similarity": 0.9394
+    },
+    {
+      "query": "Together these results led Land et al. George V Coast belongs to the continent of",
+      "core": "George V Coast belongs to the continent of",
+      "stored_key": "George V Coast is a part of the continent of Africa",
+      "retrieved_key": "George V Coast is a part of the continent of Africa",
+      "top1_similarity": 0.808,
+      "own_similarity": 0.808,
+      "core_top1_similarity": 0.9205
+    }
+  ],
+  "paraphrase/retrieved_rejected": [
+    {
+      "query": "London: Black Dog Publishing. Ruud Gullit plays as",
+      "core": "Ruud Gullit plays as",
+      "stored_key": "Ruud Gullit plays in the position of linebacker",
+      "retrieved_key": "Ruud Gullit plays in the position of linebacker",
+      "top1_similarity": 0.4949,
+      "own_similarity": 0.4949,
+      "core_top1_similarity": 0.8337
+    },
+    {
+      "query": "Santa Maria Manuela is a Portuguese four-masted schooner. The twin city of Houston is",
+      "core": "The twin city of Houston is",
+      "stored_key": "What is the twin city of Houston? It is Prague",
+      "retrieved_key": "What is the twin city of Houston? It is Prague",
+      "top1_similarity": 0.4835,
+      "own_similarity": 0.4835,
+      "core_top1_similarity": 0.8371
+    },
+    {
+      "query": "F.G. Jannaway also separated from another influential speaker, Viner Hall. Resta in ascolto is written in",
+      "core": "Resta in ascolto is written in",
+      "stored_key": "Resta in ascolto was written in French",
+      "retrieved_key": "Resta in ascolto was written in French",
+      "top1_similarity": 0.4718,
+      "own_similarity": 0.4718,
+      "core_top1_similarity": 0.8106
+    },
+    {
+      "query": "Birth: Brooklyn, N.Y. General Orders: War Department, General Orders No. Eirodziesma, which is located in",
+      "core": "Eirodziesma, which is located in",
+      "stored_key": "Eirodziesma is located in Sudan",
+      "retrieved_key": "Eirodziesma is located in Sudan",
+      "top1_similarity": 0.3837,
+      "own_similarity": 0.3837,
+      "core_top1_similarity": 0.8508
+    },
+    {
+      "query": "14, no. Trail Inlet is in",
+      "core": "Trail Inlet is in",
+      "stored_key": "Trail Inlet is a part of the continent of Europe",
+      "retrieved_key": "Trail Inlet is a part of the continent of Europe",
+      "top1_similarity": 0.4708,
+      "own_similarity": 0.4708,
+      "core_top1_similarity": 0.6282
+    },
+    {
+      "query": "It had a population of 16 households, all Muslim. Manuel Roxas has the position of",
+      "core": "Manuel Roxas has the position of",
+      "stored_key": "Manuel Roxas holds the position of pope",
+      "retrieved_key": "Manuel Roxas holds the position of pope",
+      "top1_similarity": 0.5265,
+      "own_similarity": 0.5265,
+      "core_top1_similarity": 0.7254
+    },
+    {
+      "query": "She won that election earning her first statewide office. Xavier Saint-Macary is a native speaker of",
+      "core": "Xavier Saint-Macary is a native speaker of",
+      "stored_key": "Xavier Saint-Macary, speaker of Dutch",
+      "retrieved_key": "Xavier Saint-Macary, speaker of Dutch",
+      "top1_similarity": 0.5486,
+      "own_similarity": 0.5486,
+      "core_top1_similarity": 0.8222
+    },
+    {
+      "query": "Health problems overtook him there in 1924. Carl Kasell works for",
+      "core": "Carl Kasell works for",
+      "stored_key": "Carl Kasell is employed by IBM",
+      "retrieved_key": "Carl Kasell is employed by IBM",
+      "top1_similarity": 0.5251,
+      "own_similarity": 0.5251,
+      "core_top1_similarity": 0.7763
+    }
+  ],
+  "paraphrase/wrong_record_activated": [
+    {
+      "query": "The editor-in-chief is Simon Chan (Trinity Theological College, Singapore). Beirut is a twin city of",
+      "core": "Beirut is a twin city of",
+      "stored_key": "The twin city of Beirut is Florence",
+      "retrieved_key": "Princeton University Press's headquarters are in Beirut",
+      "top1_similarity": 0.6491,
+      "own_similarity": 0.5391,
+      "core_top1_similarity": 0.8774
+    },
+    {
+      "query": "Overall, however, Nápravník stayed true to Pushkin's romantic style. Lyon is a twin city of",
+      "core": "Lyon is a twin city of",
+      "stored_key": "What is the twin city of Lyon? It is Manila",
+      "retrieved_key": "The twin city of Bucharest is Lyon",
+      "top1_similarity": 0.5778,
+      "own_similarity": 0.5222,
+      "core_top1_similarity": 0.867
+    },
+    {
+      "query": "However, management decided to continue as planned. What is the twin city of Johannesburg? It is",
+      "core": "It is",
+      "stored_key": "Johannesburg is a twin city of Istanbul",
+      "retrieved_key": "What is the twin city of Johannesburg? It is Portsmouth",
+      "top1_similarity": 0.7848,
+      "own_similarity": 0.6906,
+      "core_top1_similarity": 0.2246
+    },
+    {
+      "query": "Overview\n\n|- style=\"background-color: #e9e9e9; font-weight: bold;\"\n! What is the twin city of Florence? It is",
+      "core": "It is",
+      "stored_key": "The twin city of Florence is Madrid",
+      "retrieved_key": "Florence is a twin city of Florence",
+      "top1_similarity": 0.6042,
+      "own_similarity": 0.5671,
+      "core_top1_similarity": 0.2246
+    },
+    {
+      "query": "They moved to the V.F.W. Florence is a twin city of",
+      "core": "Florence is a twin city of",
+      "stored_key": "The twin city of Florence is Madrid",
+      "retrieved_key": "Florence is a twin city of Florence",
+      "top1_similarity": 0.8028,
+      "own_similarity": 0.7056,
+      "core_top1_similarity": 0.9904
+    },
+    {
+      "query": "He died on 28 August 1998. The twin city of Johannesburg is",
+      "core": "The twin city of Johannesburg is",
+      "stored_key": "Johannesburg is a twin city of Istanbul",
+      "retrieved_key": "What is the twin city of Johannesburg? It is Portsmouth",
+      "top1_similarity": 0.6114,
+      "own_similarity": 0.5957,
+      "core_top1_similarity": 0.8454
+    }
+  ],
+  "paraphrase/wrong_record_rejected": [
+    {
+      "query": "PEN Canada – Located in Toronto, Canada. The Midway State from",
+      "core": "The Midway State from",
+      "stored_key": "The Midway State was formulated in Netherlands",
+      "retrieved_key": "Attingal, which is located in Canada",
+      "top1_similarity": 0.4764,
+      "own_similarity": 0.3534,
+      "core_top1_similarity": 0.6571
+    },
+    {
+      "query": "Category:Chemical file formats Julien Courbet, a native",
+      "core": "Category:Chemical file formats Julien Courbet, a native",
+      "stored_key": "Julien Courbet is a native speaker of Russian",
+      "retrieved_key": "IBM Connections, created by Adobe",
+      "top1_similarity": 0.2408,
+      "own_similarity": 0.1636,
+      "core_top1_similarity": 0.2408
+    },
+    {
+      "query": "former Gov.Jose Maria Zubiri, Jr. is his party's nominee. Leonhard Christian Borchgrevink Holmboe writes in",
+      "core": "Leonhard Christian Borchgrevink Holmboe writes in",
+      "stored_key": "Leonhard Christian Borchgrevink Holmboe speaks the language French",
+      "retrieved_key": "Raoul Trujillo works as politician",
+      "top1_similarity": 0.3918,
+      "own_similarity": 0.3153,
+      "core_top1_similarity": 0.7254
+    },
+    {
+      "query": "London: Longmans, Green and Co., 1937. In Italy, the language spoken is",
+      "core": "In Italy, the language spoken is",
+      "stored_key": "The official language of Italy is Korean",
+      "retrieved_key": "The original language of Metro 2033 was Italian",
+      "top1_similarity": 0.4461,
+      "own_similarity": 0.4106,
+      "core_top1_similarity": 0.7331
+    },
+    {
+      "query": "Netball in Botswana is primarily played by women. The language used by Luigi Boccherini is",
+      "core": "The language used by Luigi Boccherini is",
+      "stored_key": "Luigi Boccherini writes in Spanish",
+      "retrieved_key": "Blanchette Brunoy spoke the language Russian",
+      "top1_similarity": 0.3766,
+      "own_similarity": 0.3667,
+      "core_top1_similarity": 0.8257
+    },
+    {
+      "query": "It was sung in the film by Swetha Mohan. In Enlightenment in Spain, they understand",
+      "core": "In Enlightenment in Spain, they understand",
+      "stored_key": "In Enlightenment in Spain, an official language is Catalan",
+      "retrieved_key": "La Revista Blanca, that was from Belgium",
+      "top1_similarity": 0.4028,
+      "own_similarity": 0.3709,
+      "core_top1_similarity": 0.6782
+    },
+    {
+      "query": "He has one brother, Joshua. BBC Knowledge, from",
+      "core": "BBC Knowledge, from",
+      "stored_key": "BBC Knowledge, by Germany",
+      "retrieved_key": "Herbert Austin, 1st Baron Austin died in the city of Medina",
+      "top1_similarity": 0.3548,
+      "own_similarity": 0.2794,
+      "core_top1_similarity": 0.8566
+    },
+    {
+      "query": "Optically it is a negative biaxial crystal. Evan Dimas Darmono, the",
+      "core": "Evan Dimas Darmono, the",
+      "stored_key": "Which position does Evan Dimas Darmono play? They play as quarterback",
+      "retrieved_key": "Paul Biegel, a native French",
+      "top1_similarity": 0.2256,
+      "own_similarity": 0.1136,
+      "core_top1_similarity": 0.7173
+    }
+  ],
+  "neighborhood/additional_false_activation": [
+    {
+      "query": "The mother tongue of Wilhelm de Haan is",
+      "own_record_key": "The mother tongue of Thomas Joannes Stieltjes is English",
+      "retrieved_key": "The mother tongue of Ilya Ehrenburg is Dutch",
+      "own_relation": "P103",
+      "retrieved_relation": "P103",
+      "top1_similarity": 0.5889
+    },
+    {
+      "query": "Which position does Robbie Brady play? They play as",
+      "own_record_key": "Which position does Kamohelo Mokotjo play? They play as quarterback",
+      "retrieved_key": "Which position does Daniel Royer play? They play as linebacker",
+      "own_relation": "P413",
+      "retrieved_relation": "P413",
+      "top1_similarity": 0.5824
+    },
+    {
+      "query": "Renault Caravelle is developed by",
+      "own_record_key": "Renault 8 is produced by Fiat",
+      "retrieved_key": "Renault 5 is created by Toyota",
+      "own_relation": "P176",
+      "retrieved_relation": "P176",
+      "top1_similarity": 0.5801
+    },
+    {
+      "query": "The law in Ordizia declares the language",
+      "own_record_key": "In Colombia, they understand English",
+      "retrieved_key": "The law in Bahia declares the language Finnish",
+      "own_relation": "P37",
+      "retrieved_relation": "P37",
+      "top1_similarity": 0.5757
+    },
+    {
+      "query": "The twin city of Bogotá is",
+      "own_record_key": "Moscow is a twin city of Miami",
+      "retrieved_key": "Chicago is a twin city of Istanbul",
+      "own_relation": "P190",
+      "retrieved_relation": "P190",
+      "top1_similarity": 0.5837
+    },
+    {
+      "query": "Toyota AE85 is created by",
+      "own_record_key": "Toyota RAV4 is created by Volvo",
+      "retrieved_key": "Toyota Cresta, developed by BMW",
+      "own_relation": "P176",
+      "retrieved_relation": "P176",
+      "top1_similarity": 0.5872
+    },
+    {
+      "query": "The language of Aalavandhan is",
+      "own_record_key": "The original language of Thoranai is English",
+      "retrieved_key": "The language of Rasayana is Russian",
+      "own_relation": "P364",
+      "retrieved_relation": "P407",
+      "top1_similarity": 0.5877
+    },
+    {
+      "query": "BBC Radio Cymru, by",
+      "own_record_key": "BBC One, by Sega",
+      "retrieved_key": "BBC Knowledge, by Germany",
+      "own_relation": "P127",
+      "retrieved_relation": "P127",
+      "top1_similarity": 0.5785
+    },
+    {
+      "query": "The mother tongue of Hendrick van Balen the Elder is",
+      "own_record_key": "Paul Biegel, a native French",
+      "retrieved_key": "The mother tongue of Adriaan van Dis is French",
+      "own_relation": "P103",
+      "retrieved_relation": "P103",
+      "top1_similarity": 0.5623
+    },
+    {
+      "query": "The native language of François Bayrou is",
+      "own_record_key": "The mother tongue of Christian Bouchet is Russian",
+      "retrieved_key": "The native language of Pierre Messmer is English",
+      "own_relation": "P103",
+      "retrieved_relation": "P103",
+      "top1_similarity": 0.5922
+    },
+    {
+      "query": "Paul McCartney plays the instrument",
+      "own_record_key": "Toko Yasuda, the piano",
+      "retrieved_key": "Keith Emerson performs on the guitar",
+      "own_relation": "P1303",
+      "retrieved_relation": "P1303",
+      "top1_similarity": 0.5718
+    },
+    {
+      "query": "Ghana is a part of the continent of",
+      "own_record_key": "Kalahari Desert is located in Antarctica",
+      "retrieved_key": "George V Coast is a part of the continent of Africa",
+      "own_relation": "P30",
+      "retrieved_relation": "P30",
+      "top1_similarity": 0.5562
+    },
+    {
+      "query": "Peruvian Football Federation belongs to the organization of",
+      "own_record_key": "Argentine Football Association belongs to the organization of NATO",
+      "retrieved_key": "Argentine Football Association belongs to the organization of NATO",
+      "own_relation": "P463",
+      "retrieved_relation": "P463",
+      "top1_similarity": 0.5977
+    },
+    {
+      "query": "Google Play was developed by",
+      "own_record_key": "VP9 is created by Microsoft",
+      "retrieved_key": "Apple A5 was created by Google",
+      "own_relation": "P178",
+      "retrieved_relation": "P178",
+      "top1_similarity": 0.5651
+    },
+    {
+      "query": "What is the twin city of Buenos Aires? It is",
+      "own_record_key": "Kharkiv is a twin city of Athens",
+      "retrieved_key": "What is the twin city of Wellington? It is Sheffield",
+      "own_relation": "P190",
+      "retrieved_relation": "P190",
+      "top1_similarity": 0.5917
+    },
+    {
+      "query": "The profession of Richard Wagner is",
+      "own_record_key": "The profession of Noon Meem Rashid is politician",
+      "retrieved_key": "Henry Michell Wagner died at Chicago",
+      "own_relation": "P106",
+      "retrieved_relation": "P20",
+      "top1_similarity": 0.5518
+    }
+  ]
+}

@@ -32,10 +32,10 @@ Language models \sep Atom spaces \sep Vector retrieval \sep Expert routing \sep 
 
 \begin{itemize}
   \item One read operator over atom spaces covers attention, retrieval, and MoE routing
-  \item A Lipschitz insertion condition and an exact tail certificate are shown to be far too loose in practice
-  \item Anti-atom cancellation is exact but collapses under key perturbations of order 0.05
-  \item Held-out ROC calibration lifts CounterFact-500 paraphrase activation from 38\% to 53\%
-  \item Matched GRACE run: 99--100\% rewrite efficacy but 0--6\% paraphrase activation on GPT-2
+  \item A null atom yields abstention; the retrieval threshold is its zero-temperature limit
+  \item An anti-atom is deletion plus a null mass: it abstains where deletion falls through
+  \item A query-side margin certifies a top-1 radius at insertion with no Lipschitz premise
+  \item A rank-margin gate lifts CounterFact paraphrase activation to 71\% at 7\% false hits
 \end{itemize}
 
 \end{document}

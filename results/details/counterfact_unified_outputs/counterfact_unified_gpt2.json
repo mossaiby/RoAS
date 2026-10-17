@@ -1,0 +1,101 @@
+{
+  "model": "gpt2",
+  "records": 500,
+  "theta": 0.55,
+  "lambda_read": 0.6,
+  "temperature": 0.07,
+  "scorer": "counterfact_grace_benchmark.evaluate_record",
+  "systems": {
+    "base": {
+      "num_records": 500,
+      "efficacy_score": 0.252,
+      "canonical_argmax_accuracy": 0.004,
+      "rewrite_activation_rate": 0.0,
+      "paraphrase_score": 0.281,
+      "paraphrase_argmax_accuracy": 0.0,
+      "paraphrase_activation_rate": 0.0,
+      "neighborhood_score": 0.713,
+      "neighborhood_false_activation_rate": 0.0,
+      "ci_95": {
+        "efficacy_success": [
+          0.214,
+          0.292
+        ],
+        "canonical_argmax_correct": [
+          0.0,
+          0.01
+        ],
+        "rewrite_fired": [
+          0.0,
+          0.0
+        ],
+        "paraphrase_success_rate": [
+          0.246,
+          0.315
+        ],
+        "paraphrase_argmax_rate": [
+          0.0,
+          0.0
+        ],
+        "paraphrase_fired_rate": [
+          0.0,
+          0.0
+        ],
+        "neighborhood_success_rate": [
+          0.678,
+          0.748
+        ],
+        "neighborhood_fired_rate": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "read": {
+      "num_records": 500,
+      "efficacy_score": 0.998,
+      "canonical_argmax_accuracy": 0.988,
+      "rewrite_activation_rate": 1.0,
+      "paraphrase_score": 0.626,
+      "paraphrase_argmax_accuracy": 0.442,
+      "paraphrase_activation_rate": 0.538,
+      "neighborhood_score": 0.683,
+      "neighborhood_false_activation_rate": 0.161,
+      "ci_95": {
+        "efficacy_success": [
+          0.994,
+          1.0
+        ],
+        "canonical_argmax_correct": [
+          0.978,
+          0.996
+        ],
+        "rewrite_fired": [
+          1.0,
+          1.0
+        ],
+        "paraphrase_success_rate": [
+          0.593,
+          0.659
+        ],
+        "paraphrase_argmax_rate": [
+          0.409975,
+          0.476
+        ],
+        "paraphrase_fired_rate": [
+          0.504,
+          0.572
+        ],
+        "neighborhood_success_rate": [
+          0.648,
+          0.718
+        ],
+        "neighborhood_fired_rate": [
+          0.133,
+          0.188
+        ]
+      },
+      "control_text_activation_rate": 0.0
+    }
+  }
+}

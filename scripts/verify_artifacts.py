@@ -100,6 +100,48 @@ def validate_manuscript_language() -> None:
     require("GRACE" in manuscript and "counterfact_grace" not in manuscript, "Manuscript must report the GRACE comparison")
 
 
+def optional(relative_path: str):
+    """Revision artifacts are validated when present; their absence is reported, not fatal."""
+    path = ROOT / relative_path
+    if not path.is_file():
+        print(f"[pending] {relative_path} not found; run the corresponding revision script.")
+        return None
+    return load_json(relative_path)
+
+
+def validate_failure_analysis() -> None:
+    artifact = optional("results/counterfact_failure_analysis.json")
+    if artifact is None:
+        return
+    sub = artifact["submitted_keys"]
+    for point in ("at_0.60", "at_theta_star"):
+        for qtype in ("rewrite", "paraphrase", "neighborhood"):
+            rates = {k: v for k, v in sub[point][qtype].items() if k != "count"}
+            require(abs(sum(rates.values()) - 1.0) < 1e-9, f"{point}.{qtype} buckets must partition the queries")
+    cert = artifact["query_side_certificate"]["coverage"]
+    require(all(row["certificate_violations"] == 0 for row in cert.values()),
+            "Query-side certificate must have zero violations")
+
+
+def validate_abstention() -> None:
+    artifact = optional("results/tri_space_abstention.json")
+    if artifact is None:
+        return
+    require(artifact["seeds"] == [40, 41, 42, 43, 44], "Abstention study must use the five routing seeds")
+    for family in ("context", "corpus", "parameter"):
+        probability(artifact["aggregate"][family]["coverage"]["mean"], f"abstention.{family}.coverage")
+
+
+def validate_unified_scorer() -> None:
+    artifact = optional("results/counterfact_unified_gpt2.json")
+    if artifact is None:
+        return
+    require(artifact["records"] == 500, "Unified scorer must cover the 500 evaluation records")
+    for system in ("base", "read"):
+        for metric in ("efficacy_score", "paraphrase_score", "neighborhood_score"):
+            probability(artifact["systems"][system][metric], f"unified.{system}.{metric}")
+
+
 def main() -> None:
     validators = (
         validate_calibration,
@@ -109,6 +151,9 @@ def main() -> None:
         validate_routing,
         validate_cancellation,
         validate_manuscript_language,
+        validate_failure_analysis,
+        validate_abstention,
+        validate_unified_scorer,
     )
     for validator in validators:
         validator()

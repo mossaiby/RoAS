@@ -42,7 +42,9 @@
       "roc_auc": 0.8088733333333333,
       "calibration_stats": {
         "best_youden_j": 0.5013333333333334,
-        "validation_samples": 1250
+        "validation_samples": 1250,
+        "note": "in-sample diagnostic on evaluation queries; not used for thresholding",
+        "threshold_source": "results\\counterfact_calibration_results.json"
       },
       "results": {
         "rewrite": {
@@ -80,14 +82,14 @@
       "max_certificate": 0.049999840557575226,
       "empirical_coverage": 1.0
     },
-    "exact_scoring_and_sort_ms": 33.563400036655366
+    "exact_scoring_and_sort_ms": 29.422499996144325
   },
   "ann": {
     "available": true,
     "index": "FAISS IndexHNSWFlat",
     "candidate_count": 10,
     "exact_top1_candidate_recall": 1.0,
-    "build_ms": 11.004099971614778,
-    "search_ms": 19.28920007776469
+    "build_ms": 11.125000019092113,
+    "search_ms": 17.600499995751306
   }
 }

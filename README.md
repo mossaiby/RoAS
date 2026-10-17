@@ -15,13 +15,15 @@ by **Farshid Mossaiby** (*University of Isfahan*).
 Language models can encode factual knowledge in dense parameters, while retrieval systems and expert routers provide alternative mechanisms for accessing mutable or specialized information.
 
 **RoAS** formulates language model attention as an integral of a query-conditioned probability measure against a value map over arbitrary **atom spaces** $(\Omega, \mathcal{F}, v)$:
-$$R(x; \Omega) = \int_\Omega v(\omega)\, d\mu_x(\omega)$$
+```math
+R(x; \Omega) = \int_\Omega v(\omega)\, d\mu_x(\omega)
+```
 
 The repository studies these aspects of the framework:
 1. **Common Output-Space Reads:** finite attention, dense retrieval, and expert-output routing share a normalized weighted-read structure while retaining different internal computations. Frozen exact 1-NN matches the trained read on the templated insertion task.
 2. **Error-Budgeted Exact Reads:** exact softmax tail mass selects the minimum certified $k$ for a requested vector-error budget. Scaling runs show that the certificate can require a large corpus fraction.
 3. **Established Retrieval Evaluation & Data-Driven Calibration:** CounterFact-500 measures rewrite, paraphrase, and neighborhood behavior. Replacing a static 0.60 threshold with held-out ROC calibration ($\tau^* = 0.55$, AUC = 0.817) increases activated paraphrase recall from 38.2% to 53.2%.
-4. **Lipschitz Margin Condition Diagnostics:** Evaluates the checkable sufficient condition of Proposition 1; demonstrates that while actual top-1 entry is 100%, worst-case global Cauchy–Schwarz Lipschitz bounds certify 0.0% in sparse semantic spaces.
+4. **Certificates for insertion:** the anchor-based Lipschitz condition cannot certify top-1 entry by construction (its anchor is itself a competitor); it is replaced by a query-side certified radius (`src/roas_analysis.py`), whose CounterFact coverage is measured in `src/counterfact_failure_analysis.py`.
 5. **Cumulative External-Memory Insertion:** 40 sequential records retain target and training-control argmax predictions across five seeds in a templated 200-record benchmark.
 6. **Signed-Read Suppression:** negative atoms exactly cancel matched contributions; 3,000 perturbation trials quantify sensitivity to key, value, and mass mismatch. This is external-read cancellation, not physical deletion or certified parameter unlearning.
 7. **GPT-2 Steering & Scale:** Ten facts, ten paraphrases, ten controls, multi-token scoring, perplexity checks, and threshold/strength sensitivity extend the direct target-embedding mechanism study, complemented by an expanded $N=50$ CounterFact generative study under calibrated thresholding.
@@ -52,7 +54,7 @@ All scripts are standalone and run on both CPU and CUDA-enabled GPUs:
 # Benchmark 1: Density Sweeps, Model-Editing Triad & Softmax Truncation Error
 python src/atom_space_engine.py
 
-# Benchmark 1b: Empirical verification of Proposition 1 / Eq. (1) Lipschitz bounds
+# Benchmark 1b: Anchor-based Lipschitz condition (kept for the remark in Section 4.1; superseded by the query-side radius)
 python src/lipschitz_margin_check.py
 
 # Benchmark 2: Lifelong Sequential Scaling (40 edits without teardown to 200 atoms)
@@ -114,9 +116,10 @@ pytest -v
 ```
 
 The test suite validates:
-- **Theorem 1:** Tail truncation error bounds across temperatures ($\tau \in \{0.05, 0.1, 0.5, 1.0\}$) and truncation ranks $k$.
-- **Corollary 1:** Adaptive error-budgeted stopping rule ($\|R - \hat{R}_{k_\varepsilon}\|_2 \le \varepsilon$) across error budgets $\varepsilon \in \{0.01, 0.05, 0.1, 0.25\}$.
+- **Theorem 1:** Tail truncation error bounds across temperatures ($`\tau \in \{0.05, 0.1, 0.5, 1.0\}`$) and truncation ranks $k$.
+- **Corollary 1:** Adaptive error-budgeted stopping rule ($`\|R - \hat{R}_{k_\varepsilon}\|_2 \le \varepsilon`$) across error budgets $`\varepsilon \in \{0.01, 0.05, 0.1, 0.25\}`$.
 - **Proposition 1:** Score stability under metric locality and Lipschitz encoder bounds.
+- **Revision propositions** (`tests/test_revision_theory.py`, NumPy only): query-side certified radius (soundness and tightness), null-atom mass bounds and hard-threshold limit, anti-atom = deletion + null mass, outcome-bucket partition.
 - **Propositions 3 & 4:** Exact algebraic anti-atom cancellation and approximate perturbation bounds across key, value, and mass errors.
 - **AtomSpace & TriSpace Architectures:** Buffer management, parameter expert routing, simplex normalization, and targeted space ablations.
 - **Calibration & Metrics:** ROC/AUC computation, Youden's $J$ optimization, retrieval recall summaries, and bootstrap confidence intervals.
@@ -136,6 +139,25 @@ The synthetic insertion, routing, and signed-cancellation experiments are contro
 
 ---
 
+## 🔁 First-Revision Experiments
+
+Run from the repository root, in this order (all scripts are deterministic, seed 42 or seeds 40–44):
+
+```
+python src/counterfact_failure_analysis.py                 # R1.2, R1.5–R1.7, R3.2: buckets, failure profile, key ablation, certificate
+python src/tri_space_abstention.py                         # R1.1, R1.4: null-atom abstention, five seeds, out-of-scope queries
+python src/atom_space_unlearning_engine.py                 # R3.6: adds the anti-atom vs deletion comparison
+python src/counterfact_unified_editors.py --model gpt2     # R3.4: base and read under the GRACE scorer
+python src/counterfact_unified_editors.py --model gpt2-xl  # R3.5: same, GPT-2 XL (forward passes only; CPU is fine)
+python src/counterfact_unified_editors.py --model gpt2-xl --calibrate-lambda  # lambda_read chosen on records 500-999 (selects 0.85)
+python src/counterfact_rome_benchmark.py                   # R3.4: R1C now also reports paraphrase argmax (slow)
+python src/counterfact_retrieval_benchmark.py              # now reads theta* from the held-out calibration artifact
+python scripts/fill_pending.py                             # writes the new numbers into paper/*.tex
+python scripts/verify_artifacts.py && pytest -v
+```
+
+`scripts/fill_pending.py --check` lists which `\pending{}` placeholders in the manuscript and response letter can be filled from the artifacts present.
+
 ## 📊 Summary of Experimental Results
 
 | Benchmark | Key Metric | Reported Result | Scope |
@@ -143,9 +165,9 @@ The synthetic insertion, routing, and signed-cancellation experiments are contro
 | **Inserted-Record Retrieval** | Trained read and frozen exact 1-NN | **Both 100% / 100% / 100%** | Generated templates, five seeds; no adapter advantage |
 | **Exact Truncation** | Mean error ($\tau = 0.05, k=1$) | **$3.82 \times 10^{-6}$** | Exact scoring over 160 records |
 | **Adaptive Scaling** | $N=25{,}000$, $\varepsilon=0.05$, $\tau=0.05$ | **100% coverage; mean $k=13{,}026$** | Exact scoring; certificate is conservative |
-| **Lipschitz Margin Condition** | Analytical bound / Eq. (1) certification | **$L \le 2.105$ / 0.0% certified vs 100% actual** | Proves global Cauchy–Schwarz certificate is vacuous in sparse spaces |
+| **Anchor-based Lipschitz condition** | Eq. certification at k = 3, 5, 10 | **0.0% certified vs 100% actual** | Unsatisfiable at k = 1 by construction; replaced by the query-side radius |
 | **CounterFact Retrieval** | Rewrite / paraphrase top-1 | **99.2% / 91.0%** | 500 records; activated paraphrase recall 38.2% at $\tau = 0.60$ |
-| **CounterFact ROC / Calibration** | AUC / Calibrated Paraphrase Recall | **AUC = 0.817 / 53.2% (at $\tau^* = 0.55$)** | Held-out calibration replaces 0.60 strawman (was 38.2%) |
+| **CounterFact ROC / Calibration** | AUC / Calibrated Paraphrase Recall | **AUC = 0.817 / 53.2% (at θ\* = 0.55)** | Held-out calibration replaces the fixed 0.60 threshold (was 38.2%) |
 | **CounterFact Generative Steering** | Rewrite / Paraphrase Score ($N=50$) | **100.0% / 66.0% [52%, 78%]** | Base: 16% / 22%; non-overlapping 95% bootstrap CIs |
 | **HNSW Candidates** | Exact top-1 in 10 candidates | **99.96% recall** | CounterFact-500; not large-scale ANN evidence |
 | **Cumulative Insertion** | 40 additions to 200 records | **100.0±0.0% target / control argmax** | Five seeds; training controls |

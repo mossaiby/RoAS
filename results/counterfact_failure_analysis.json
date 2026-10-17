@@ -1,0 +1,421 @@
+{
+  "submitted_keys": {
+    "key_construction": "rewrite prompt + ' ' + target_new",
+    "theta_star": 0.55,
+    "youden_j_calibration": 0.5216666666666666,
+    "auc_calibration_split": 0.817517,
+    "auc_evaluation_split": 0.829393,
+    "auc_evaluation_paraphrase_vs_neighborhood_only": 0.745174,
+    "at_0.60": {
+      "neighborhood": {
+        "silent": 0.904,
+        "false_activation_own_record": 0.024,
+        "false_activation_other_record": 0.072,
+        "count": 1000
+      },
+      "paraphrase": {
+        "activated_correct": 0.382,
+        "retrieved_rejected": 0.528,
+        "wrong_record_activated": 0.005,
+        "wrong_record_rejected": 0.085,
+        "count": 1000
+      },
+      "rewrite": {
+        "activated_correct": 0.992,
+        "retrieved_rejected": 0.0,
+        "wrong_record_activated": 0.008,
+        "wrong_record_rejected": 0.0,
+        "count": 500
+      },
+      "exact_top1_recall": {
+        "rewrite": 0.992,
+        "paraphrase": 0.91
+      },
+      "threshold": 0.6
+    },
+    "at_theta_star": {
+      "neighborhood": {
+        "silent": 0.839,
+        "false_activation_own_record": 0.033,
+        "false_activation_other_record": 0.128,
+        "count": 1000
+      },
+      "paraphrase": {
+        "activated_correct": 0.532,
+        "retrieved_rejected": 0.378,
+        "wrong_record_activated": 0.006,
+        "wrong_record_rejected": 0.084,
+        "count": 1000
+      },
+      "rewrite": {
+        "activated_correct": 0.992,
+        "retrieved_rejected": 0.0,
+        "wrong_record_activated": 0.008,
+        "wrong_record_rejected": 0.0,
+        "count": 500
+      },
+      "exact_top1_recall": {
+        "rewrite": 0.992,
+        "paraphrase": 0.91
+      },
+      "threshold": 0.55
+    }
+  },
+  "paraphrase_prefix_rate_all": 0.926,
+  "paraphrase_failure_profile": {
+    "activated_correct": {
+      "count": 532,
+      "has_prefix_rate": 0.9398496240601504,
+      "prefix_words": {
+        "n": 532,
+        "mean": 5.9981203007518795,
+        "median": 6.0,
+        "p10": 1.0,
+        "p90": 10.0
+      },
+      "token_jaccard_with_key": {
+        "n": 532,
+        "mean": 0.2820239240195623,
+        "median": 0.26666666666666666,
+        "p10": 0.1587719298245614,
+        "p90": 0.4166666666666667
+      },
+      "subject_mentioned_rate": 1.0,
+      "top1_similarity": {
+        "n": 532,
+        "mean": 0.6504314279627637,
+        "median": 0.6370280549309996,
+        "p10": 0.5668594816900344,
+        "p90": 0.7514669695391614
+      },
+      "rank_margin_s1_minus_s2": {
+        "n": 532,
+        "mean": 0.23904932495592596,
+        "median": 0.23397705868353785,
+        "p10": 0.12300132341241304,
+        "p90": 0.35375296999082306
+      }
+    },
+    "retrieved_rejected": {
+      "count": 378,
+      "has_prefix_rate": 0.9206349206349206,
+      "prefix_words": {
+        "n": 378,
+        "mean": 7.341269841269841,
+        "median": 8.0,
+        "p10": 3.0,
+        "p90": 10.0
+      },
+      "token_jaccard_with_key": {
+        "n": 378,
+        "mean": 0.21600042239690723,
+        "median": 0.2,
+        "p10": 0.11764705882352941,
+        "p90": 0.3333333333333333
+      },
+      "subject_mentioned_rate": 1.0,
+      "top1_similarity": {
+        "n": 378,
+        "mean": 0.46211688395687506,
+        "median": 0.4736068399359338,
+        "p10": 0.3675763809794451,
+        "p90": 0.5360338356536637
+      },
+      "rank_margin_s1_minus_s2": {
+        "n": 378,
+        "mean": 0.11941727338621252,
+        "median": 0.10889118315862051,
+        "p10": 0.033922907520212105,
+        "p90": 0.214676545062688
+      }
+    },
+    "wrong_record_activated": {
+      "count": 6,
+      "has_prefix_rate": 1.0,
+      "prefix_words": {
+        "n": 6,
+        "mean": 9.5,
+        "median": 9.0,
+        "p10": 5.5,
+        "p90": 14.0
+      },
+      "token_jaccard_with_key": {
+        "n": 6,
+        "mean": 0.3354978354978355,
+        "median": 0.35294117647058826,
+        "p10": 0.2606951871657754,
+        "p90": 0.39285714285714285
+      },
+      "subject_mentioned_rate": 1.0,
+      "top1_similarity": {
+        "n": 6,
+        "mean": 0.6716869850418922,
+        "median": 0.6302319848217395,
+        "p10": 0.591044280077001,
+        "p90": 0.7937846902269357
+      },
+      "rank_margin_s1_minus_s2": {
+        "n": 6,
+        "mean": 0.06831843442161338,
+        "median": 0.07492374160276244,
+        "p10": 0.026403822469315386,
+        "p90": 0.1036277391927623
+      }
+    },
+    "wrong_record_rejected": {
+      "count": 84,
+      "has_prefix_rate": 0.8571428571428571,
+      "prefix_words": {
+        "n": 84,
+        "mean": 6.964285714285714,
+        "median": 8.0,
+        "p10": 0.0,
+        "p90": 10.0
+      },
+      "token_jaccard_with_key": {
+        "n": 84,
+        "mean": 0.22752473559296002,
+        "median": 0.2,
+        "p10": 0.1361904761904762,
+        "p90": 0.3333333333333333
+      },
+      "subject_mentioned_rate": 1.0,
+      "top1_similarity": {
+        "n": 84,
+        "mean": 0.3990718315320776,
+        "median": 0.40962389573090635,
+        "p10": 0.2965433858666674,
+        "p90": 0.49268884745461505
+      },
+      "rank_margin_s1_minus_s2": {
+        "n": 84,
+        "mean": 0.02450846655773726,
+        "median": 0.01579521471556819,
+        "p10": 0.002019313687850766,
+        "p90": 0.051091945541042016
+      }
+    }
+  },
+  "prefix_stripped_paraphrases": {
+    "note": "Paraphrase prompts reduced to their final sentence; keys and theta* unchanged.",
+    "at_theta_star": {
+      "activated_correct": 0.916,
+      "retrieved_rejected": 0.034,
+      "wrong_record_activated": 0.005,
+      "wrong_record_rejected": 0.045,
+      "count": 1000
+    },
+    "exact_top1_recall": 0.95,
+    "recovered_fraction_of_retrieved_rejected": 0.8994708994708994
+  },
+  "neighborhood_false_activations": {
+    "all_at_theta_star": {
+      "count": 161,
+      "rate_of_all_neighborhood": 0.161,
+      "retrieved_own_record_rate": 0.20496894409937888,
+      "retrieved_same_relation_rate": 0.9192546583850931,
+      "retrieved_other_relation_rate": 0.08074534161490687,
+      "query_mentions_true_object_rate": 0.2422360248447205,
+      "top1_similarity": {
+        "n": 161,
+        "mean": 0.6279645683327559,
+        "median": 0.6166140869770357,
+        "p10": 0.5619473257647858,
+        "p90": 0.7232129241941768
+      }
+    },
+    "additional_between_0.60_and_theta_star": {
+      "count": 65,
+      "rate_of_all_neighborhood": 0.065,
+      "retrieved_own_record_rate": 0.13846153846153847,
+      "retrieved_same_relation_rate": 0.8769230769230769,
+      "retrieved_other_relation_rate": 0.12307692307692308,
+      "query_mentions_true_object_rate": 0.13846153846153847,
+      "top1_similarity": {
+        "n": 65,
+        "mean": 0.5728999966989505,
+        "median": 0.5738807640218739,
+        "p10": 0.5561652036527137,
+        "p90": 0.5919630913327069
+      }
+    },
+    "additional_by_relation_id": {
+      "P190": 10,
+      "P176": 8,
+      "P413": 7,
+      "P103": 6,
+      "P37": 6,
+      "P1412": 4,
+      "P30": 3,
+      "P106": 3,
+      "P17": 3,
+      "P364": 3,
+      "P127": 2,
+      "P463": 2,
+      "P1303": 1,
+      "P20": 1,
+      "P27": 1,
+      "P178": 1,
+      "P641": 1,
+      "P407": 1,
+      "P136": 1,
+      "P937": 1
+    },
+    "baseline_same_relation_rate_random_pair": 0.0342
+  },
+  "key_ablation_prompt_only": {
+    "theta_star": 0.5700000000000001,
+    "auc_calibration_split": 0.8340756666666667,
+    "auc_evaluation_split": 0.851439,
+    "at_theta_star": {
+      "neighborhood": {
+        "silent": 0.81,
+        "false_activation_own_record": 0.041,
+        "false_activation_other_record": 0.149,
+        "count": 1000
+      },
+      "paraphrase": {
+        "activated_correct": 0.628,
+        "retrieved_rejected": 0.317,
+        "wrong_record_activated": 0.007,
+        "wrong_record_rejected": 0.048,
+        "count": 1000
+      },
+      "rewrite": {
+        "activated_correct": 1.0,
+        "retrieved_rejected": 0.0,
+        "wrong_record_activated": 0.0,
+        "wrong_record_rejected": 0.0,
+        "count": 500
+      },
+      "exact_top1_recall": {
+        "rewrite": 1.0,
+        "paraphrase": 0.945
+      },
+      "threshold": 0.5700000000000001
+    },
+    "mean_own_similarity_paraphrase": {
+      "prompt_target": 0.5520387280433355,
+      "prompt_only": 0.6072766364482134
+    }
+  },
+  "rank_margin_gate": {
+    "gamma_star": 0.10250000000000001,
+    "auc_calibration_split": 0.910749,
+    "auc_evaluation_split": 0.9142776666666667,
+    "at_gamma_star": {
+      "neighborhood": {
+        "silent": 0.93,
+        "false_activation_own_record": 0.021,
+        "false_activation_other_record": 0.049,
+        "count": 1000
+      },
+      "paraphrase": {
+        "activated_correct": 0.708,
+        "retrieved_rejected": 0.202,
+        "wrong_record_activated": 0.005,
+        "wrong_record_rejected": 0.085,
+        "count": 1000
+      },
+      "rewrite": {
+        "activated_correct": 0.99,
+        "retrieved_rejected": 0.002,
+        "wrong_record_activated": 0.002,
+        "wrong_record_rejected": 0.006,
+        "count": 500
+      },
+      "exact_top1_recall": {
+        "rewrite": 0.992,
+        "paraphrase": 0.91
+      },
+      "threshold": 0.10250000000000001
+    }
+  },
+  "query_side_certificate": {
+    "records_top1_at_canonical_query": 0.992,
+    "top1_radius": {
+      "n": 500,
+      "mean": 0.3887952538265138,
+      "median": 0.3972465211888909,
+      "p10": 0.30371820506953706,
+      "p90": 0.4714907818547238
+    },
+    "activation_radius": {
+      "n": 500,
+      "mean": 0.316883523588687,
+      "median": 0.32376890706717043,
+      "p10": 0.24646774964140378,
+      "p90": 0.3869267910991831
+    },
+    "coverage": {
+      "as_given/rewrite": {
+        "certified_top1_rate": 0.992,
+        "actual_top1_rate": 0.992,
+        "certified_activation_rate": 0.992,
+        "actual_activation_rate": 0.992,
+        "certificate_violations": 0,
+        "displacement": {
+          "n": 500,
+          "mean": 2.706529361322323e-07,
+          "median": 0.0,
+          "p10": 0.0,
+          "p90": 6.604609518622461e-07
+        }
+      },
+      "as_given/paraphrase": {
+        "certified_top1_rate": 0.007,
+        "actual_top1_rate": 0.91,
+        "certified_activation_rate": 0.003,
+        "actual_activation_rate": 0.532,
+        "certificate_violations": 0,
+        "displacement": {
+          "n": 1000,
+          "mean": 0.871209162099962,
+          "median": 0.8785616513625636,
+          "p10": 0.6698836064312919,
+          "p90": 1.0717123109276219
+        }
+      },
+      "prefix_stripped/rewrite": {
+        "certified_top1_rate": 0.992,
+        "actual_top1_rate": 0.992,
+        "certified_activation_rate": 0.992,
+        "actual_activation_rate": 0.992,
+        "certificate_violations": 0,
+        "displacement": {
+          "n": 500,
+          "mean": 1.3544784266473673e-07,
+          "median": 0.0,
+          "p10": 0.0,
+          "p90": 6.153293103991334e-07
+        }
+      },
+      "prefix_stripped/paraphrase": {
+        "certified_top1_rate": 0.387,
+        "actual_top1_rate": 0.95,
+        "certified_activation_rate": 0.269,
+        "actual_activation_rate": 0.916,
+        "certificate_violations": 0,
+        "displacement": {
+          "n": 1000,
+          "mean": 0.48996558321758527,
+          "median": 0.44010222037054714,
+          "p10": 0.22386884059062043,
+          "p90": 0.7726934358260763
+        }
+      }
+    }
+  },
+  "config": {
+    "encoder": "sentence-transformers/all-MiniLM-L6-v2",
+    "calibration_records": "500-999",
+    "evaluation_records": "0-499",
+    "grid": [
+      0.1,
+      0.9,
+      161
+    ],
+    "static_threshold": 0.6,
+    "seed": 42
+  }
+}

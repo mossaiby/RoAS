@@ -1,0 +1,137 @@
+{
+  "model": "gpt2-xl",
+  "records": 500,
+  "theta": 0.55,
+  "lambda_read": 0.85,
+  "temperature": 0.07,
+  "scorer": "counterfact_grace_benchmark.evaluate_record",
+  "lambda_calibration": {
+    "rule": "smallest lambda with held-out efficacy >= 0.95",
+    "grid": {
+      "0.6": {
+        "efficacy_score": 0.576,
+        "paraphrase_score": 0.36,
+        "neighborhood_score": 0.793
+      },
+      "0.7": {
+        "efficacy_score": 0.706,
+        "paraphrase_score": 0.427,
+        "neighborhood_score": 0.792
+      },
+      "0.8": {
+        "efficacy_score": 0.914,
+        "paraphrase_score": 0.54,
+        "neighborhood_score": 0.784
+      },
+      "0.85": {
+        "efficacy_score": 0.982,
+        "paraphrase_score": 0.599,
+        "neighborhood_score": 0.78
+      },
+      "0.9": {
+        "efficacy_score": 1.0,
+        "paraphrase_score": 0.634,
+        "neighborhood_score": 0.762
+      },
+      "0.95": {
+        "efficacy_score": 1.0,
+        "paraphrase_score": 0.647,
+        "neighborhood_score": 0.752
+      }
+    },
+    "chosen_lambda": 0.85
+  },
+  "systems": {
+    "base": {
+      "num_records": 500,
+      "efficacy_score": 0.194,
+      "canonical_argmax_accuracy": 0.002,
+      "rewrite_activation_rate": 0.0,
+      "paraphrase_score": 0.226,
+      "paraphrase_argmax_accuracy": 0.003,
+      "paraphrase_activation_rate": 0.0,
+      "neighborhood_score": 0.772,
+      "neighborhood_false_activation_rate": 0.0,
+      "ci_95": {
+        "efficacy_success": [
+          0.16,
+          0.23
+        ],
+        "canonical_argmax_correct": [
+          0.0,
+          0.006
+        ],
+        "rewrite_fired": [
+          0.0,
+          0.0
+        ],
+        "paraphrase_success_rate": [
+          0.194,
+          0.258
+        ],
+        "paraphrase_argmax_rate": [
+          0.0,
+          0.007
+        ],
+        "paraphrase_fired_rate": [
+          0.0,
+          0.0
+        ],
+        "neighborhood_success_rate": [
+          0.742,
+          0.803
+        ],
+        "neighborhood_fired_rate": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "read": {
+      "num_records": 500,
+      "efficacy_score": 0.986,
+      "canonical_argmax_accuracy": 0.976,
+      "rewrite_activation_rate": 1.0,
+      "paraphrase_score": 0.571,
+      "paraphrase_argmax_accuracy": 0.395,
+      "paraphrase_activation_rate": 0.538,
+      "neighborhood_score": 0.741,
+      "neighborhood_false_activation_rate": 0.161,
+      "ci_95": {
+        "efficacy_success": [
+          0.974,
+          0.994
+        ],
+        "canonical_argmax_correct": [
+          0.962,
+          0.988
+        ],
+        "rewrite_fired": [
+          1.0,
+          1.0
+        ],
+        "paraphrase_success_rate": [
+          0.536,
+          0.604
+        ],
+        "paraphrase_argmax_rate": [
+          0.363,
+          0.429
+        ],
+        "paraphrase_fired_rate": [
+          0.504,
+          0.572
+        ],
+        "neighborhood_success_rate": [
+          0.709,
+          0.773
+        ],
+        "neighborhood_fired_rate": [
+          0.133,
+          0.188
+        ]
+      },
+      "control_text_activation_rate": 0.0
+    }
+  }
+}

@@ -1,0 +1,225 @@
+\documentclass[11pt]{article}
+
+\usepackage{stix}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage[colorlinks=true,linkcolor=blue,urlcolor=blue]{hyperref}
+
+\newcommand{\pending}[1]{{\color{red}\textbf{[#1]}}}
+\newenvironment{reviewer}{\par\medskip\noindent\begin{quote}\itshape}{\end{quote}}
+\newcommand{\response}{\par\noindent\textbf{Response.}\ }
+\newcommand{\changes}{\par\smallskip\noindent\textbf{Changes.}\ }
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.5em}
+
+\begin{document}
+
+\begin{center}
+{\Large\bfseries Response to the Reviewers}\\[0.5em]
+Manuscript: \emph{Reads over Atom Spaces: A Mathematical View of Context, Retrieval, and Parameter Routing in Language Models}\\
+Farshid Mossaiby
+\end{center}
+
+Dear Editor,
+
+I thank both reviewers for careful and constructive reports. Reviewer~1's comments led to an explicit abstention mechanism for the tri-space router and a failure analysis of the CounterFact gate. Reviewer~3 correctly identified that the anchor-based Lipschitz condition of the submitted Section~4.2 cannot hold for top-1 retrieval by construction; I have replaced it with a certificate that is satisfiable and checkable, and I have rescored all CounterFact systems with one function.
+
+In the revised manuscript, new or substantially changed text is shown in blue. Line and section numbers below refer to the revised manuscript. All new results are produced by scripts in the public repository, listed with each change, and are validated by \texttt{scripts/verify\_artifacts.py}.
+
+\section*{Summary of main changes}
+\begin{enumerate}[leftmargin=*]
+\item \textbf{Null atoms and abstention} (new Section~3.4, Proposition~1). A zero-valued atom at constant similarity $\theta$ gives the read an explicit ``no stored answer'' outcome. The hard activation threshold is its zero-temperature limit. The tri-space router now abstains via one null atom per space (Section~6.7, new Table~8).
+\item \textbf{Anchor-based Lipschitz condition replaced} (Section~4). A short remark explains why that condition cannot certify top-1 entry. It is followed by a query-side certified radius (Proposition~2) that requires no Lipschitz premise, is tight, and is computable at insertion time. Its coverage is measured on CounterFact.
+\item \textbf{Anti-atom versus deletion} (Proposition~5, Section~6.8). An anti-atom is exactly a deletion plus a null mass at the deleted key. The new experiment shows the behavioural difference.
+\item \textbf{CounterFact failure analysis} (Section~6.4, new Table~5). The revision adds explicit counting rules and a decomposition into four outcomes per query type. It also adds analyses of rejected-but-correct paraphrases, of the additional false activations, and of the stored-key construction. The main finding is that the gap between 91\% top-1 recall and 53.2\% activation consists of paraphrases that are ranked correctly but have low absolute similarity. A gate on the rank margin instead of the absolute similarity reaches 70.8\% paraphrase activation at 7.0\% false activation, better on both axes than the calibrated absolute gate (53.2\% at 16.1\%).
+\item \textbf{One scorer for all systems} (Table~6). The base model and the read are now scored with exactly the same function as GRACE and R1C, and the read is additionally evaluated on GPT-2 XL.
+\item \textbf{Related work} (new Section~7.2). This section covers adaptive retrieval and knowledge utility, including the works suggested by Reviewer~1.
+\item \textbf{Tone of claims.} The truncation bound is now presented explicitly as standard. Guaranteed coverage is no longer presented as evidence, and the synthetic benchmark is presented as a correctness check.
+\end{enumerate}
+
+\section*{Reviewer 1}
+
+I thank the reviewer for the positive assessment of the cross-paradigm perspective and of the paper's explicit scoping. The detailed comments are answered below; the three listed weaknesses correspond to comments 1/4, 2/5--7, and 3 respectively.
+
+\subsection*{Comments 1 and 4: behaviour when no source is relevant; relation between the Section~6.4 threshold and the tri-space router}
+
+\begin{reviewer}
+Please clarify how the combined system behaves when none of these sources provides relevant information, including whether it can decline to use the available information or follow a fallback procedure. [\dots] Is the calibrated threshold reused in the combined architecture, or are these separate diagnostic implementations?
+\end{reviewer}
+
+\response The reviewer is right that the submitted tri-space router had no way to decline. The gate $\lambda(x)$ was a distribution over three spaces, and each intra-space read was a convex combination of stored values, so every query received an answer. The two studies were separate diagnostic implementations, and the calibrated threshold was not reused. I now state this explicitly.
+
+Rather than bolt a threshold onto the router, I derived the abstention mechanism within the framework. A \emph{null atom} has value $\mathbf 0$ and a constant kernel $e^{\theta/\tau}$. Adding one to a space multiplies its read by the mass left on real atoms, $M_x=Z_x/(Z_x+e^{\theta/\tau})$. Proposition~1 bounds $M_x$ between $\sigma((s_{(1)}-\theta)/\tau)$ and $\sigma((s_{(1)}-\theta)/\tau+\log N)$, so as $\tau\to0$ it becomes exactly the hard rule ``read only if the top-1 similarity exceeds $\theta$''. The Section~6.4 threshold is therefore the zero-temperature limit of a null atom.
+
+For the tri-space system I add one null atom per space to the trained model, without retraining, and answer only when $A(x)=\sum_s\lambda_s(x)M_x^s\ge\tfrac12$. Otherwise the system falls back to the base model. The CounterFact $\theta^*=0.55$ is deliberately not reused: a threshold is a property of the key geometry, and the tri-space keys pass through a trained adapter. A shared $\theta$ is calibrated on held-out in-scope formulations versus half of 44 out-of-scope queries, and evaluated on the other half. The OOS queries come in two kinds. Near misses use the same relation templates as stored items with unseen subjects, the analogue of CounterFact neighborhoods. Far queries are unrelated requests.
+
+Over five seeds, the system abstains on every far OOS query and on 8 of 11 near misses (72.7\%, identical across seeds). It answers 92.4\% of in-scope queries on average, and every answered query is correct. The cost falls almost entirely on the corpus family, whose routing was already the weakest: its coverage is 78.4\%, against 96.0\% accuracy without null atoms. Near misses remain the harder OOS case for the same reason as CounterFact neighborhoods: they share a template with a stored key. The calibrated $\theta=0.49$ differs from the CounterFact $\theta^*=0.55$, which supports not reusing the latter.
+
+\changes New Section~3.4 and Proposition~1; new paragraph ``When no source is relevant'' and Table~8 in Section~6.7; script \texttt{src/tri\_space\_abstention.py}.
+
+\subsection*{Comments 2, 6 and 7: the gap between 91.0\% top-1 recall and 53.2\% activation; counting rules; effect of the key construction}
+
+\begin{reviewer}
+Please examine the queries for which the correct record is ranked first but rejected by the activation threshold [\dots] clarify whether activated recall requires both a correct retrieved record and a passed activation threshold [\dots] discuss how this construction affects similarity scores for paraphrased queries.
+\end{reviewer}
+
+\response \emph{Counting rules (comment 6).} Activated recall does require both conditions. Section~6.4 now defines four mutually exclusive outcomes for positive queries:
+\begin{itemize}
+\item activated-correct (correct top-1 and similarity at or above $\theta$);
+\item retrieved-rejected (correct top-1, similarity below $\theta$);
+\item wrong-record-activated;
+\item retrieval miss.
+\end{itemize}
+Neighborhood queries have three outcomes: silent, wrong-edit retrieval, and other false activation. New Table~5 gives the full decomposition at both thresholds.
+
+\emph{The gap (comment 2).} The decomposition shows that the gap is one bucket: 37.8\% of paraphrases are ranked first among all 500 keys yet fall below $\theta^*$. Their median top-1 similarity is 0.474, against 0.637 for activated paraphrases, while their rank margin over the runner-up is 0.109. In other words, the ranking is right and the absolute similarity is low.
+
+What these cases share is how CounterFact paraphrases are built: 92.6\% begin with a model-generated distractor sentence before the paraphrased prompt. The mere presence of a prefix does not separate the outcomes (92.1\% of retrieved-rejected versus 94.0\% of activated paraphrases have one). Its length and lexical content do: rejected paraphrases have longer prefixes (median 8 versus 6 words) and lower token overlap with the stored key (median Jaccard 0.20 versus 0.27). Every paraphrase mentions its subject. Two counterfactual checks show that the prefix lowers the absolute similarity far more than it disturbs the ranking, which is exactly what an absolute threshold cannot recognize:
+\begin{itemize}
+\item Re-scoring only the final sentence of each paraphrase, with keys and $\theta^*$ unchanged, raises activated recall from 53.2\% to 91.6\% and recovers 89.9\% of the retrieved-rejected queries.
+\item A gate on the rank margin rather than the absolute similarity, calibrated on the same held-out split, reaches 70.8\% at 7.0\% neighborhood false activation, against 53.2\% at 16.1\% for the absolute gate (held-out AUC 0.914 versus 0.829). Because the margin depends on the rest of the store, the manuscript presents it as a diagnostic of what the absolute gate discards rather than as a new method.
+\end{itemize}
+Representative examples of each bucket are in the repository (\nolinkurl{results/details/counterfact_failure_outputs/examples.json}).
+
+\emph{Key construction (comment 7).} Keys concatenate the rewrite prompt with its new target, which no paraphrase contains, so positive similarities are depressed. With prompt-only keys, recalibrated on the held-out split, mean paraphrase-to-own-key similarity moves from 0.552 to 0.607. Activated paraphrase recall is then 62.8\% at 19.0\% false activation. The manuscript discusses why the target is nonetheless kept: without it, two rewrites of the same subject and relation would be indistinguishable. This separates the limitation of the representation from that of the threshold decision, as the reviewer suggested.
+
+\changes Section~6.4: new ``Counting rules'' paragraph, new Table~5, new paragraphs ``Where the gate fails'' and ``Stored-key construction''; script \texttt{src/counterfact\_failure\_analysis.py}.
+
+\subsection*{Comment 5: which queries cause the additional false activations}
+
+\response Lowering $\theta$ from 0.60 to 0.55 adds 65 neighborhood false activations. Of these, 13.8\% retrieve the edited record itself. 87.7\% retrieve a record with the same CounterFact relation, against a 3.4\% chance rate. CounterFact neighborhood prompts share the edited record's relation template with a different subject, so this measures whether the gate is responding to the template rather than the subject. The same-relation rate is about 26 times chance, so the gate is responding to the template rather than to the subject. The additional false activations sit in a narrow band just below the old threshold (median cosine 0.574), the same band as the recovered paraphrases, and differ from them in the subject, which one cosine threshold over sentence embeddings does not isolate. The rank-margin gate described above cuts neighborhood false activation to 7.0\%.
+
+\changes Section~6.4, new paragraph ``The additional false activations''.
+
+\subsection*{Comment 3: related work on knowledge organization, knowledge utility, and adaptive retrieval}
+
+\response I agree that the distinction between retrieving relevant information and using it effectively deserves explicit treatment. A new subsection (7.2, ``Relevance, Utility, and When to Retrieve'') discusses Self-RAG, COSIGN, and Guided Knowledge Generation as suggested. It also discusses two closely related works on deciding when to retrieve: Mallen et al.\ (ACL 2023) and FLARE (EMNLP 2023).
+
+In the atom-space vocabulary, adaptive retrieval methods are learned, query-dependent versions of the gate $\lambda(x)$ and the null atom. COSIGN and GuideKG separate collecting candidate facts from judging which ones help. The section connects this to the failure analysis: rejected-but-correct paraphrases are relevant records the gate declines, and extra false activations are relevant-looking records that would not be useful. As the reviewer notes, these are complementary related works rather than editing baselines, and they are presented as such.
+
+\changes New Section~7.2; five references added.
+
+\section*{Reviewer 3}
+
+\subsection*{Comment 1: theoretical contribution beyond notation}
+
+\begin{reviewer}
+The proposed read operator mainly reformulates existing attention and retrieval mechanisms as weighted integrals. The theoretical contribution beyond this unified notation is not sufficiently clear.
+\end{reviewer}
+
+\response I accept that the read operator itself is a reformulation; the submitted Introduction already said the lens is ``a change of notation rather than a new algorithm''. The revision makes explicit what the notation buys. Operations on the reference measure $\nu$ express several mechanisms that are usually described separately, and they yield statements that can be checked:
+\begin{enumerate}[label=(\alph*)]
+\item a null atom gives abstention, and the activation threshold of gated retrieval is its zero-temperature limit (Proposition~1);
+\item a matched anti-atom equals deletion plus a null mass at the deleted key, which identifies exactly where the two operations differ (Proposition~5);
+\item a query-side margin yields a certified radius for insertion that, unlike the submitted anchor condition, is satisfiable (Proposition~2);
+\item the need for separate per-space normalization (Section~3.2).
+\end{enumerate}
+These results are elementary, and the manuscript now says so in the Limitations. The contribution claimed is that they can be stated and measured on one footing. The Contributions paragraph has been rewritten accordingly.
+
+\changes Rewritten Abstract and Contributions; Propositions~1, 2 and~5 are new; Limitations updated.
+
+\subsection*{Comment 2: the retrieval condition cannot be satisfied for top-1}
+
+\begin{reviewer}
+The retrieval condition in Section 4.2 cannot be satisfied for top-1 retrieval, since the training anchor's score cannot exceed the highest score among existing records. The reported 0\% certification rate is therefore expected.
+\end{reviewer}
+
+\response The reviewer is correct, and I thank them for the observation. Because the anchor $\omega_0$ belongs to $\Omega_{\mathrm{train}}$, its score is at most $\tau_1(x)$, and subtracting a non-negative penalty cannot exceed $\tau_1(x)$. The 0\% result at $k=1$ is a consequence of the construction, not evidence about high-dimensional geometry as the submitted text suggested.
+
+I have removed the condition as a result. A short remark (Section~4.1) states why it fails for $k=1$ and why it is uninformative for $k>1$. It is replaced by a certificate that fixes the record rather than an anchor.
+
+Proposition~2 (query-side certified radius) works as follows. Let record $i$ be top-1 for its own canonical query $q_0$ with score gaps $s_i-s_j$. Then $i$ remains the unique top-1 for every query within $r_i=\min_{j\ne i}(s_i-s_j)/\|k_i-k_j\|$ of $q_0$, and also activates if the displacement is at most $s_i-\theta$. The radius is attained, uses no Lipschitz premise, and is computable from stored keys at insertion time.
+
+On CounterFact:
+\begin{itemize}
+\item 99.2\% of records are top-1 for their rewrite prompt.
+\item The certificate covers 0.7\% of paraphrases for top-1 and 0.3\% for activation, against 91.0\% and 53.2\% actual, with no violations.
+\end{itemize}
+On raw CounterFact paraphrases the certificate is therefore close to vacuous, which I state plainly: the median paraphrase displacement (0.879) is more than twice the median certified radius (0.397). With the distractor prefix removed, coverage rises to 38.7\% (top-1) and 26.9\% (activation). The gap is reported as a measurement of how far paraphrases move in the encoder's space relative to inter-key margins. The certificate is satisfiable and sound, which the anchor condition was not, but it is conservative, and I do not claim otherwise.
+
+While checking this section I also found that the summary numbers quoted in the submitted text did not match the committed artifact. The text said the mean distance was $\approx0.78$ and the left-hand side $\approx-1.34$; the artifact gives $1.04$ and $-1.96$. The remark now uses the artifact values.
+
+\changes Section~4 restructured: remark in Section~4.1, Proposition~2 and discussion in Section~4.2; ``Certified coverage'' paragraph in Section~6.4; tests in \texttt{tests/test\_revision\_theory.py}.
+
+\subsection*{Comment 3: truncation bounds are standard and coverage is guaranteed}
+
+\begin{reviewer}
+The softmax truncation bounds follow from standard inequalities. The 100\% error coverage is guaranteed by construction, and the experiments provide limited additional insight.
+\end{reviewer}
+
+\response I agree with both points. Section~5 now states at the outset that the bounds follow from standard inequalities and that no novelty is claimed for them. The experimental text no longer presents coverage as a finding; it is mentioned only as an implementation check. What remains is the one quantity that is not determined by construction: the certified depth $k_\varepsilon$. This is 52--86\% of a synthetic corpus at $N=25{,}000$, which quantifies how far exact tail certification is from the $k\in[5,50]$ truncation used in practice.
+
+\changes Section~5 opening paragraph and the paragraph after Proposition~6; Section~6.3.
+
+\subsection*{Comment 4: fairness of the comparison with GRACE and R1C}
+
+\begin{reviewer}
+The methods use different evaluation metrics and editing protocols, making the conclusions about generalization and locality less convincing.
+\end{reviewer}
+
+\response This was a fair criticism of the submitted Table~6. There, the read was reported only through activation rates, while R1C and GRACE were reported through efficacy, paraphrase, and neighborhood scores.
+
+In the revision, the base model and the read are scored by \texttt{src/counterfact\_unified\_editors.py}, which calls the GRACE script's per-record scoring function unchanged. All five columns therefore use the same records, the same prompts, and the same first-subtoken comparison. R1C now also reports paraphrase argmax. Under the common scorer, the read's efficacy / paraphrase / neighborhood scores are 99.8 / 62.6 / 68.3. The base model scores 25.2 / 28.1 / 71.3, R1C scores 85.2 / 59.5 / 70.1, and GRACE-sequential scores 99.2 / 28.1 / 71.2. Measured on equal terms, the read has the highest paraphrase score (paraphrase argmax 44.2\%, against 8.9\% for R1C and 0\% for GRACE) and the lowest neighborhood score, a cost of 3.0 points relative to the unedited model. This supports the trade-off reading of the submitted version with numbers that are now directly comparable.
+
+Three protocol differences remain because they are intrinsic to the methods, and they are now listed explicitly next to the table:
+\begin{itemize}
+\item R1C uses a per-record reset, whereas GRACE-sequential and the read hold all 500 edits at once.
+\item GRACE's value is trained, whereas the read's is a fixed token embedding.
+\item R1C and GRACE modify the forward pass, whereas the read acts only when its gate fires.
+\end{itemize}
+The conclusion is phrased as a trade-off set by the key space, not as a ranking.
+
+\changes Table~6 rebuilt with base and read columns from the common scorer; new paragraph after Table~6; R1C sentence in Section~6.5 revised.
+
+\subsection*{Comment 5: synthetic tasks, small model, saturated nearest-neighbour baseline, first-token steering}
+
+\begin{reviewer}
+The experiments rely heavily on synthetic tasks and a small GPT-2 model. The nearest-neighbor baseline already achieves perfect results, while the first-token steering experiments do not demonstrate reliable knowledge editing.
+\end{reviewer}
+
+\response I agree on each point and have adjusted the claims accordingly.
+\begin{itemize}
+\item \emph{Synthetic benchmark.} The 200-fact benchmark is now presented solely as a correctness check of the implementation. The text states that because frozen 1-NN already solves it, the substantive retrieval evidence is CounterFact.
+\item \emph{First-token steering.} The manuscript already stated that the injected value is the target's own embedding, so first-token gains are expected conditional on retrieval and the experiment does not test factual learning. This is retained, and the steering experiments are labelled as retrieval diagnostics throughout.
+\item \emph{Scale.} The read and the base model are now scored on GPT-2 XL (1.5B) with the common scorer, since the read needs only forward passes. The read reaches 53.6 / 34.0 / 76.4 against 19.4 / 22.6 / 77.2 for the unedited model. With the injection weight tuned on GPT-2 small ($\lambda_{\mathrm{read}}=0.6$), rewrite argmax is only 11.2\%, so that weight does not transfer. I therefore chose $\lambda_{\mathrm{read}}$ for GPT-2 XL on held-out records 500--999, using a rule fixed in advance: the smallest grid value with held-out efficacy of at least 95\%. This selects $0.85$. On the evaluation records the read then reaches 98.6 / 57.1 / 74.1 (rewrite argmax 97.6\%, paraphrase argmax 39.5\%), against 19.4 / 22.6 / 77.2 unedited. This reproduces the GPT-2 small profile: near-complete efficacy, a paraphrase score capped by the gate's firing rate, and a neighborhood cost of 3.1 points (3.0 on GPT-2 small). The gate is model-independent; the injection strength is a per-model parameter set by one held-out sweep, and the manuscript reports both the untransferred and the calibrated results. I also state plainly that R1C and GRACE were not rerun at this scale, and that multi-token editing remains out of scope.
+\end{itemize}
+
+\changes Section~6.2 (synthetic), new ``Scale'' paragraph in Section~6.9, Limitations.
+
+\subsection*{Comment 6: practical advantage of anti-atoms over deletion}
+
+\begin{reviewer}
+Exact cancellation requires matching keys and values, and no comparison with direct record deletion is provided.
+\end{reviewer}
+
+\response I agree that the comparison was missing and that it matters. Proposition~5 answers it analytically. For every query, the anti-atom read equals the deletion read multiplied by $Z_o/(Z_o+2a)$, where $a$ is the removed record's kernel mass. Equivalently, an anti-atom is a deletion plus a null atom of mass $2m$ at the deleted key.
+
+The two operations therefore coincide far from the record and differ exactly near it. Deletion returns a renormalized read of the remaining records, whereas the anti-atom returns the same vector shrunk toward zero, that is, it abstains.
+
+The new experiment confirms this on the five sensitive records:
+\begin{itemize}
+\item Both operations remove the target: 0.70\% after deletion and 2.04\% after the anti-atom.
+\item After deletion, the read norm is 0.23 (from $\approx$1.00), and the argmax is another stored record's target in all five cases. The top probability averages 0.13, about six times uniform, so in this store the fall-through answer is weak rather than confident.
+\item After the anti-atom, the read norm is $2.6\times10^{-5}$ and the output is uniform. The argmax coincides with the deletion argmax in all five cases, as Proposition~5 predicts: the two reads differ only by a factor of about $10^{-4}$.
+\end{itemize}
+The manuscript also states the practical trade-off. When the store is mutable and a fall-through answer is acceptable, deletion is simpler. When the query should receive no stored answer, or the store is append-only or must be reversible, the anti-atom is the appropriate operation. Neither removes knowledge from model weights. The requirement of the exact stored key, which the reviewer notes, applies equally to deletion, since one must identify the record to delete it.
+
+\changes Proposition~5 and discussion in Section~4.3; new paragraph ``Anti-atom versus deletion'' in Section~6.8; deletion arm added to \texttt{src/atom\_space\_unlearning\_engine.py}.
+
+\section*{Additional corrections}
+\begin{itemize}[leftmargin=*]
+\item \texttt{src/counterfact\_retrieval\_benchmark.py} contained a legacy in-script calibration that chose its threshold on the evaluation queries. No reported number used it (all reported values come from the held-out calibration on records 500--999), but the script now reads $\theta^*$ from the held-out calibration artifact so that rerunning the repository cannot reproduce a leaked threshold.
+\item The Lipschitz summary numbers were corrected to match the committed artifact (see Reviewer~3, comment~2).
+\item Highlights and the stand-alone abstract were updated to match the revised manuscript, and the README now documents the revision experiments and renders its formulas correctly on GitHub.
+\end{itemize}
+
+I hope the revised manuscript addresses the reviewers' concerns.
+
+Sincerely,\\
+Farshid Mossaiby
+
+\end{document}

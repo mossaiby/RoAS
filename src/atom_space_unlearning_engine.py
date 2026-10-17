@@ -321,6 +321,8 @@ def run_suppression_experiment():
     print("="*70)
     
     unlearn_results = []
+    # Snapshot of the store before any anti-atom is inserted (used by Experiment 3)
+    snapshot = (model.omega_corpus.keys.clone(), model.omega_corpus.values.clone(), model.omega_corpus.weights.clone())
     
     for s, r, o_sensitive in SENSITIVE_TARGETS_FOR_UNLEARNING:
         q_text = f"What {r} {s}?"
@@ -360,10 +362,74 @@ def run_suppression_experiment():
             "background_specificity": clean_acc
         })
 
+    # ========================================================================
+    # EXPERIMENT 3 (revision, Reviewer 3 comment 6): anti-atom versus deletion
+    # ------------------------------------------------------------------------
+    # Each arm starts from the same snapshot. Deletion sets the record's mass to 0;
+    # the anti-atom arm appends a matched atom of mass -1. By the decomposition
+    # proposition, anti-atom = deletion + a null mass of 2 at the deleted key, so the
+    # two differ exactly on queries near that key: deletion falls through to the
+    # nearest remaining record, the anti-atom shrinks the read toward zero.
+    # ========================================================================
+    print("\n" + "="*70)
+    print("EXPERIMENT 3: ANTI-ATOM VERSUS DELETION (same snapshot)")
+    print("="*70)
+    id2target = {i: t for t, i in target2id.items()}
+    # Every target that has an atom in the snapshot store: the initial pool plus the
+    # contradicting atoms appended by Experiment 1.
+    stored_targets = {o for _, _, o in train_pool_facts} | {o_new for _, _, _, o_new in KNOWLEDGE_UPDATES}
+
+    def restore():
+        model.omega_corpus.keys, model.omega_corpus.values, model.omega_corpus.weights = (
+            snapshot[0].clone(), snapshot[1].clone(), snapshot[2].clone())
+
+    def probe(q_raw, id_sensitive):
+        with torch.no_grad():
+            logits, _ = model(q_raw)
+            probs = F.softmax(logits, dim=-1)[0]
+            q = model.phi(q_raw)
+            z, _ = model.omega_corpus.read_signed(q, model.phi, tau=model.cfg.read_temperature)
+            clean_l, _ = model(clean_q_raw)
+        entropy = float(-(probs * torch.log(probs + 1e-12)).sum().item())
+        top = int(probs.argmax().item())
+        return {
+            "p_sensitive": float(probs[id_sensitive].item()),
+            "argmax_target": id2target[top],
+            "argmax_is_other_stored_fact": bool(top != id_sensitive and id2target[top] in stored_targets),
+            "max_probability": float(probs.max().item()),
+            "normalized_entropy": entropy / float(np.log(vocab_size)),
+            "read_norm": float(z.norm().item()),
+            "background_specificity": float((clean_l.argmax(dim=-1) == clean_tgts).float().mean().item()),
+        }
+
+    deletion_vs_anti = []
+    for s, r, o_sensitive in SENSITIVE_TARGETS_FOR_UNLEARNING:
+        q_raw = encode_clean([f"What {r} {s}?"])
+        id_sensitive = target2id[o_sensitive]
+        record_index = train_pool_facts.index((s, r, o_sensitive))
+
+        restore()
+        before = probe(q_raw, id_sensitive)
+
+        restore()
+        model.omega_corpus.weights[record_index, 0] = 0.0          # deletion
+        deleted = probe(q_raw, id_sensitive)
+
+        restore()
+        model.omega_corpus.insert_atom(snapshot[0][record_index], snapshot[1][record_index], weight=-1.0)
+        anti = probe(q_raw, id_sensitive)
+
+        print(f"{o_sensitive:22s} | deletion -> '{deleted['argmax_target']}' (p={deleted['max_probability']:.3f}, "
+              f"H/logV={deleted['normalized_entropy']:.2f}) | anti-atom -> p_max={anti['max_probability']:.3f}, "
+              f"H/logV={anti['normalized_entropy']:.2f}, ||z||={anti['read_norm']:.2e}")
+        deletion_vs_anti.append({"target": o_sensitive, "before": before, "deletion": deleted, "anti_atom": anti})
+    restore()
+
     # Export to both OUT_DIR and results/
     summary = {
         "counterfactual_updates": update_results,
-        "anti_atom_suppression": unlearn_results
+        "anti_atom_suppression": unlearn_results,
+        "anti_atom_vs_deletion": deletion_vs_anti,
     }
     with open(os.path.join(OUT_DIR, "unlearning_results.json"), "w") as f:
         json.dump(summary, f, indent=2)

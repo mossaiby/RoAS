@@ -295,11 +295,13 @@ def run_counterfact_rome():
         canonical_argmax_correct = int(rewrite_probs.argmax().item() == target_new_id)
 
         paraphrase_successes = []
+        paraphrase_argmax = []
         for paraphrase in record["paraphrase_prompts"][:2]:
             input_ids = tokenizer.encode(paraphrase, return_tensors="pt").to(DEVICE)
             with torch.no_grad():
                 probs = F.softmax(model(input_ids).logits[:, -1, :], dim=-1)[0]
             paraphrase_successes.append(probs[target_new_id].item() > probs[target_true_id].item())
+            paraphrase_argmax.append(probs.argmax().item() == target_new_id)
 
         neighborhood_successes = []
         for neighbor in record["neighborhood_prompts"][:2]:
@@ -320,6 +322,7 @@ def run_counterfact_rome():
             "efficacy_success": bool(efficacy_success),
             "canonical_argmax_correct": bool(canonical_argmax_correct),
             "paraphrase_success_rate": float(np.mean(paraphrase_successes)) if paraphrase_successes else None,
+            "paraphrase_argmax_rate": float(np.mean(paraphrase_argmax)) if paraphrase_argmax else None,
             "neighborhood_success_rate": float(np.mean(neighborhood_successes)) if neighborhood_successes else None,
             "mean_control_perplexity_ratio": float(np.mean(ppl_ratios)),
         })
@@ -338,6 +341,7 @@ def run_counterfact_rome():
         "efficacy_score": float(np.mean([r["efficacy_success"] for r in per_record_results])),
         "canonical_argmax_accuracy": float(np.mean([r["canonical_argmax_correct"] for r in per_record_results])),
         "paraphrase_score": float(np.mean([r["paraphrase_success_rate"] for r in per_record_results if r["paraphrase_success_rate"] is not None])),
+        "paraphrase_argmax_accuracy": float(np.mean([r["paraphrase_argmax_rate"] for r in per_record_results if r["paraphrase_argmax_rate"] is not None])),
         "neighborhood_score": float(np.mean([r["neighborhood_success_rate"] for r in per_record_results if r["neighborhood_success_rate"] is not None])),
         "mean_control_perplexity_ratio": float(np.mean([r["mean_control_perplexity_ratio"] for r in per_record_results])),
         "max_control_perplexity_ratio": float(np.max([r["mean_control_perplexity_ratio"] for r in per_record_results])),

@@ -1,7 +1,7 @@
 \documentclass[preprint,12pt]{elsarticle}
 %DIF LATEXDIFF DIFFERENCE FILE
 %DIF DEL main_submitted.tex   Sat Oct 17 10:21:19 2026
-%DIF ADD main.tex             Sat Oct 17 10:21:19 2026
+%DIF ADD main.tex             Sat Oct 17 21:45:09 2026
 
 \usepackage{stix}
 \usepackage{amsmath,amsthm,mathtools}
@@ -169,7 +169,7 @@ To address the rigidity of dense parameter storage, multiple architectural strat
 In this work, we adopt a single analytical lens for in-context attention, external retrieval, and parameter-expert output routing: each is an integral of a value map against a query-conditioned probability measure over a \emph{valued atom space}. Under a counting measure this read is exactly a softmax-weighted combination, so the lens is a change of notation rather than a new algorithm, and we do not claim that the three mechanisms are algorithmically interchangeable. Related expectation-based views of attention appear in kernel attention \cite{tsai2019transformer} and sparse-transform attention \cite{martins2020sparse}; our contribution is to use one formalism across the three memory locations, so that insertion, truncation, cancellation, and calibration questions can be posed once and tested on each.
 
 \paragraph{Contributions}
-\DIFaddbegin \rev{The notation is not new, and we do not claim that it is. What we claim is that a small number of operations on the reference measure $\nu$ express, and let us analyse on one footing, mechanisms that are usually described separately.} \DIFaddend The paper makes \DIFdelbegin \DIFdel{four contributions, two of which are negative results that we regard as informative.
+\DIFaddbegin \rev{An integral form of attention is not new. Martins et al.~\cite{martins2020sparse} define attention over a general measure space as the expectation of a value function under a query-dependent density, which reduces to softmax attention under the counting measure; Tsai et al.~\cite{tsai2019transformer} analyse attention as a kernel smoother, and Katharopoulos et al.~\cite{katharopoulos2020transformers} rewrite it with kernel feature maps; and Vuckovic et al.~\cite{vuckovic2020mathematical} and Geshkovski et al.~\cite{geshkovski2025mathematical} model attention and Transformers as maps on probability measures. Our claim is narrower: a few operations on the reference measure $\nu$ (separate normalization per space, signed atoms, and null atoms) express, and let us analyse on one footing, three mechanisms that are usually described separately, namely in-context attention, external retrieval, and parameter-expert routing.} \DIFaddend The paper makes \DIFdelbegin \DIFdel{four contributions, two of which are negative results that we regard as informative.
 First, }\DIFdelend \DIFaddbegin \DIFadd{the following contributions.
 }\begin{enumerate}[leftmargin=*,label=(\roman*)]
 \item \DIFaddend Section~\ref{sec:atomspaces} defines the read operator $R(x;\Om)$, specializes it to context, corpus, and parameter-expert spaces, and derives from the measure view the requirement that spaces of very different cardinality be normalized separately and combined by a gate, with unit-norm keys across spaces.

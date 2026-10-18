@@ -1,0 +1,7 @@
+Highlights
+
+- One read operator over atom spaces covers attention, retrieval, and MoE routing
+- A null atom yields abstention; the retrieval threshold is its zero-temperature limit
+- An anti-atom is deletion plus a null mass: it abstains where deletion falls through
+- A query-side margin certifies a top-1 radius at insertion with no Lipschitz premise
+- A rank-margin gate lifts CounterFact paraphrase activation to 71% at 7% false hits

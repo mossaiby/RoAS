@@ -108,7 +108,7 @@ The CounterFact scripts download the official dataset to `data/counterfact.json`
 ### 3. Automated Test Suite & Artifact Validation
 
 #### Running Unit & Theory Tests
-The repository includes a comprehensive 110-test suite covering analytical bounds, exact cancellations, dynamic memory buffers, tri-space gating, threshold calibration, and estimators:
+The repository includes a comprehensive 129-test suite covering analytical bounds, exact cancellations, dynamic memory buffers, tri-space gating, threshold calibration, and estimators:
 
 ```bash
 # Run all unit, theoretical, and architectural tests
@@ -158,6 +158,15 @@ python scripts/verify_artifacts.py && pytest -v
 
 `scripts/fill_pending.py --check` lists which `\pending{}` placeholders in the manuscript and response letter can be filled from the artifacts present.
 
+## 🔁 Second-Revision Experiments
+
+```
+python src/counterfact_score_decomposition.py --model gpt2   # R1.2: per-query split of the read's scores by gate firing
+python src/atom_space_unlearning_engine.py                   # R1.1: now records the net signed mass and the fallback decision
+```
+
+`paper/main_revision1.tex` is the first-revision manuscript; `paper/main_diff_round2.pdf` marks the second-round changes against it.
+
 ## 📊 Summary of Experimental Results
 
 | Benchmark | Key Metric | Reported Result | Scope |
@@ -171,7 +180,7 @@ python scripts/verify_artifacts.py && pytest -v
 | **CounterFact Generative Steering** | Rewrite / Paraphrase Score ($N=50$) | **100.0% / 66.0% [52%, 78%]** | Base: 16% / 22%; non-overlapping 95% bootstrap CIs |
 | **HNSW Candidates** | Exact top-1 in 10 candidates | **99.96% recall** | CounterFact-500; not large-scale ANN evidence |
 | **Cumulative Insertion** | 40 additions to 200 records | **100.0±0.0% target / control argmax** | Five seeds; training controls |
-| **Tri-Space Gating** | Five-seed surface-matched task / route accuracy | **100/96.8/100% task; 100/82.4/100% route** | Mean over five seeds; known tasks and labels |
+| **Tri-Space Gating** | Five-seed surface-matched task / route accuracy | **100/96.4/100% task; 100/83.2/100% route** | Mean over five seeds; known tasks and labels |
 | **Matched Suppression** | Residual target probability | **$2.0407\pm0.00003\%$** | Five seeds; exact paired-key construction |
 | **Cancellation Stress** | Analytical residual-bound coverage | **100% over 3,000 trials** | Key mismatch degrades rapidly |
 | **GPT-2 Steering (Exploratory)** | Canonical / paraphrase first-token correction | **10/10 / 9/10** | Ten controls bypassed intervention |

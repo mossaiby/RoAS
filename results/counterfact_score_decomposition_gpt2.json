@@ -1,0 +1,94 @@
+{
+  "model": "gpt2",
+  "records": 500,
+  "theta": 0.55,
+  "lambda_read": 0.6,
+  "temperature": 0.07,
+  "scorer": "counterfact_grace_benchmark.score_prompt",
+  "decomposition": {
+    "rewrite": {
+      "queries": 500,
+      "fired_rate": 1.0,
+      "score": {
+        "read": 0.998,
+        "base": 0.252,
+        "read_given_fired": 0.998,
+        "read_given_not_fired": null,
+        "base_given_fired": 0.252,
+        "base_given_not_fired": null,
+        "contribution_fired": 0.998,
+        "contribution_not_fired": 0.0,
+        "upper_bound": 1.0,
+        "not_fired_mismatches_vs_base": 0
+      },
+      "argmax": {
+        "read": 0.988,
+        "base": 0.004,
+        "read_given_fired": 0.988,
+        "read_given_not_fired": null,
+        "base_given_fired": 0.004,
+        "base_given_not_fired": null,
+        "contribution_fired": 0.988,
+        "contribution_not_fired": 0.0,
+        "upper_bound": 1.0,
+        "not_fired_mismatches_vs_base": 0
+      }
+    },
+    "paraphrase": {
+      "queries": 1000,
+      "fired_rate": 0.538,
+      "score": {
+        "read": 0.626,
+        "base": 0.281,
+        "read_given_fired": 0.9237918215613383,
+        "read_given_not_fired": 0.2792207792207792,
+        "base_given_fired": 0.2825278810408922,
+        "base_given_not_fired": 0.2792207792207792,
+        "contribution_fired": 0.497,
+        "contribution_not_fired": 0.129,
+        "upper_bound": 0.667,
+        "not_fired_mismatches_vs_base": 0
+      },
+      "argmax": {
+        "read": 0.442,
+        "base": 0.0,
+        "read_given_fired": 0.8215613382899628,
+        "read_given_not_fired": 0.0,
+        "base_given_fired": 0.0,
+        "base_given_not_fired": 0.0,
+        "contribution_fired": 0.442,
+        "contribution_not_fired": 0.0,
+        "upper_bound": 0.538,
+        "not_fired_mismatches_vs_base": 0
+      }
+    },
+    "neighborhood": {
+      "queries": 1000,
+      "fired_rate": 0.161,
+      "score": {
+        "read": 0.683,
+        "base": 0.713,
+        "read_given_fired": 0.5962732919254659,
+        "read_given_not_fired": 0.699642431466031,
+        "base_given_fired": 0.782608695652174,
+        "base_given_not_fired": 0.699642431466031,
+        "contribution_fired": 0.096,
+        "contribution_not_fired": 0.587,
+        "upper_bound": 0.748,
+        "not_fired_mismatches_vs_base": 0
+      },
+      "argmax": {
+        "read": 0.033,
+        "base": 0.006,
+        "read_given_fired": 0.16770186335403728,
+        "read_given_not_fired": 0.007151370679380214,
+        "base_given_fired": 0.0,
+        "base_given_not_fired": 0.007151370679380214,
+        "contribution_fired": 0.027,
+        "contribution_not_fired": 0.006,
+        "upper_bound": 0.167,
+        "not_fired_mismatches_vs_base": 0
+      }
+    }
+  }
+}

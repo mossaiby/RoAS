@@ -87,6 +87,8 @@
     {
       "target": "Location-Redacted",
       "before": {
+        "net_signed_mass": 1.000000238418579,
+        "answers_from_memory": true,
         "p_sensitive": 0.9999784231185913,
         "argmax_target": "Location-Redacted",
         "argmax_is_other_stored_fact": false,
@@ -96,6 +98,8 @@
         "background_specificity": 1.0
       },
       "deletion": {
+        "net_signed_mass": 0.9999579787254333,
+        "answers_from_memory": true,
         "p_sensitive": 0.010752838104963303,
         "argmax_target": "X Corp",
         "argmax_is_other_stored_fact": true,
@@ -105,6 +109,8 @@
         "background_specificity": 1.0
       },
       "anti_atom": {
+        "net_signed_mass": 0.00011903047561645508,
+        "answers_from_memory": false,
         "p_sensitive": 0.02040705643594265,
         "argmax_target": "X Corp",
         "argmax_is_other_stored_fact": true,
@@ -117,6 +123,8 @@
     {
       "target": "Confidential-Illness",
       "before": {
+        "net_signed_mass": 1.0000001192092896,
+        "answers_from_memory": true,
         "p_sensitive": 0.9999783039093018,
         "argmax_target": "Confidential-Illness",
         "argmax_is_other_stored_fact": false,
@@ -126,6 +134,8 @@
         "background_specificity": 1.0
       },
       "deletion": {
+        "net_signed_mass": 0.9999579787254333,
+        "answers_from_memory": true,
         "p_sensitive": 0.0038921565283089876,
         "argmax_target": "PyPy JIT",
         "argmax_is_other_stored_fact": true,
@@ -135,6 +145,8 @@
         "background_specificity": 1.0
       },
       "anti_atom": {
+        "net_signed_mass": 0.00011903047561645508,
+        "answers_from_memory": false,
         "p_sensitive": 0.02040661685168743,
         "argmax_target": "PyPy JIT",
         "argmax_is_other_stored_fact": true,
@@ -147,6 +159,8 @@
     {
       "target": "Patent-Secret",
       "before": {
+        "net_signed_mass": 1.0,
+        "answers_from_memory": true,
         "p_sensitive": 0.9999785423278809,
         "argmax_target": "Patent-Secret",
         "argmax_is_other_stored_fact": false,
@@ -156,6 +170,8 @@
         "background_specificity": 1.0
       },
       "deletion": {
+        "net_signed_mass": 0.9999182820320129,
+        "answers_from_memory": true,
         "p_sensitive": 0.007437353953719139,
         "argmax_target": "PyPy JIT",
         "argmax_is_other_stored_fact": true,
@@ -165,6 +181,8 @@
         "background_specificity": 1.0
       },
       "anti_atom": {
+        "net_signed_mass": 6.103515625e-05,
+        "answers_from_memory": false,
         "p_sensitive": 0.02040749229490757,
         "argmax_target": "PyPy JIT",
         "argmax_is_other_stored_fact": true,
@@ -177,6 +195,8 @@
     {
       "target": "Bunker-Zero",
       "before": {
+        "net_signed_mass": 0.9999999403953552,
+        "answers_from_memory": true,
         "p_sensitive": 0.9999784231185913,
         "argmax_target": "Bunker-Zero",
         "argmax_is_other_stored_fact": false,
@@ -186,6 +206,8 @@
         "background_specificity": 1.0
       },
       "deletion": {
+        "net_signed_mass": 0.9999524354934692,
+        "answers_from_memory": true,
         "p_sensitive": 0.009305626153945923,
         "argmax_target": "Location-Redacted",
         "argmax_is_other_stored_fact": true,
@@ -195,6 +217,8 @@
         "background_specificity": 1.0
       },
       "anti_atom": {
+        "net_signed_mass": 0.00010523200035095215,
+        "answers_from_memory": false,
         "p_sensitive": 0.020407162606716156,
         "argmax_target": "Location-Redacted",
         "argmax_is_other_stored_fact": true,
@@ -207,6 +231,8 @@
     {
       "target": "Master-Passphrase",
       "before": {
+        "net_signed_mass": 0.9999998807907104,
+        "answers_from_memory": true,
         "p_sensitive": 0.9999784231185913,
         "argmax_target": "Master-Passphrase",
         "argmax_is_other_stored_fact": false,
@@ -216,6 +242,8 @@
         "background_specificity": 1.0
       },
       "deletion": {
+        "net_signed_mass": 0.9999657869338989,
+        "answers_from_memory": true,
         "p_sensitive": 0.0035304406192153692,
         "argmax_target": "Proof-of-Stake",
         "argmax_is_other_stored_fact": true,
@@ -225,6 +253,8 @@
         "background_specificity": 1.0
       },
       "anti_atom": {
+        "net_signed_mass": 0.00014662742614746094,
+        "answers_from_memory": false,
         "p_sensitive": 0.02040623128414154,
         "argmax_target": "Proof-of-Stake",
         "argmax_is_other_stored_fact": true,

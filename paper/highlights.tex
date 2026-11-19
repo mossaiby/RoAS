@@ -33,7 +33,7 @@ Language models \sep Atom spaces \sep Vector retrieval \sep Expert routing \sep 
 \begin{itemize}
   \item One read operator over atom spaces covers attention, retrieval, and MoE routing
   \item A null atom yields abstention; the retrieval threshold is its zero-temperature limit
-  \item An anti-atom is deletion plus a null mass: it abstains where deletion falls through
+  \item Anti-atom = deletion + null mass; a mass test, not the argmax, triggers fallback
   \item A query-side margin certifies a top-1 radius at insertion with no Lipschitz premise
   \item A rank-margin gate lifts CounterFact paraphrase activation to 71\% at 7\% false hits
 \end{itemize}

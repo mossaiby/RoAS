@@ -388,11 +388,19 @@ def run_suppression_experiment():
             logits, _ = model(q_raw)
             probs = F.softmax(logits, dim=-1)[0]
             q = model.phi(q_raw)
-            z, _ = model.omega_corpus.read_signed(q, model.phi, tau=model.cfg.read_temperature)
+            z, signed_mu = model.omega_corpus.read_signed(q, model.phi, tau=model.cfg.read_temperature)
             clean_l, _ = model(clean_q_raw)
         entropy = float(-(probs * torch.log(probs + 1e-12)).sum().item())
         top = int(probs.argmax().item())
+        # Round 2, Reviewer 1 comment 1: the argmax of the read alone is invariant to the
+        # positive factor Z_o / (Z_o + 2a) that separates the anti-atom from deletion, so the
+        # argmax cannot trigger a fallback. The statistic that does is the net signed mass
+        # mu_x^{+-}(Omega) = Z_o / (Z_o + 2a) (1 for deletion, ~0 for the anti-atom), tested
+        # with the same rule as the null-atom router: answer from memory iff it is >= 1/2.
+        net_mass = float(signed_mu.sum().item())
         return {
+            "net_signed_mass": net_mass,
+            "answers_from_memory": bool(net_mass >= 0.5),
             "p_sensitive": float(probs[id_sensitive].item()),
             "argmax_target": id2target[top],
             "argmax_is_other_stored_fact": bool(top != id_sensitive and id2target[top] in stored_targets),

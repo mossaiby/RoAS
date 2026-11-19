@@ -18,42 +18,35 @@ Elsevier B.V.
 
 \textbf{Date:} \today
 
-\textbf{Subject:} Revised manuscript KNOSYS-D-26-21176, \emph{``Reads over Atom Spaces: A Mathematical View of Context, Retrieval, and Parameter Routing in Language Models''}
+\textbf{Subject:} Second revision of manuscript KNOSYS-D-26-21176, \emph{``Reads over Atom Spaces: A Mathematical View of Context, Retrieval, and Parameter Routing in Language Models''}
 
 \vspace{0.5em}
 Dear Editor-in-Chief,
 
-I am pleased to submit the revised version of the above-titled research article for consideration in \emph{Knowledge-Based Systems}. A point-by-point response to the reviewers is provided as a separate file. This letter sets out the novel contribution the paper makes to the published literature.
+I am pleased to submit the second revision of the above-titled article. I thank you and the reviewers for the further round of review. A point-by-point response is provided as a separate file. Changes made in this round are marked in blue in the revised manuscript, and a separate file marks them against the first revision.
 
-\section*{Position in the current literature}
+\section*{Summary of the second revision}
 
-Language models access information through three mechanisms that are normally studied separately. Attention reads the current context; retrieval-augmented models such as $k$NN-LM, RAG and RETRO read an external corpus; and mixture-of-experts layers route a query to parameter experts. Integral and measure-theoretic descriptions of attention already exist: Martins et al.\ (NeurIPS 2020) define attention as an expectation over a general measure space, Vuckovic et al.\ (2020) model attention with measure theory, and Geshkovski et al.\ (\emph{Bull.\ Amer.\ Math.\ Soc.}, 2025) treat Transformers as flow maps on probability measures. These works concern attention within a model. They do not cover external memory or expert routing, and they do not address the questions that arise when a model reads from an editable store: when to decline a read, how to remove a record, and when an inserted record is guaranteed to be found.
-
-\section*{Novel contributions}
-
+Reviewer~1 recommended minor revision and raised three specific points. All three identified real problems, and each has been corrected.
 \begin{enumerate}[leftmargin=*]
-\item \textbf{One read operator across context, corpus, and parameter experts.} The paper defines a single read $R(x;\Omega)=\int_\Omega v\,d\mu_x$ over valued atom spaces and specializes it to all three mechanisms. The measure view yields a design requirement that is easy to miss in separate notations: spaces of very different cardinality must be normalized separately and combined by a gate.
-
-\item \textbf{Abstention as an operation on the measure.} Adding a \emph{null atom} (zero value, constant kernel) gives the read an explicit ``no stored answer'' outcome. The paper proves that the hard activation threshold used in gated retrieval is the zero-temperature limit of a null atom, so a common heuristic becomes a derived quantity. Adaptive-retrieval methods such as Self-RAG learn when to retrieve; this result gives an analytic account of declining that such methods can be read against. Applied to tri-space routing without retraining, the system abstains on all far out-of-scope queries and 8 of 11 near misses, and every in-scope answer it gives is correct.
-
-\item \textbf{An exact relation between signed cancellation and deletion.} The paper proves that a matched anti-atom (negative mass) equals deletion plus a null mass at the deleted key. This identifies exactly where the two operations differ: deletion falls through to the remaining records, while the anti-atom abstains. Experiments confirm the predicted relation, in which the two reads share a direction and differ by a factor of about $10^{-4}$.
-
-\item \textbf{A satisfiable insertion certificate.} The paper gives a query-side certified radius within which an inserted record provably remains the top-1 read and activates. It is computable at insertion time from stored keys alone and requires no Lipschitz assumption. The paper also shows why the more natural anchor-based Lipschitz argument cannot certify top-1 retrieval at all. The certificate's coverage on CounterFact is reported as measured, including where it is conservative.
-
-\item \textbf{A diagnosis of why gated retrieval misses paraphrases.} On CounterFact-500, held-out calibration raises paraphrase activation from 38.2\% to 53.2\%, against 91.0\% exact top-1 recall. The analysis shows that the remaining gap consists of paraphrases that are ranked correctly but have low absolute similarity. Scoring only the final sentence of each paraphrase raises activation to 91.6\%, and a gate on the rank margin reaches 70.8\% activation at 7.0\% false activation, better on both counts than the absolute threshold (16.1\%). The false activations that calibration adds retrieve a record with the same relation 88\% of the time, against 3\% by chance. These findings locate the failure in the relevance statistic rather than in retrieval.
-
-\item \textbf{A like-for-like comparison of external and parametric editing.} The gated read, a rank-one parametric update, and GRACE are scored by one function on the same 500 records. The read has the highest paraphrase score and the largest locality cost, which places the methods on a generalization--locality trade-off set by their key spaces. The read is also evaluated on GPT-2 XL, with its one model-specific parameter chosen on held-out records.
+\item \textbf{What triggers fallback after an anti-atom.} The previous text described the anti-atom's attenuated read as an abstention, although its argmax equals that of deletion. The revision makes the decision rule explicit. A fallback is triggered by a test on the read's net signed mass, the same rule the null-atom router already uses, and not by the attenuation itself. Proposition~5 now states this mass, which is $1$ after deletion and close to $0$ after an anti-atom. The experiment now records it: the test answers from memory on all five deleted records and falls back on all five anti-atom queries.
+\item \textbf{Paraphrase score versus activation.} The statement that the read's paraphrase score is capped by its activation rate was incorrect, since unfired queries keep the unedited model's score. A new per-query analysis gives the exact split. Of the 62.6\% score, 49.7 points come from fired queries and 12.9 from unfired ones, which match the unedited model on every query. The bound is now stated for argmax accuracy, where it does hold.
+\item \textbf{An inconsistency between Table~7 and Figure~1.} Table~7 carried values from an earlier run of the routing sweep. It now uses the committed result file from which Figure~1 is drawn. No conclusion changes.
 \end{enumerate}
 
-The paper does not propose a new editing method or claim superiority over existing editors. Its contribution is a shared vocabulary in which these mechanisms can be analysed together, a small set of exact results derived from it, and empirical calibrations of what retrieval, margin, and tail arguments can and cannot certify. The bounds involved are elementary, and the manuscript says so. The limitations are stated in the paper, including the templated synthetic tasks, the first-subtoken scorer, and the absence of comparisons with MEMIT and SERAC under their published protocols.
+Reviewer~4 questioned the novelty of the framework, its operational relevance, and the size of its empirical gains. The response answers each point. In reply to the concern that the manuscript has no operational knowledge component, the revision adds a short section (Section~7.2, Table~12). It sets out the paper's results as operations on an external knowledge store: inserting, deciding relevance, abstaining, retracting, updating, and reading. For each operation it gives the rule that governs it and the evidence and measured failure mode in the paper. The section summarizes reported results and introduces no new claims.
 
-\section*{Background and reproducibility}
+\section*{Contribution}
 
-My background is in computational mechanics and numerical methods. The integral formulation was motivated by particle methods such as smoothed particle hydrodynamics, in which a field is approximated by aggregating kernel-weighted contributions of discrete particles. The paper does not claim that attention is such a discretization; the analogy helped separate the roles of the reference measure, kernel, normalization, and value map. The complete code, benchmark definitions, result files, and reproduction scripts are publicly available at \url{https://github.com/mossaiby/RoAS}.
+The paper does not propose a new editing method, and the manuscript says so. Its contribution is analytical and empirical. Operations on the reference measure of a single read operator express abstention, retraction, and calibrated relevance for context, external memory, and parameter experts on one footing. From these follow exact results: the activation threshold as the limit of a null atom, anti-atom as deletion plus a null mass, and a satisfiable insertion certificate. On CounterFact, the paper locates the gap between retrieval and activation in the relevance statistic rather than in retrieval itself. A rank-margin gate reaches 70.8\% paraphrase activation at 7.0\% false activation, against 53.2\% at 16.1\% for the calibrated absolute threshold. The paper also compares the gated read, a rank-one parametric update, and GRACE under one scorer. I believe this kind of precise account of what reads over knowledge stores can guarantee, together with the measured operating points, is relevant to the readership of \emph{Knowledge-Based Systems}.
 
-\section*{Declarations}
+\section*{Ongoing work}
 
-I confirm that the manuscript is original and is not under consideration elsewhere, and that the author declares no competing financial or personal interests. During manuscript preparation, I used generative AI as an editorial and technical-writing aid to make the presentation more complete and to refine terminology used in machine learning, numerical analysis, and computational science. The research idea, numerical-methods analogy, mathematical framing, experiments, interpretation of results, and final responsibility for the manuscript are my own; all AI-assisted text was reviewed, revised, and validated by me. This use is disclosed in the manuscript in accordance with Elsevier policy.
+The framework is the basis of a separate system study now in progress (code and draft: \url{https://github.com/mossaiby/RoHAS}). There, the null atom of this manuscript is the abstention outcome of a per-token gate over heterogeneous experts, trained without routing labels. In preliminary experiments at small scale, a compiled arithmetic expert added to a frozen gate over pretrained models makes their arithmetic exact on held-out long equations at negligible cost elsewhere. New facts are added by updating one expert while compute-matched monolithic models forget. I mention this only as an indication that the operations analysed here support a working system. Those results are not part of the present submission and are being extended to larger scale.
+
+All new results for the present manuscript are produced by scripts in the public repository, \url{https://github.com/mossaiby/RoAS}, which also contains the complete code, benchmark definitions, and result files.
+
+I confirm that the manuscript is original and is not under consideration elsewhere. The competing-interest and generative-AI declarations are included in the manuscript.
 
 Thank you for considering the revised manuscript.
 

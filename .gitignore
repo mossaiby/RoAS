@@ -1,5 +1,6 @@
 data/counterfact.json
-data/counterfact_minilm_embeddings.npz
+data/*_minilm_embeddings.npz
+data/zsre_mem_eval.jsonl
 
 # =============================================================================
 # LaTeX / pdflatex build artifacts

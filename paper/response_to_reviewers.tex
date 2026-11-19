@@ -131,7 +131,7 @@ Your work does not present a new algorithm or system. You explicitly call it ``a
 \item \emph{A query-side certified radius} (Proposition~2) is computable at insertion time without a Lipschitz premise. It replaces a condition that, as a first-round reviewer showed, could never hold.
 \item \emph{On CounterFact-500}, an outcome decomposition locates the entire gap between top-1 recall and activation in one bucket: correctly ranked paraphrases below the threshold. The decomposition also identifies the cause (distractor prefixes) and shows that a gate on the rank margin is better on both axes, at 70.8\% activation and 7.0\% false activation against 53.2\% and 16.1\% (held-out AUC 0.914 against 0.829).
 \end{itemize}
-The paper reports the rank-margin gate as a diagnostic, not as a method. It was evaluated on one store size, and its calibration depends on store density. I prefer to say this than to present it as a contribution the evidence does not yet support. The paper's claim is therefore analytical and empirical rather than algorithmic: it identifies what can be guaranteed about reads over external knowledge stores and measures how far those guarantees reach on standard data. I believe this is a legitimate contribution type. The Abstract, Contributions, and Limitations state it in those terms, so that no reader expects a new editor.
+The paper reports the rank-margin gate as a diagnostic, not as a method. It was evaluated on one dataset, and although it beats the absolute gate at every store size tested, its activation declines as the store grows (see comment~4). I prefer to say this than to present it as a contribution the evidence does not yet support. The paper's claim is therefore analytical and empirical rather than algorithmic: it identifies what can be guaranteed about reads over external knowledge stores and measures how far those guarantees reach on standard data. I believe this is a legitimate contribution type. The Abstract, Contributions, and Limitations state it in those terms, so that no reader expects a new editor.
 
 \changes None to the claims, which were already scoped in this way; see the response to comment~3 for the new Section~7.2.
 
@@ -174,11 +174,11 @@ Your work has weak empirical gains. The gap to 91\% top-1 recall remains large.
 \begin{itemize}
 \item The outcome decomposition (Table~5) shows that 37.8\% of paraphrases are ranked correctly but fall below the threshold. Only 8.4\% are genuine retrieval misses.
 \item Re-scoring only the final sentence of each paraphrase, with keys and threshold unchanged, raises activation to 91.6\%. The distractor prefixes in CounterFact therefore lower absolute similarity much more than they disturb the ranking.
-\item A gate on the rank margin, calibrated on the same held-out split, closes most of the gap. It reaches 70.8\% activation at 7.0\% false activation, against 53.2\% at 16.1\% for the absolute gate.
+\item A gate on the rank margin, calibrated on the same held-out split, closes most of the gap. It reaches 70.8\% activation at 7.0\% false activation, against 53.2\% at 16.1\% for the absolute gate. A new store-size study (Section~6.4) repeats this comparison on stores of up to 10,000 records. At an equal false-activation cost of 10\%, the margin gate activates 38.6\% of paraphrases at 10,000 records against 5.5\% for the absolute gate, and its threshold carries over across store sizes without refitting. Both gates decline as the store grows, and the manuscript says so.
 \end{itemize}
 Under one scoring function on the same records, the gated read also has the highest paraphrase score of the four systems compared: 62.6\%, against 59.5\% for the rank-one parametric reference, 28.1\% for GRACE, and 28.1\% unedited. Its paraphrase argmax is 44.2\%, against 8.9\% for the rank-one reference. These are not small effects. I nevertheless do not present them as a state-of-the-art claim, because the comparison uses first-subtoken scoring and a GPT-2 scale that the Limitations section states. The purpose of the CounterFact study is to show where the gate fails and why, and to measure how much a better relevance statistic recovers.
 
-\changes None; the analysis already appears in Section~6.4 and Table~6.
+\changes Store-size study added to the ``Where the gate fails'' paragraph of Section~6.4 (script \nolinkurl{src/counterfact_margin_scaling.py}); Limitations updated. The rest of the analysis already appeared in Section~6.4 and Table~6.
 
 \subsection*{Comment 5: tri-space routing and steering are diagnostics}
 

@@ -1,4 +1,5 @@
 data/counterfact.json
+data/counterfact_minilm_embeddings.npz
 
 # =============================================================================
 # LaTeX / pdflatex build artifacts
